@@ -15,6 +15,7 @@
 		B0C5D630224FD14900D9A54E /* QuestionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C5D62F224FD14900D9A54E /* QuestionGroup.swift */; };
 		B0C5D632224FD19900D9A54E /* QuestionGroupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C5D631224FD19900D9A54E /* QuestionGroupData.swift */; };
 		B0C5D634224FD20F00D9A54E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0C5D633224FD20F00D9A54E /* LaunchScreen.storyboard */; };
+		B0C5D636224FD38300D9A54E /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C5D635224FD38300D9A54E /* QuestionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		B0C5D62F224FD14900D9A54E /* QuestionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroup.swift; sourceTree = "<group>"; };
 		B0C5D631224FD19900D9A54E /* QuestionGroupData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionGroupData.swift; sourceTree = "<group>"; };
 		B0C5D633224FD20F00D9A54E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B0C5D635224FD38300D9A54E /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			children = (
 				B0C5D633224FD20F00D9A54E /* LaunchScreen.storyboard */,
 				B0C5D619224FCDC700D9A54E /* Main.storyboard */,
+				B0C5D635224FD38300D9A54E /* QuestionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 				B0C5D618224FCDC700D9A54E /* QuestionViewController.swift in Sources */,
 				B0C5D616224FCDC700D9A54E /* AppDelegate.swift in Sources */,
 				B0C5D630224FD14900D9A54E /* QuestionGroup.swift in Sources */,
+				B0C5D636224FD38300D9A54E /* QuestionView.swift in Sources */,
 				B0C5D632224FD19900D9A54E /* QuestionGroupData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
