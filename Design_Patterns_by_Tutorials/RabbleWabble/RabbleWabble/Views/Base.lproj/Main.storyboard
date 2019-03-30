@@ -39,10 +39,16 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MeG-em-slx">
                                 <rect key="frame" x="32" y="711" width="80" height="80"/>
                                 <state key="normal" image="ic_circle_x"/>
+                                <connections>
+                                    <action selector="handleIncorrect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o4O-QS-aQl"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4qq-Bv-8bj">
                                 <rect key="frame" x="302" y="711" width="80" height="80"/>
                                 <state key="normal" image="ic_circle_check"/>
+                                <connections>
+                                    <action selector="handleCorrect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G1n-PU-fwU"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bPp-sV-cse">
                                 <rect key="frame" x="62" y="799" width="20" height="39"/>
@@ -58,6 +64,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6jI-N9-dQT" firstAttribute="top" secondItem="Z3u-HH-blA" secondAttribute="bottom" constant="8" id="1NV-dm-EmZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wO1-U6-ZuP" secondAttribute="trailing" id="8SD-ba-NA7"/>
@@ -84,10 +91,16 @@
                             <outlet property="hintLabel" destination="6jI-N9-dQT" id="i7W-Xj-bvY"/>
                             <outlet property="incorrectCountLabel" destination="bPp-sV-cse" id="AJZ-Xa-kvN"/>
                             <outlet property="promptLabel" destination="Z3u-HH-blA" id="m5R-Me-sA7"/>
+                            <outletCollection property="gestureRecognizers" destination="EN2-t6-mmT" appends="YES" id="1Ej-jh-Z2H"/>
                         </connections>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="EN2-t6-mmT">
+                    <connections>
+                        <action selector="toggleAnswerLabels:" destination="BYZ-38-t0r" id="znt-nq-W2a"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>
