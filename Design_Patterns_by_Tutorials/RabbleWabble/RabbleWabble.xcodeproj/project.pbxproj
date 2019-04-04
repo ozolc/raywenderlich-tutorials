@@ -21,6 +21,8 @@
 		B0E1BFE722536E5A006B2107 /* QuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E1BFE622536E5A006B2107 /* QuestionStrategy.swift */; };
 		B0E1BFE922536F8A006B2107 /* SequentalQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E1BFE822536F8A006B2107 /* SequentalQuestionStrategy.swift */; };
 		B0E1BFEB2253710F006B2107 /* RandomQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E1BFEA2253710F006B2107 /* RandomQuestionStrategy.swift */; };
+		B0E79A042255DFE30098698F /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E79A032255DFE30098698F /* AppSettings.swift */; };
+		B0E79A062255E4DD0098698F /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E79A052255E4DD0098698F /* AppSettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		B0E1BFE622536E5A006B2107 /* QuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionStrategy.swift; sourceTree = "<group>"; };
 		B0E1BFE822536F8A006B2107 /* SequentalQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequentalQuestionStrategy.swift; sourceTree = "<group>"; };
 		B0E1BFEA2253710F006B2107 /* RandomQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomQuestionStrategy.swift; sourceTree = "<group>"; };
+		B0E79A032255DFE30098698F /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		B0E79A052255E4DD0098698F /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,7 @@
 			children = (
 				B0C5D617224FCDC700D9A54E /* QuestionViewController.swift */,
 				B03AF3842250F18900C45358 /* SelectQuestionGroupViewController.swift */,
+				B0E79A052255E4DD0098698F /* AppSettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 				B0C5D62D224FD03700D9A54E /* Question.swift */,
 				B0C5D62F224FD14900D9A54E /* QuestionGroup.swift */,
 				B0C5D631224FD19900D9A54E /* QuestionGroupData.swift */,
+				B0E79A032255DFE30098698F /* AppSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -212,11 +218,13 @@
 			files = (
 				B0C5D62E224FD03700D9A54E /* Question.swift in Sources */,
 				B0E1BFE922536F8A006B2107 /* SequentalQuestionStrategy.swift in Sources */,
+				B0E79A042255DFE30098698F /* AppSettings.swift in Sources */,
 				B0C5D618224FCDC700D9A54E /* QuestionViewController.swift in Sources */,
 				B0E1BFEB2253710F006B2107 /* RandomQuestionStrategy.swift in Sources */,
 				B0C5D616224FCDC700D9A54E /* AppDelegate.swift in Sources */,
 				B0C5D630224FD14900D9A54E /* QuestionGroup.swift in Sources */,
 				B0C5D636224FD38300D9A54E /* QuestionView.swift in Sources */,
+				B0E79A062255E4DD0098698F /* AppSettingsViewController.swift in Sources */,
 				B0C5D632224FD19900D9A54E /* QuestionGroupData.swift in Sources */,
 				B03AF3852250F18900C45358 /* SelectQuestionGroupViewController.swift in Sources */,
 				B0E1BFE722536E5A006B2107 /* QuestionStrategy.swift in Sources */,
