@@ -17,6 +17,7 @@
 		B0C5D630224FD14900D9A54E /* QuestionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C5D62F224FD14900D9A54E /* QuestionGroup.swift */; };
 		B0C5D634224FD20F00D9A54E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0C5D633224FD20F00D9A54E /* LaunchScreen.storyboard */; };
 		B0C5D636224FD38300D9A54E /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C5D635224FD38300D9A54E /* QuestionView.swift */; };
+		B0D8CDC5225B29030007C4B2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D8CDC4225B29030007C4B2 /* Observable.swift */; };
 		B0DA9D5B22572F9900064AC0 /* DiskCaretaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA9D5A22572F9900064AC0 /* DiskCaretaker.swift */; };
 		B0DA9D5D2257341700064AC0 /* QuestionGroupCaretaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA9D5C2257341700064AC0 /* QuestionGroupCaretaker.swift */; };
 		B0DA9D5F2257360100064AC0 /* QuestionGroupData.json in Resources */ = {isa = PBXBuildFile; fileRef = B0DA9D5E2257360100064AC0 /* QuestionGroupData.json */; };
@@ -41,6 +42,7 @@
 		B0C5D62F224FD14900D9A54E /* QuestionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroup.swift; sourceTree = "<group>"; };
 		B0C5D633224FD20F00D9A54E /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0C5D635224FD38300D9A54E /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
+		B0D8CDC4225B29030007C4B2 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B0DA9D5A22572F9900064AC0 /* DiskCaretaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCaretaker.swift; sourceTree = "<group>"; };
 		B0DA9D5C2257341700064AC0 /* QuestionGroupCaretaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroupCaretaker.swift; sourceTree = "<group>"; };
 		B0DA9D5E2257360100064AC0 /* QuestionGroupData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = QuestionGroupData.json; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		B0C5D62A224FCEB400D9A54E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B0D8CDC4225B29030007C4B2 /* Observable.swift */,
 				B0C5D62D224FD03700D9A54E /* Question.swift */,
 				B0C5D62F224FD14900D9A54E /* QuestionGroup.swift */,
 				B0E79A032255DFE30098698F /* AppSettings.swift */,
@@ -234,6 +237,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0D8CDC5225B29030007C4B2 /* Observable.swift in Sources */,
 				B0C5D62E224FD03700D9A54E /* Question.swift in Sources */,
 				B0DA9D61225737FD00064AC0 /* BaseQuestionStrategy.swift in Sources */,
 				B0E1BFE922536F8A006B2107 /* SequentalQuestionStrategy.swift in Sources */,
