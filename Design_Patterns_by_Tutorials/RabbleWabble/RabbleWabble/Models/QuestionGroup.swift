@@ -6,28 +6,26 @@
 //  Copyright © 2019 Maksim Nosov. All rights reserved.
 //
 
-import Foundation
-
 public class QuestionGroup: Codable {
     
     public class Score: Codable {
         public var correctCount: Int = 0 {
             didSet {
-                updateRunningPercentege()
+                updateRunningPercentage()
             }
         }
         public var incorrectCount: Int = 0 {
             didSet {
-                updateRunningPercentege()
+                updateRunningPercentage()
             }
-        }        
-        private func updateRunningPercentege() {
+        }
+        private func updateRunningPercentage() {
             runningPercentage.value = calculateRunningPercentage()
         }
-        
         public init() { }
         
-        public lazy var runningPercentage = Observable(calculateRunningPercentage())
+        public lazy var runningPercentage =
+            Observable(calculateRunningPercentage())
         
         private func calculateRunningPercentage() -> Double {
             let totalCount = correctCount + incorrectCount
@@ -48,7 +46,6 @@ public class QuestionGroup: Codable {
     public private(set) var score: Score
     public let title: String
     
-    
     public init(questions: [Question],
                 score: Score = Score(),
                 title: String) {
@@ -57,4 +54,3 @@ public class QuestionGroup: Codable {
         self.title = title
     }
 }
-

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0204A79225C801500A2020C /* CreateQuestionGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0204A78225C801500A2020C /* CreateQuestionGroupViewController.swift */; };
+		B0204A7E225C802C00A2020C /* NewQuestionGroup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0204A7A225C802C00A2020C /* NewQuestionGroup.storyboard */; };
+		B0204A7F225C802C00A2020C /* JapaneseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0204A7B225C802C00A2020C /* JapaneseTextField.swift */; };
+		B0204A80225C802C00A2020C /* CreateQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0204A7C225C802C00A2020C /* CreateQuestionCell.swift */; };
+		B0204A81225C802C00A2020C /* CreateQuestionGroupTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0204A7D225C802C00A2020C /* CreateQuestionGroupTitleCell.swift */; };
+		B0204A84225C843000A2020C /* QuestionGroupBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0204A83225C843000A2020C /* QuestionGroupBuilder.swift */; };
 		B03AF3852250F18900C45358 /* SelectQuestionGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03AF3842250F18900C45358 /* SelectQuestionGroupViewController.swift */; };
 		B03AF3872250F36200C45358 /* QuestionGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03AF3862250F36200C45358 /* QuestionGroupCell.swift */; };
 		B0C5D616224FCDC700D9A54E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C5D615224FCDC700D9A54E /* AppDelegate.swift */; };
@@ -30,6 +36,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B0204A78225C801500A2020C /* CreateQuestionGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionGroupViewController.swift; sourceTree = "<group>"; };
+		B0204A7A225C802C00A2020C /* NewQuestionGroup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewQuestionGroup.storyboard; sourceTree = "<group>"; };
+		B0204A7B225C802C00A2020C /* JapaneseTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JapaneseTextField.swift; sourceTree = "<group>"; };
+		B0204A7C225C802C00A2020C /* CreateQuestionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionCell.swift; sourceTree = "<group>"; };
+		B0204A7D225C802C00A2020C /* CreateQuestionGroupTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionGroupTitleCell.swift; sourceTree = "<group>"; };
+		B0204A83225C843000A2020C /* QuestionGroupBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroupBuilder.swift; sourceTree = "<group>"; };
 		B03AF3842250F18900C45358 /* SelectQuestionGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectQuestionGroupViewController.swift; sourceTree = "<group>"; };
 		B03AF3862250F36200C45358 /* QuestionGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGroupCell.swift; sourceTree = "<group>"; };
 		B0C5D612224FCDC700D9A54E /* RabbleWabble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RabbleWabble.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B0204A82225C840300A2020C /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				B0204A83225C843000A2020C /* QuestionGroupBuilder.swift */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
 		B0C5D609224FCDC700D9A54E = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				B0C5D627224FCE7000D9A54E /* AppDelegate */,
+				B0204A82225C840300A2020C /* Builders */,
 				B0DA9D5922572F5800064AC0 /* Caretakers */,
 				B0C5D629224FCE8700D9A54E /* Controllers */,
 				B0C5D62A224FCEB400D9A54E /* Models */,
@@ -106,6 +127,7 @@
 		B0C5D629224FCE8700D9A54E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B0204A78225C801500A2020C /* CreateQuestionGroupViewController.swift */,
 				B0C5D617224FCDC700D9A54E /* QuestionViewController.swift */,
 				B03AF3842250F18900C45358 /* SelectQuestionGroupViewController.swift */,
 				B0E79A052255E4DD0098698F /* AppSettingsViewController.swift */,
@@ -137,10 +159,14 @@
 		B0C5D62C224FCEC500D9A54E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B0204A7C225C802C00A2020C /* CreateQuestionCell.swift */,
+				B0204A7D225C802C00A2020C /* CreateQuestionGroupTitleCell.swift */,
+				B0204A7B225C802C00A2020C /* JapaneseTextField.swift */,
 				B0C5D633224FD20F00D9A54E /* LaunchScreen.storyboard */,
 				B0C5D619224FCDC700D9A54E /* Main.storyboard */,
-				B0C5D635224FD38300D9A54E /* QuestionView.swift */,
+				B0204A7A225C802C00A2020C /* NewQuestionGroup.storyboard */,
 				B03AF3862250F36200C45358 /* QuestionGroupCell.swift */,
+				B0C5D635224FD38300D9A54E /* QuestionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0204A7E225C802C00A2020C /* NewQuestionGroup.storyboard in Resources */,
 				B0C5D634224FD20F00D9A54E /* LaunchScreen.storyboard in Resources */,
 				B0DA9D5F2257360100064AC0 /* QuestionGroupData.json in Resources */,
 				B0C5D61D224FCDC700D9A54E /* Assets.xcassets in Resources */,
@@ -241,15 +268,20 @@
 				B0C5D62E224FD03700D9A54E /* Question.swift in Sources */,
 				B0DA9D61225737FD00064AC0 /* BaseQuestionStrategy.swift in Sources */,
 				B0E1BFE922536F8A006B2107 /* SequentalQuestionStrategy.swift in Sources */,
+				B0204A80225C802C00A2020C /* CreateQuestionCell.swift in Sources */,
+				B0204A7F225C802C00A2020C /* JapaneseTextField.swift in Sources */,
 				B0E79A042255DFE30098698F /* AppSettings.swift in Sources */,
+				B0204A84225C843000A2020C /* QuestionGroupBuilder.swift in Sources */,
 				B0C5D618224FCDC700D9A54E /* QuestionViewController.swift in Sources */,
 				B0E1BFEB2253710F006B2107 /* RandomQuestionStrategy.swift in Sources */,
 				B0C5D616224FCDC700D9A54E /* AppDelegate.swift in Sources */,
 				B0C5D630224FD14900D9A54E /* QuestionGroup.swift in Sources */,
 				B0C5D636224FD38300D9A54E /* QuestionView.swift in Sources */,
 				B0E79A062255E4DD0098698F /* AppSettingsViewController.swift in Sources */,
+				B0204A79225C801500A2020C /* CreateQuestionGroupViewController.swift in Sources */,
 				B0DA9D5D2257341700064AC0 /* QuestionGroupCaretaker.swift in Sources */,
 				B0DA9D5B22572F9900064AC0 /* DiskCaretaker.swift in Sources */,
+				B0204A81225C802C00A2020C /* CreateQuestionGroupTitleCell.swift in Sources */,
 				B03AF3852250F18900C45358 /* SelectQuestionGroupViewController.swift in Sources */,
 				B0E1BFE722536E5A006B2107 /* QuestionStrategy.swift in Sources */,
 				B03AF3872250F36200C45358 /* QuestionGroupCell.swift in Sources */,
