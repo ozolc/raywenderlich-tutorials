@@ -26,35 +26,53 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 import MapKit
 import YelpAPI
 
-public class AnnotationFactory {
-  
-  public func createBusinessMapViewModel(for business: Business) -> BusinessMapViewModel? {
-    
-    let name = business.name
-    let rating = business.rating
-    let image: UIImage
-    switch rating {
-    case 0.0..<3.0:
-      image = UIImage(named: "terrible")!
-    case 3.0..<3.5:
-      image = UIImage(named: "bad")!
-    case 3.5..<4.0:
-      image = UIImage(named: "meh")!
-    case 4.0..<4.75:
-      image = UIImage(named: "good")!
-    case 4.75...5.0:
-      image = UIImage(named: "great")!
-    default:
-      image = UIImage(named: "bad")!
-    }
-    return BusinessMapViewModel(coordinate: business.location,
-                                name: name,
-                                rating: rating,
-                                image: image)
+protocol SearchResultsProtocol {
+  func adaptSearchResultsFromYLP() -> SearchResults
+}
+
+protocol BusinessProtocol {
+  func adaptBusinessFromYLP() -> Business
+}
+
+public struct SearchResults {
+  var businesses: [Business]
+  var total: UInt
+}
+
+public struct Business {
+  var name: String
+  var rating: Double
+  var location: CLLocationCoordinate2D
+}
+
+// 1
+extension YLPLocation {
+  func getCoordinateFromYLP() -> CLLocationCoordinate2D {
+    let coordinate = CLLocationCoordinate2DMake(self.coordinate!.latitude, self.coordinate!.longitude)
+    return coordinate
   }
 }
 
+// 2
+extension YLPBusiness: BusinessProtocol {
+  func adaptBusinessFromYLP() -> Business {
+    return Business(name: self.name,
+                    rating: self.rating,
+                    location: self.location.getCoordinateFromYLP())
+  }
+}
+
+// 3
+extension YLPSearch: SearchResultsProtocol {
+  func adaptSearchResultsFromYLP() -> SearchResults {
+    let businesses = self.businesses.map { (business: YLPBusiness) in
+      business.adaptBusinessFromYLP()
+    }
+    
+    return SearchResults(businesses: businesses, total: self.total)
+  }
+}
