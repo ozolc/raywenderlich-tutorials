@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4252EAAA2023E05900847430 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4252EAA92023E05900847430 /* APIKeys.swift */; };
+		B04B5C802260814D00CD1A2C /* AnnotationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04B5C7F2260814D00CD1A2C /* AnnotationFactory.swift */; };
 		C35933852023BF5700D85500 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35933842023BF5700D85500 /* AppDelegate.swift */; };
 		C35933872023BF5700D85500 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35933862023BF5700D85500 /* ViewController.swift */; };
 		C359338A2023BF5700D85500 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35933882023BF5700D85500 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 		0EB69E332F1CF61F584429C4 /* Pods-CoffeeQuest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoffeeQuest.release.xcconfig"; path = "Pods/Target Support Files/Pods-CoffeeQuest/Pods-CoffeeQuest.release.xcconfig"; sourceTree = "<group>"; };
 		4252EAA92023E05900847430 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		75B5478A401116797B732C06 /* Pods-CoffeeQuest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoffeeQuest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CoffeeQuest/Pods-CoffeeQuest.debug.xcconfig"; sourceTree = "<group>"; };
+		B04B5C7F2260814D00CD1A2C /* AnnotationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationFactory.swift; sourceTree = "<group>"; };
 		C35933812023BF5700D85500 /* CoffeeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoffeeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35933842023BF5700D85500 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C35933862023BF5700D85500 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B04B5C7E2260812C00CD1A2C /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				B04B5C7F2260814D00CD1A2C /* AnnotationFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
 		C1EFE88AC37DC2B295A4CA23 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +137,7 @@
 		C35933832023BF5700D85500 /* CoffeeQuest */ = {
 			isa = PBXGroup;
 			children = (
+				B04B5C7E2260812C00CD1A2C /* Factories */,
 				4252EAA42023DFE500847430 /* AppDelegate */,
 				4252EAA52023DFE800847430 /* Controllers */,
 				4252EAA82023DFFB00847430 /* Resources */,
@@ -268,6 +279,7 @@
 			files = (
 				C35933972023D71C00D85500 /* BusinessMapViewModel.swift in Sources */,
 				4252EAAA2023E05900847430 /* APIKeys.swift in Sources */,
+				B04B5C802260814D00CD1A2C /* AnnotationFactory.swift in Sources */,
 				C35933872023BF5700D85500 /* ViewController.swift in Sources */,
 				C35933852023BF5700D85500 /* AppDelegate.swift in Sources */,
 			);
