@@ -39,7 +39,7 @@ public class EyeballMonster: Monster {
     }
     
     // 3
-    @available(*, unavailable, message: "Call copy() instead")    
+    @available(*, unavailable, message: "Call copy() instead")
     public required convenience init(_ prototype: Monster) {
         let eyeballMonster = prototype as! EyeballMonster
         self.init(health: eyeballMonster.health,
