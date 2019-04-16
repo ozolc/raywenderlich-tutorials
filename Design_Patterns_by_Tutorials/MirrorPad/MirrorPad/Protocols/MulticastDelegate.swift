@@ -1,15 +1,15 @@
-/// Copyright (c) 2018 Razeware LLC
-///
+/// Copyright (c) 2019 Razeware LLC
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,7 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
+/// 
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,36 +26,51 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-public class ViewController: UIViewController {
-
-  // MARK: - Outlets
-  @IBOutlet public var drawViewContainer: UIView!
-  @IBOutlet public var inputDrawView: DrawView!
-  @IBOutlet public var mirrorDrawViews: [DrawView]!
+public class MulticastDelegate<ProtocolType> {
   
-  // MARK: - View Lifecycle
-  public override func viewDidLoad() {
-    super.viewDidLoad()
-    mirrorDrawViews.forEach {
-      inputDrawView.addDelegate($0)
+  // MARK: - DelegateWrapper
+  private class DelegateWrapper {
+    weak var delegate: AnyObject?
+    
+    init(_ delegate: AnyObject) {
+      self.delegate = delegate
     }
   }
-
-  // MARK: - Actions
-  @IBAction public func animatePressed(_ sender: Any) {
-    mirrorDrawViews.forEach { $0.copyLines(from: inputDrawView) }
-    mirrorDrawViews.forEach { $0.animate() }
-    inputDrawView.animate()
+  
+  // MARK: - Instance Properties
+  private var delegateWrappers: [DelegateWrapper]
+  
+  public var delegates: [ProtocolType] {
+    delegateWrappers = delegateWrappers.filter { $0.delegate != nil }
+    return delegateWrappers.map { $0.delegate!} as! [ProtocolType]
   }
-
-  @IBAction public func clearPressed(_ sender: Any) {
-    inputDrawView.clear()
-    mirrorDrawViews.forEach { $0.clear() }
+  
+  // MARK: - Object Lifecycle
+  public init(delegates: [ProtocolType] = []) {
+    delegateWrappers = delegates.map {
+      DelegateWrapper($0 as AnyObject)
+    }
   }
-
-  @IBAction public func sharePressed(_ sender: Any) {
-
+  
+  // MARK: - Delegate Management
+  public func addDelegate(_ delegate: ProtocolType) {
+    let wrapper = DelegateWrapper(delegate as AnyObject)
+    delegateWrappers.append(wrapper)
+  }
+  
+  public func removeDelegate(_ delegate: ProtocolType) {
+    guard let index = delegateWrappers.firstIndex(where: {
+      $0.delegate === (delegate as AnyObject)
+    }) else {
+      return
+    }
+    delegateWrappers.remove(at: index)
+  }
+  
+  public func invokeDelegates(_ closure: (ProtocolType) -> ())
+  {
+    delegates.forEach { closure($0) }
   }
 }

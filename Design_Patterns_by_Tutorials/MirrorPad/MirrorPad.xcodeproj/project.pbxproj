@@ -20,6 +20,7 @@
 		B05B08072264DAA800831996 /* ClearState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05B08062264DAA800831996 /* ClearState.swift */; };
 		B05B08092264DAB400831996 /* CopyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05B08082264DAB400831996 /* CopyState.swift */; };
 		B05B080B2264DAC000831996 /* DrawViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05B080A2264DAC000831996 /* DrawViewState.swift */; };
+		B067AACA2265BA20000BD4B3 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B067AAC92265BA20000BD4B3 /* MulticastDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		B05B08062264DAA800831996 /* ClearState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearState.swift; sourceTree = "<group>"; };
 		B05B08082264DAB400831996 /* CopyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyState.swift; sourceTree = "<group>"; };
 		B05B080A2264DAC000831996 /* DrawViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewState.swift; sourceTree = "<group>"; };
+		B067AAC92265BA20000BD4B3 /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				B04A97012264655900A5CD86 /* Copying.swift */,
+				B067AAC92265BA20000BD4B3 /* MulticastDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				B05B08072264DAA800831996 /* ClearState.swift in Sources */,
 				B04A97022264655900A5CD86 /* Copying.swift in Sources */,
 				42F35C3620449C9A00584FAD /* AppDelegate.swift in Sources */,
+				B067AACA2265BA20000BD4B3 /* MulticastDelegate.swift in Sources */,
 				B05B08032264DA9000831996 /* AcceptInputState.swift in Sources */,
 				424387E420449D300056B653 /* DrawView.swift in Sources */,
 			);
