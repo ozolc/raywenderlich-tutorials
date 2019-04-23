@@ -66,7 +66,25 @@ class ViewController: UIViewController {
 
   // MARK: - IBActions
   @IBAction func segmentedControl(_ sender: Any) {
-
+    // Кастим sender как SegmentedControl
+    guard let control = sender as? UISegmentedControl,
+      // Получить значение свойства Title для выделенного сегмента
+      let selectedValue = control.titleForSegment(at: control.selectedSegmentIndex) else {
+        return
+    }
+    
+    // Запрос из Core Data со значением из SegmentedControl
+    let request: NSFetchRequest<Bowtie> = Bowtie.fetchRequest()
+    request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(Bowtie.searchKey), selectedValue]) // ограничение на запрос из Core Data со значением searchKey = Title из выбранного сегмента
+    
+    do {
+      let results = try managedContext.fetch(request)
+      currentBowtie = results.first
+      populate(bowtie: currentBowtie)
+      
+    } catch let error as NSError {
+      print("Could not fetch \(error), \(error.userInfo)")
+    }
   }
 
   @IBAction func wear(_ sender: Any) {
