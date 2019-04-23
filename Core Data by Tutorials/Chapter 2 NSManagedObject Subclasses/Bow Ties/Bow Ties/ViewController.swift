@@ -119,8 +119,16 @@ class ViewController: UIViewController {
       currentBowtie.rating = rating
       try managedContext.save()
       populate(bowtie: currentBowtie)
-      } catch let error as NSError {
+      
+      // Если меньше ошибка минимального/максимального значения для оценки, то вызвать повторно метод rate.
+      // ограничение задается в Data Model Inspector для атрибута rating
+    } catch let error as NSError {
+      if error.domain == NSCocoaErrorDomain &&
+        (error.code == NSValidationNumberTooLargeError || error.code == NSValidationNumberTooSmallError) {
+        rate(currentBowtie)
+      } else {
         print("Could not save \(error), \(error.userInfo)")
+      }
     }
   }
   
@@ -177,8 +185,9 @@ class ViewController: UIViewController {
     
     imageView.image = UIImage(data: imageData)
     nameLabel.text = bowtie.name
-    
     ratingLabel.text = "Rating: \(bowtie.rating)/5"
+    
+    timesWornLabel.text = "# times worn: \(bowtie.timesWorn)"
     
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .short
