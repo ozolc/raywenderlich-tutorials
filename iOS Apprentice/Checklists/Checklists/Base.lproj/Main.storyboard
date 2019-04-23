@@ -58,7 +58,7 @@
             </objects>
             <point key="canvasLocation" x="1055.072463768116" y="138.61607142857142"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Add Item-->
         <scene sceneID="7IH-oC-pmG">
             <objects>
                 <tableViewController id="I0i-0d-wzq" sceneMemberID="viewController">
@@ -81,6 +81,10 @@
                             <outlet property="delegate" destination="I0i-0d-wzq" id="3gI-bo-QcT"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Add Item" id="vps-9J-YnL">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="M8D-lx-5OO"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="DhK-Ov-qhb"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ly-9k-DKB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
