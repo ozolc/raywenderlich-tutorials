@@ -40,6 +40,20 @@ class ChecklistViewController: UITableViewController {
         items.append(item5)
     }
 
+    // MARK: - Action
+    @IBAction func addItem() {
+        let newRowIndex = items.count // Индекс новой строки в массиве items (так как массивы считаются с 0, следующий элемент будет на 1 позицию больше из-за метода count, который считает количество элементов с 1. Удачное применение!
+        
+        let item = ChecklistItem()
+        item.text = "I am a new row"
+        item.checked = true
+        items.append(item)
+        
+        let indexPath = IndexPath(row: newRowIndex, section: 0) // IndexPath объект который указывает на новую строку используя локальную переменную newRowIndex
+        let indexPaths = [indexPath] // временный массив содержащий только один indexPath
+        tableView.insertRows(at: indexPaths, with: .automatic) // Сообщаем tableView добавить новые ячейки из массива indexPaths
+    }
+    
     // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
