@@ -15,7 +15,7 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех ViewController
         
         let item1 = ChecklistItem()
         item1.text = "Walk the dog"
