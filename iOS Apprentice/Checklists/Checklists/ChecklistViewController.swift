@@ -59,6 +59,13 @@ class ChecklistViewController: UITableViewController {
         return items.count
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        items.remove(at: indexPath.row) // Удаление строки из массива
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic) // Удаление ячейки из tableView
+    }
+    
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
         
         cell.accessoryType = item.checked ? .checkmark : .none
@@ -92,6 +99,7 @@ class ChecklistViewController: UITableViewController {
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     
 }
 
