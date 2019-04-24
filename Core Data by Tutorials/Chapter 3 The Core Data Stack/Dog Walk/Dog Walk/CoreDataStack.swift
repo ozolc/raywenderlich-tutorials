@@ -30,19 +30,22 @@ import Foundation
 import CoreData
 
 class CoreDataStack {
-
+  
   private let modelName: String
   lazy var managedContext: NSManagedObjectContext = {
-    return self.storeContainer.viewContext
+    return self.storeContainer.viewContext // доступ к context из NSPersistentContainer
   }()
   
   init(modelName: String) {
     self.modelName = modelName
   }
   
+  // NSPersistentContainer удерживает. Удобный класс для инициализации всего стека Core Data. У него есть доступ ко всем объектам (Model, Context etc. Сделал private для инкапсуляции. Досутп к контексту через managedContext выше
   private lazy var storeContainer: NSPersistentContainer = {
     
-    let container = loadPersistentStores { (storeDescription, error) in
+    let container = NSPersistentContainer(name: self.modelName)
+    
+    container.loadPersistentStores { (storeDescription, error) in
       if let error = error as NSError? {
         print("Unresolved error \(error), \(error.userInfo)")
       }
@@ -51,13 +54,12 @@ class CoreDataStack {
   }()
   
   func saveContext() {
-    guard managedContext.hasChanges else { return }
-    
+    guard managedContext.hasChanges else { return } // если были изменения в контексте, то только тогда пробуем сохранить из памяти на диск.
     do {
       try managedContext.save()
     } catch let error as NSError {
       print("Unresolved error \(error), \(error.userInfo)")
     }
   }
- 
+  
 }
