@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     guard let navController = window?.rootViewController as? UINavigationController,
       let viewController = navController.topViewController as? ViewController else { return true }
     
-    viewController.managedContext = coreDataStack.managedContext
+    viewController.managedContext = coreDataStack.managedContext // связываем созданный контекст с используемым в viewController
     return true
   }
   
