@@ -39,6 +39,8 @@ class ViewController: UIViewController {
   var fetchRequest: NSFetchRequest<Venue>?
   var venues: [Venue] = []
   
+  var asyncFetchRequest: NSAsynchronousFetchRequest<Venue>? // Для асинхронных запросов, чтобы не блокировать main поток
+  
   // MARK: - IBOutlets
   @IBOutlet weak var tableView: UITableView!
   
@@ -51,9 +53,27 @@ class ViewController: UIViewController {
 //      let fetchRequest = model.fetchRequestTemplate(forName: "FetchRequest") as? NSFetchRequest<Venue> else { return }
 //    self.fetchRequest = fetchRequest
     
-    fetchRequest = Venue.fetchRequest()
+    let venueFetchRequest: NSFetchRequest<Venue> = Venue.fetchRequest()
+    fetchRequest = venueFetchRequest
     
-    fetchAndReload()
+    // Своего рода асинхронная обертка над fetchRequest
+    asyncFetchRequest = NSAsynchronousFetchRequest<Venue>(fetchRequest: venueFetchRequest) { [unowned self] (result: NSAsynchronousFetchResult) in
+      
+      guard let venues = result.finalResult else {return}
+      
+      self.venues = venues
+      self.tableView.reloadData()
+    }
+    
+    do {
+      guard let asyncFetchRequest = asyncFetchRequest else {return}
+      try coreDataStack.managedContext.execute(asyncFetchRequest) // Returns immediately, cancel here if you wwant
+    } catch let error as NSError {
+      print("Could not fetch \(error), \(error.userInfo)")
+    }
+    
+    
+//    fetchAndReload()
   }
   
   // MARK: - Navigation
