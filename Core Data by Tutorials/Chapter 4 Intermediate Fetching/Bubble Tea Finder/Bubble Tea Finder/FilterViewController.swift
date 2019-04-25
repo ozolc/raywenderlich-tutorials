@@ -29,6 +29,12 @@
 import UIKit
 import CoreData
 
+protocol FilterViewControllerDelegate: class {
+  func filterViewController(/*filter: FilterViewController,*/
+                            didSelectPredicate predicate: NSPredicate?,
+                            sortDescriptor: NSSortDescriptor?)
+}
+
 class FilterViewController: UITableViewController {
   
   @IBOutlet weak var firstPriceCategoryLabel: UILabel!
@@ -53,8 +59,13 @@ class FilterViewController: UITableViewController {
   @IBOutlet weak var priceSortCell: UITableViewCell!
   
   // MARK: - Properties
+  weak var delegate: FilterViewControllerDelegate?
+  var selectedSortDescriptor: NSSortDescriptor?
+  var selectedPredicate: NSPredicate?
+  
   var coreDataStack: CoreDataStack!
-  // Шаблон для предиката (условие для фильтра в NSFetchRequest
+  
+  // Шаблоны для предиката (условие для фильтра в NSFetchRequest
   lazy var cheapVenuePredicate: NSPredicate = {
     return NSPredicate(format: "%K == %@", #keyPath(Venue.priceInfo.priceCategory), "$")
   }()
@@ -67,6 +78,18 @@ class FilterViewController: UITableViewController {
     return NSPredicate(format: "%K == %@",
                        #keyPath(Venue.priceInfo.priceCategory), "$$$")
   }()
+  
+  lazy var offeringDealPredicate: NSPredicate = {
+    return NSPredicate(format: "%K > 0", #keyPath(Venue.specialCount))
+  }()
+  
+  lazy var walkingDistancePredicate: NSPredicate = {
+    return NSPredicate(format: "%K < 500", #keyPath(Venue.location.distance))
+  }()
+  
+  lazy var hasUserTipsPredicate: NSPredicate = {
+    return NSPredicate(format: "%K > 0", #keyPath(Venue.stats.tipCount))
+    }()
   
   
   // MARK: - View Life Cycle
@@ -81,6 +104,8 @@ class FilterViewController: UITableViewController {
       populateVenueCountLabel(with: value) { categoryLabel.text = $0 }
     }
     
+    populateDealsCountLabel()
+    
   }
 }
 
@@ -88,7 +113,11 @@ class FilterViewController: UITableViewController {
   extension FilterViewController {
     
     @IBAction func search(_ sender: UIBarButtonItem) {
+      delegate?.filterViewController(/*filter: self,*/
+                                     didSelectPredicate: selectedPredicate,
+                                     sortDescriptor: selectedSortDescriptor)
       
+      self.dismiss(animated: true)
     }
   }
   
@@ -96,7 +125,28 @@ class FilterViewController: UITableViewController {
   extension FilterViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      guard let cell = tableView.cellForRow(at: indexPath) else {return}
       
+      // Price секция
+      switch cell {
+      case cheapVenueCell:
+        selectedPredicate = cheapVenuePredicate
+      case moderateVenueCell:
+        selectedPredicate = moderateVenuePredicate
+      case expensiveVenueCell:
+        selectedPredicate = expensiveVenuePredicate
+      
+      // Most Popular section
+      case offeringDealCell:
+      selectedPredicate = offeringDealPredicate
+      case walkingDistanceCell:
+      selectedPredicate = walkingDistancePredicate
+      case userTipsCell:
+      selectedPredicate = hasUserTipsPredicate
+      default: break
+    }
+      
+      cell.accessoryType = .checkmark
     }
   }
   
@@ -121,6 +171,32 @@ class FilterViewController: UITableViewController {
         print("Count not fetch \(error), \(error.userInfo)")
       }
     }
-    //  }
-    
+
+    func populateDealsCountLabel() {
+      
+      let fetchRequest = NSFetchRequest<NSDictionary>(entityName: "Venue")
+      fetchRequest.resultType = .dictionaryResultType // возвращает Dictionary из запроса
+      
+      let sumExpressionDesc = NSExpressionDescription() // Создал ключ для словаря
+      sumExpressionDesc.name = "sumDeals"
+      
+      let specialCountExp = NSExpression(forKeyPath: #keyPath(Venue.specialCount)) // указал какое поле подвергнуть функции
+      sumExpressionDesc.expression = NSExpression(forFunction: "sum:", arguments: [specialCountExp]) // "sum:" - это предустановленная функция
+      sumExpressionDesc.expressionResultType = .integer32AttributeType // установил тип возвращаемых данных
+      
+      fetchRequest.propertiesToFetch = [sumExpressionDesc] // что будет запрашивать, на основе данных заданных выше
+      
+      do {
+        
+        let results = try coreDataStack.managedContext.fetch(fetchRequest)
+        
+        let resultDict = results.first!
+        let numDeals = resultDict["sumDeals"] as! Int
+        let pluralized = numDeals == 1 ? "deal" : "deals"
+        numDealsLabel.text = "\(numDeals) \(pluralized)"
+        
+      } catch let error as NSError {
+        print("Count not fetch \(error), \(error.userInfo)")
+      }
+    }
 }

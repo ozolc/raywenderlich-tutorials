@@ -46,11 +46,13 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    guard let model = coreDataStack.managedContext.persistentStoreCoordinator?.managedObjectModel,
-      // Берем fetchRequest созданный в Xcode через графический редактор
-      let fetchRequest = model.fetchRequestTemplate(forName: "FetchRequest") as? NSFetchRequest<Venue> else { return }
+//    guard let model = coreDataStack.managedContext.persistentStoreCoordinator?.managedObjectModel,
+//      // Берем fetchRequest созданный в Xcode через графический редактор
+//      let fetchRequest = model.fetchRequestTemplate(forName: "FetchRequest") as? NSFetchRequest<Venue> else { return }
+//    self.fetchRequest = fetchRequest
     
-    self.fetchRequest = fetchRequest
+    fetchRequest = Venue.fetchRequest()
+    
     fetchAndReload()
   }
   
@@ -61,6 +63,8 @@ class ViewController: UIViewController {
       let filterVC = navController.topViewController as? FilterViewController else {return}
     
     filterVC.coreDataStack = coreDataStack
+    
+    filterVC.delegate = self
   }
 }
 
@@ -103,4 +107,25 @@ extension ViewController: UITableViewDataSource {
     cell.detailTextLabel?.text = venue.priceInfo?.priceCategory
     return cell
   }
+}
+
+// MARK: - FilterViewControllerDelegate
+extension ViewController: FilterViewControllerDelegate {
+
+  func filterViewController(/*filter: FilterViewController,*/ didSelectPredicate predicate: NSPredicate?, sortDescriptor: NSSortDescriptor?) {
+    
+    guard let fetchRequest = fetchRequest else {return}
+    
+    fetchRequest.predicate = nil
+    fetchRequest.sortDescriptors = nil
+    
+    fetchRequest.predicate = predicate
+    
+    if let sr = sortDescriptor {
+      fetchRequest.sortDescriptors = [sr]
+    }
+    
+    fetchAndReload()
+  }
+  
 }
