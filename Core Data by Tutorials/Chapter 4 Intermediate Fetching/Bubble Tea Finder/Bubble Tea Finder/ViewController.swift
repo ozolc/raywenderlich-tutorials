@@ -30,18 +30,18 @@ import UIKit
 import CoreData
 
 class ViewController: UIViewController {
-
+  
   // MARK: - Properties
   private let filterViewControllerSegueIdentifier = "toFilterViewController"
   private let venueCellIdentifier = "VenueCell"
-
+  
   var coreDataStack: CoreDataStack!
   var fetchRequest: NSFetchRequest<Venue>?
   var venues: [Venue] = []
-
+  
   // MARK: - IBOutlets
   @IBOutlet weak var tableView: UITableView!
-
+  
   // MARK: - View Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -53,18 +53,20 @@ class ViewController: UIViewController {
     self.fetchRequest = fetchRequest
     fetchAndReload()
   }
-
+  
   // MARK: - Navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == filterViewControllerSegueIdentifier {
-      
-    }
+    guard segue.identifier == filterViewControllerSegueIdentifier,
+      let navController = segue.destination as? UINavigationController,
+      let filterVC = navController.topViewController as? FilterViewController else {return}
+    
+    filterVC.coreDataStack = coreDataStack
   }
 }
 
 // MARK: - IBActions
 extension ViewController {
-
+  
   @IBAction func unwindToVenueListViewController(_ segue: UIStoryboardSegue) {
   }
 }
@@ -88,11 +90,11 @@ extension ViewController {
 
 // MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
-
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return venues.count
   }
-
+  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: venueCellIdentifier, for: indexPath)
     
