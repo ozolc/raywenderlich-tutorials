@@ -48,10 +48,24 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-//    guard let model = coreDataStack.managedContext.persistentStoreCoordinator?.managedObjectModel,
-//      // Берем fetchRequest созданный в Xcode через графический редактор
-//      let fetchRequest = model.fetchRequestTemplate(forName: "FetchRequest") as? NSFetchRequest<Venue> else { return }
-//    self.fetchRequest = fetchRequest
+    let batchUpdate = NSBatchUpdateRequest(entityName: "Venue") // Обновление на стороне Core Data без загрузки в RAM через ConetxtManager
+    batchUpdate.propertiesToUpdate = [#keyPath(Venue.favorite): true] // что меняем и на какое значение
+    
+    batchUpdate.affectedStores = coreDataStack.managedContext.persistentStoreCoordinator?.persistentStores // в каких PersistentStores будет производится действие в Core Data
+    
+    batchUpdate.resultType = .updatedObjectsCountResultType // возвратить количество измененных элементов
+    
+    do {
+      let batchResult = try coreDataStack.managedContext.execute(batchUpdate) as! NSBatchUpdateResult
+      print("Records updated \(batchResult.result!)")
+    } catch let error as NSError {
+      print("Could not update \(error), \(error.userInfo)")
+    }
+    
+    //    guard let model = coreDataStack.managedContext.persistentStoreCoordinator?.managedObjectModel,
+    //      // Берем fetchRequest созданный в Xcode через графический редактор
+    //      let fetchRequest = model.fetchRequestTemplate(forName: "FetchRequest") as? NSFetchRequest<Venue> else { return }
+    //    self.fetchRequest = fetchRequest
     
     let venueFetchRequest: NSFetchRequest<Venue> = Venue.fetchRequest()
     fetchRequest = venueFetchRequest
@@ -73,7 +87,7 @@ class ViewController: UIViewController {
     }
     
     
-//    fetchAndReload()
+    //    fetchAndReload()
   }
   
   // MARK: - Navigation
@@ -131,7 +145,7 @@ extension ViewController: UITableViewDataSource {
 
 // MARK: - FilterViewControllerDelegate
 extension ViewController: FilterViewControllerDelegate {
-
+  
   func filterViewController(/*filter: FilterViewController,*/ didSelectPredicate predicate: NSPredicate?, sortDescriptor: NSSortDescriptor?) {
     
     guard let fetchRequest = fetchRequest else {return}
