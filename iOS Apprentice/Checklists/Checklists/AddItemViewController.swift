@@ -9,7 +9,8 @@
 import UIKit
 
 class AddItemViewController: UITableViewController {
-
+    @IBOutlet weak var textField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,11 +19,16 @@ class AddItemViewController: UITableViewController {
 
     // MARK: - Actions
     @IBAction func cancel() {
-        navigationController?.popViewController(animated: true) // удалить из стека Navigation стека верхний View Controller и обновить экран.
+        navigationController?.popViewController(animated: true) // удалить из стека NavigationController верхний View Controller и обновить экран.
     }
     
     @IBAction func done() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textField.becomeFirstResponder()
     }
     
     // MARK: - Table view data source
