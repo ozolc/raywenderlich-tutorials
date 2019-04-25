@@ -26,4 +26,7 @@ class AddItemViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
 }
