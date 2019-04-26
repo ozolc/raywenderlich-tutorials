@@ -27,12 +27,29 @@
 /// THE SOFTWARE.
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
 
   // MARK: - Properties
   fileprivate let teamCellIdentifier = "teamCellReuseIdentifier"
   var coreDataStack: CoreDataStack!
+  
+  lazy var fetchedResultltsController: NSFetchedResultsController<Team> = {
+    
+    let fetchRequest: NSFetchRequest<Team> = Team.fetchRequest()
+    
+    let sort = NSSortDescriptor(key: #keyPath(Team.teamName), ascending: true)
+    fetchRequest.sortDescriptors = [sort] // обязательное условие для сортировки
+    
+    let fetchedResultsController = NSFetchedResultsController(
+      fetchRequest: fetchRequest,
+      managedObjectContext: coreDataStack.managedContext,
+      sectionNameKeyPath: nil,
+      cacheName: nil)
+    
+    return fetchedResultsController
+  }()
 
   // MARK: - IBOutlets
   @IBOutlet weak var tableView: UITableView!
@@ -41,6 +58,12 @@ class ViewController: UIViewController {
   // MARK: - View Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    do {
+      try fetchedResultltsController.performFetch()
+    } catch let error as NSError {
+      print("Fetching error: \(error), \(error.userInfo)")
+    }
   }
 }
 
@@ -53,9 +76,15 @@ extension ViewController {
       return
     }
 
-    cell.flagImageView.backgroundColor = .blue
-    cell.teamLabel.text = "Team Name"
-    cell.scoreLabel.text = "Wins: 0"
+    let team = fetchedResultltsController.object(at: indexPath)
+    cell.teamLabel.text = team.teamName
+    cell.scoreLabel.text = "Wins: \(team.wins)"
+    
+    if let imageName = team.imageName {
+      cell.flagImageView.image = UIImage(named: imageName)
+    } else {
+      cell.flagImageView.image = nil
+    }
   }
 }
 
@@ -63,11 +92,14 @@ extension ViewController {
 extension ViewController: UITableViewDataSource {
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return fetchedResultltsController.sections?.count ?? 0
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 20
+    guard let sectionInfo = fetchedResultltsController.sections?[section] else {
+      return 0
+    }
+    return sectionInfo.numberOfObjects
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
