@@ -48,7 +48,7 @@ class ViewController: UIViewController {
       fetchRequest: fetchRequest,
       managedObjectContext: coreDataStack.managedContext,
       sectionNameKeyPath: #keyPath(Team.qualifyingZone),
-      cacheName: nil)
+      cacheName: "worldCup") // задать имя для кеширования на диск. Теперь данные кешируются на диск.
     
     return fetchedResultsController
   }()
