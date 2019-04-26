@@ -8,7 +8,8 @@
 
 import Foundation
 // Наследуем от NSObject, что соответствовать протоколу Equiatable, для использования firstIndex(of:) в ChecklistViewController в методе делегата itemDetailViewController(:didFinishEditing)
-class ChecklistItem: NSObject {
+// Codable - поддержка протокола позволяющий конвертировать себя В и ИЗ внешних данных.
+class ChecklistItem: NSObject, Codable {
     var text = ""
     var checked = false
     

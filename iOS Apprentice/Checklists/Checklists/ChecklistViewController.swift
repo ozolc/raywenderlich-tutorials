@@ -24,6 +24,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         tableView.insertRows(at: indexPaths, with: .automatic) // Сообщаем tableView добавить новые ячейки из массива indexPaths
 
         navigationController?.popViewController(animated: true)
+        saveCheckListItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
@@ -34,6 +35,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             }
         }
         navigationController?.popViewController(animated: true)
+        saveCheckListItems()
     }
     
     
@@ -44,27 +46,47 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
         navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех ViewController
         
-        let item1 = ChecklistItem()
-        item1.text = "Walk the dog"
-        items.append(item1)
+        // Загрузка данных из plist файла
+        loadChecklistItems()
+    }
+    
+    // Путь к директории с файлом
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    // Полный путь к файлу, включая имя файла
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklist.plist")
+    }
+    
+    // Сохранение данных в plist
+    func saveCheckListItems() {
+        let encoder = PropertyListEncoder() // Объект который кодирует в тип данных для сохранения как plist
         
-        let item2 = ChecklistItem()
-        item2.text = "Brush my teeth"
-        item2.checked = true
-        items.append(item2)
+        do {
+            let data = try encoder.encode(items) // конвертирует массив ITEMS в блок двоичных данных
+            
+            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic) // сохраняет данные в файл по адресу dataFilePath()
+        } catch {
+            print("Error encoding item array: \(error.localizedDescription)")
+        }
+    }
+    
+    // Загрузка данных из plist
+    func loadChecklistItems() {
+        let path = dataFilePath()
         
-        let item3 = ChecklistItem()
-        item3.text = "Learn iOS development"
-        item3.checked = true
-        items.append(item3)
-        
-        let item4 = ChecklistItem()
-        item4.text = "Soccer practice"
-        items.append(item4)
-        
-        let item5 = ChecklistItem()
-        item5.text = "Eat ice cream"
-        items.append(item5)
+        if let data = try? Data(contentsOf: path) { // возвратить nil если ошибка получения данных (try?)
+            let decoder = PropertyListDecoder() // объект для декодирования из бинарных файлов.
+            
+            do {
+                items = try decoder.decode([ChecklistItem].self, from: data)
+            } catch {
+                print("Error decoding item array: \(error.localizedDescription)")
+            }
+        }
     }
     
     //MARK: - Navigation
@@ -94,6 +116,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic) // Удаление ячейки из tableView
+        saveCheckListItems()
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -130,6 +153,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        saveCheckListItems()
     }
     
     
