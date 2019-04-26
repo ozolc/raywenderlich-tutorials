@@ -62,6 +62,14 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         if segue.identifier == "AddItem" { // проверяем идентификатор segue
             let controller = segue.destination as! AddItemViewController // создаем ссылку на destination сегвея и force downcast его как тип AddItemViewController, т.к. destination имеет тип ViewController. Downcast не выбросит nill, т.к. AddItemViewController подкласс UIViewContoller.
             controller.delegate = self // Говорим, что делегат класса AddItemViewController будет класс ChecklistViewController (т.е. SELF - этот класс)
+        } else if segue.identifier == "EditItem" {
+            let controller = segue.destination as! AddItemViewController
+            controller.delegate = self
+            
+            // получим IndexPath нажатой ячейки, чтобы передать индекс массива с текстом для передачи в другой контроллер для изменения.
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.itemToEdit = items[indexPath.row]
+            }
         }
     }
 
