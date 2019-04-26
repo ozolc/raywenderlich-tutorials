@@ -7,6 +7,11 @@
 //
 
 import UIKit
+// class - этот протокол могу реализовывать только классы. для того чтобы иметь weak ссылку на делегат
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+}
 
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
@@ -38,13 +43,14 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     // MARK: - Text Field Delegates
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let oldText = textField.text!
         let stringRange = Range(range, in: oldText)!
         let newText = oldText.replacingCharacters(in: stringRange, with: string)
         
-        doneBarButton.isEnabled = !newText.isEmpty
+        doneBarButton.isEnabled = !newText.isEmpty // Если TextField пустая - кнопка Done неактивна
         return true
     }
     
