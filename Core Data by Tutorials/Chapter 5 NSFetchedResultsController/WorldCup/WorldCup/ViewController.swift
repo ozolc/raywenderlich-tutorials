@@ -50,6 +50,8 @@ class ViewController: UIViewController {
       sectionNameKeyPath: #keyPath(Team.qualifyingZone),
       cacheName: "worldCup") // задать имя для кеширования на диск. Теперь данные кешируются на диск.
     
+    fetchedResultsController.delegate = self // Указываем, что ViewController будет делегатом для fetchedResultltsController и говорим, что этот ViewController будет реализовывать некоторые методы при получении/отправки данных Core Data.
+    
     return fetchedResultsController
   }()
 
@@ -126,7 +128,53 @@ extension ViewController: UITableViewDelegate {
     let team = fetchedResultltsController.object(at: indexPath)
     team.wins = team.wins + 1
     tableView.deselectRow(at: indexPath, animated: true)
-    tableView.reloadData()
     coreDataStack.saveContext()
   }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension ViewController: NSFetchedResultsControllerDelegate {
+  
+  // Данные собираются измениться
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.beginUpdates() // вызываются методы перед изменением данных в таблице
+  }
+  
+  // Обработка при изменении данных в контроллере
+  func controller(_ controller:
+    NSFetchedResultsController<NSFetchRequestResult>,
+                     didChange anObject: Any,
+                     at indexPath: IndexPath?,
+                     for type: NSFetchedResultsChangeType,
+                     newIndexPath: IndexPath?) {
+    
+    switch type {
+    case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
+    case .delete: tableView.deleteRows(at: [indexPath!], with: .automatic)
+    case .update:
+      let cell = tableView.cellForRow(at: indexPath!) as! TeamCell
+      configure(cell: cell, for: indexPath!)
+    case .move:
+      tableView.deleteRows(at: [indexPath!], with: .automatic)
+      tableView.insertRows(at: [newIndexPath!], with: .automatic)
+    }
+  }
+  
+  // Метод, срабатываемый когда данные в контроллере Core Data изменились. (добавлен, удален, изменен ...)
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.endUpdates()
+  }
+  
+  // Оповещение делегата, в случае если были изменения в секциях (добавлена новая/удалена)
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+    
+    let indexSet = IndexSet(integer: sectionIndex)
+    
+    switch type {
+    case .insert: tableView.insertSections(indexSet, with: .automatic)
+    case .delete: tableView.deleteSections(indexSet, with: .automatic)
+    default: break
+    }
+  }
+  
 }
