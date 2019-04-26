@@ -39,13 +39,15 @@ class ViewController: UIViewController {
     
     let fetchRequest: NSFetchRequest<Team> = Team.fetchRequest()
     
-    let sort = NSSortDescriptor(key: #keyPath(Team.teamName), ascending: true)
-    fetchRequest.sortDescriptors = [sort] // обязательное условие для сортировки
+    let zoneSort = NSSortDescriptor(key: #keyPath(Team.qualifyingZone), ascending: true)
+    let scoreSort = NSSortDescriptor(key: #keyPath(Team.wins), ascending: false)
+    let nameSort = NSSortDescriptor(key: #keyPath(Team.teamName), ascending: true)
+    fetchRequest.sortDescriptors = [zoneSort, scoreSort, nameSort] // обязательное условие для сортировки
     
     let fetchedResultsController = NSFetchedResultsController(
       fetchRequest: fetchRequest,
       managedObjectContext: coreDataStack.managedContext,
-      sectionNameKeyPath: nil,
+      sectionNameKeyPath: #keyPath(Team.qualifyingZone),
       cacheName: nil)
     
     return fetchedResultsController
@@ -107,6 +109,12 @@ extension ViewController: UITableViewDataSource {
     let cell = tableView.dequeueReusableCell(withIdentifier: teamCellIdentifier, for: indexPath)
     configure(cell: cell, for: indexPath)
     return cell
+  }
+  
+  // Установить заголовок секции. fetchedResultltsController сам группирует по ключу sectionNameKeyPath в lazy var fetchedResultltsController: NSFetchedResultsController<Team>
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    let sectionInfo = fetchedResultltsController.sections?[section]
+    return sectionInfo?.name
   }
 }
 
