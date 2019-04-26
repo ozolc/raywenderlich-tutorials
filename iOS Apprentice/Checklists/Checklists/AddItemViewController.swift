@@ -19,10 +19,18 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     weak var delegate: AddItemViewControllerDelegate? // ссылка на класс, который подписывается под протокол AddItemViewControllerDelegate
     
+    var itemToEdit: ChecklistItem? // объект ChecklistItem, переданный из ChecklistViewController для изменения. nil - так как используются две segue для изменения(не nil) и для добавления(nil) нового элемента в таблицу
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .never // Не отображать большой заголовок в NavigationItem
+        
+        // если передано значение из ячейки для изменения, то меняем заголовок Controller и подставляем значение в TextField
+        if let item = itemToEdit {
+            title = "Edite Item"
+            textField.text = item.text
+        }
     }
 
     // MARK: - Actions
