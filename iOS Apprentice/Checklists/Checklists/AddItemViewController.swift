@@ -34,7 +34,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         let item = ChecklistItem()
         item.text = textField.text!
         
-        delegate?.addItemViewController(self, didFinishAdding: item)
+        delegate?.addItemViewController(self, didFinishAdding: item) // передаем делегату созданный объект класса ChecklistItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
