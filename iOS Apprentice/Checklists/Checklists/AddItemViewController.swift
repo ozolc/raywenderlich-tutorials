@@ -28,7 +28,6 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - Actions
     @IBAction func cancel() {
         delegate?.addItemViewControllerDidCancel(self) // Когда нажимает кнопку Cancel - мы отправляем сообщение назад делегату
-//        navigationController?.popViewController(animated: true) // удалить из стека NavigationController верхний View Controller и обновить экран.
     }
     
     @IBAction func done() {
@@ -36,7 +35,6 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         item.text = textField.text!
         
         delegate?.addItemViewController(self, didFinishAdding: item)
-//        navigationController?.popViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -8,7 +8,17 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController {
+class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true) // удалить из стека NavigationController верхний View Controller и обновить экран. Мы передали команду делегату AddItemViewControllerDelegate закрыть экран AddItemViewController.
+        // Тем самым мы выполняем метод из другого класса, делегатом которого являемся
+        
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        navigationController?.popViewController(animated: true)
+    }
+    
     
     var items = [ChecklistItem]()
 
@@ -38,6 +48,14 @@ class ChecklistViewController: UITableViewController {
         let item5 = ChecklistItem()
         item5.text = "Eat ice cream"
         items.append(item5)
+    }
+    
+    //MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddItem" { // проверяем идентификатор segue
+            let controller = segue.destination as! AddItemViewController // создаем ссылку на destination сегвея и force downcast его как тип AddItemViewController, т.к. destination имеет тип ViewController. Downcast не выбросит nill, т.к. AddItemViewController подкласс UIViewContoller.
+            controller.delegate = self // Говорим, что делегат класса AddItemViewController будет класс ChecklistViewController (т.е. SELF - этот класс)
+        }
     }
 
     // MARK: - Action
