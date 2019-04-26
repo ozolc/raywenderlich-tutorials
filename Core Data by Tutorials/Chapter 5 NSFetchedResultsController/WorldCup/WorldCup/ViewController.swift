@@ -114,5 +114,11 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    let team = fetchedResultltsController.object(at: indexPath)
+    team.wins = team.wins + 1
+    tableView.deselectRow(at: indexPath, animated: true)
+    tableView.reloadData()
+    coreDataStack.saveContext()
   }
 }
