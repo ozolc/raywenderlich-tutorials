@@ -7,8 +7,8 @@
 //
 
 import Foundation
-
-class ChecklistItem {
+// Наследуем от NSObject, что соответствовать протоколу Equiatable, для использования firstIndex(of:) в ChecklistViewController в методе делегата addItemViewController(:didFinishEditing)
+class ChecklistItem: NSObject {
     var text = ""
     var checked = false
     

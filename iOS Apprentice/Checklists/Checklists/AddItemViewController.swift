@@ -11,6 +11,7 @@ import UIKit
 protocol AddItemViewControllerDelegate: class {
     func addItemViewControllerDidCancel(_ controller: AddItemViewController)
     func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem)
 }
 
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
@@ -28,8 +29,9 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
         
         // если передано значение из ячейки для изменения, то меняем заголовок Controller и подставляем значение в TextField
         if let item = itemToEdit {
-            title = "Edite Item"
+            title = "Edit Item"
             textField.text = item.text
+            doneBarButton.isEnabled = true // активируем кнопку Done
         }
     }
 
@@ -39,10 +41,14 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func done() {
-        let item = ChecklistItem()
-        item.text = textField.text!
-        
-        delegate?.addItemViewController(self, didFinishAdding: item) // передаем делегату созданный объект класса ChecklistItem
+        if let item = itemToEdit {
+            item.text = textField.text!
+            delegate?.addItemViewController(self, didFinishEditing: item)
+        } else {
+            let item = ChecklistItem()
+            item.text = textField.text!
+            delegate?.addItemViewController(self, didFinishAdding: item) // передаем делегату созданный объект класса ChecklistItem
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
