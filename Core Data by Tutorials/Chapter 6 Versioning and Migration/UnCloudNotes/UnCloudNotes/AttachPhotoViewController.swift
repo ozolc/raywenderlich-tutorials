@@ -62,7 +62,8 @@ extension AttachPhotoViewController: UIImagePickerControllerDelegate {
     guard let note = note,
     let context = note.managedObjectContext else { return }
     
-    let attachment = Attachment(context: context)
+    let attachment = ImageAttachment(context: context)
+    attachment.caption = "New Photo"
     attachment.dateCreated = Date()
     attachment.image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage // добавить выбранное изображение в объект Note из picker'а
     attachment.note = note
