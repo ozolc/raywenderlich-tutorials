@@ -78,23 +78,23 @@
 		C77E1E791947D6D700762492 /* UnCloudNotes */ = {
 			isa = PBXGroup;
 			children = (
-				C7D603331D353F1F0080A77D /* UnCloudNotes.entitlements */,
-				C7D603311D353F150080A77D /* Images.xcassets */,
 				C77E1E7C1947D6D700762492 /* AppDelegate.swift */,
+				790FC6E3198439AD00B52A53 /* AttachPhotoViewController.swift */,
 				C73DC121195148B500DFADAB /* CoreDataStack.swift */,
+				C71A68731948D2CB003A62E7 /* CreateNoteViewController.swift */,
+				C7D603311D353F150080A77D /* Images.xcassets */,
+				279570D619827BC400F52BA9 /* ImageTransformer.swift */,
+				22AFD4B41B5527B9002CE770 /* LaunchScreen.storyboard */,
+				C77E1E801947D6D700762492 /* Main.storyboard */,
+				C7BBD86C194FFCDF00BDDB95 /* Note.swift */,
+				C7F78B8E194E1D5A00BAF550 /* NoteDetailViewController.swift */,
+				95863A161D6DE01200247AE2 /* NoteImageTableViewCell.swift */,
 				C77E1E7E1947D6D700762492 /* NotesListViewController.swift */,
 				C75D48831950CF7900648D63 /* NotesListViewController+Additions.h */,
-				C7F78B8E194E1D5A00BAF550 /* NoteDetailViewController.swift */,
-				C71A68731948D2CB003A62E7 /* CreateNoteViewController.swift */,
 				C7F78B90194E1F1300BAF550 /* NoteTableViewCell.swift */,
-				95863A161D6DE01200247AE2 /* NoteImageTableViewCell.swift */,
-				C7BBD86C194FFCDF00BDDB95 /* Note.swift */,
-				279570D619827BC400F52BA9 /* ImageTransformer.swift */,
-				790FC6E3198439AD00B52A53 /* AttachPhotoViewController.swift */,
-				C77E1E801947D6D700762492 /* Main.storyboard */,
 				C77E1E7A1947D6D700762492 /* Supporting Files */,
+				C7D603331D353F1F0080A77D /* UnCloudNotes.entitlements */,
 				C7F78B92194E1FA900BAF550 /* UnCloudNotesDataModel.xcdatamodeld */,
-				22AFD4B41B5527B9002CE770 /* LaunchScreen.storyboard */,
 			);
 			path = UnCloudNotes;
 			sourceTree = "<group>";
