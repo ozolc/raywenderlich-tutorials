@@ -106,6 +106,8 @@ cBIAAYagrxEBMQAHAAgAFwAzADQANQA/AEAAQQBcAF0AXgBkAGUAcQCHAIgAiQCKAIsAjACNAI4AjwCQ
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z105"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z112">
+        <attribute name="sourcemappingname" type="string">NoteToNote</attribute>
+        <attribute name="sourcekeypath" type="string">$source</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <attribute name="name" type="string">note</attribute>
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z105"></relationship>
