@@ -44,7 +44,7 @@ public final class CampSiteService {
 
 // MARK: Public
 extension CampSiteService {
-
+  
   public func addCampSite(_ siteNumber: NSNumber, electricity: Bool, water: Bool) -> CampSite {
     let campSite = CampSite(context: managedObjectContext)
     campSite.siteNumber = siteNumber
@@ -55,15 +55,23 @@ extension CampSiteService {
 
     return campSite
   }
+  
+  public func getCampSite(_ siteNumber: NSNumber) -> CampSite?{
+    let fetchRequest: NSFetchRequest<CampSite> = CampSite.fetchRequest()
+    fetchRequest.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(CampSite.siteNumber), siteNumber])
+    
+    let results: [CampSite]?
+    do {
+      results = try managedObjectContext.fetch(fetchRequest)
+    } catch {
+      return nil
+    }
+    
+    return results?.first
+  }
 
   public func deleteCampSite(_ siteNumber: NSNumber) {
     // TODO : Not yet implemented
-  }
-
-  public func getCampSite(_ siteNumber: NSNumber) -> CampSite? {
-    // TODO : Not yet implemented
-    
-    return nil
   }
 
   public func getCampSites() -> [CampSite] {
