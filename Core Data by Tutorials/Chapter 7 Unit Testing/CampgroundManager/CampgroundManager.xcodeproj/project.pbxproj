@@ -27,6 +27,7 @@
 		B0FAB4502275FA5E00C0E8B3 /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FAB44F2275FA5E00C0E8B3 /* TestCoreDataStack.swift */; };
 		B0FAB4542275FD5E00C0E8B3 /* CamperServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FAB4532275FD5E00C0E8B3 /* CamperServiceTests.swift */; };
 		B0FAB456227606E800C0E8B3 /* CampSiteSerciceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FAB455227606E800C0E8B3 /* CampSiteSerciceTests.swift */; };
+		B0FAB45822760BE100C0E8B3 /* ReservationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FAB45722760BE100C0E8B3 /* ReservationServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		B0FAB44F2275FA5E00C0E8B3 /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		B0FAB4532275FD5E00C0E8B3 /* CamperServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamperServiceTests.swift; sourceTree = "<group>"; };
 		B0FAB455227606E800C0E8B3 /* CampSiteSerciceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampSiteSerciceTests.swift; sourceTree = "<group>"; };
+		B0FAB45722760BE100C0E8B3 /* ReservationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				B0FAB44F2275FA5E00C0E8B3 /* TestCoreDataStack.swift */,
 				B0FAB4532275FD5E00C0E8B3 /* CamperServiceTests.swift */,
 				B0FAB455227606E800C0E8B3 /* CampSiteSerciceTests.swift */,
+				B0FAB45722760BE100C0E8B3 /* ReservationServiceTests.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 			files = (
 				B0FAB456227606E800C0E8B3 /* CampSiteSerciceTests.swift in Sources */,
 				B0FAB4502275FA5E00C0E8B3 /* TestCoreDataStack.swift in Sources */,
+				B0FAB45822760BE100C0E8B3 /* ReservationServiceTests.swift in Sources */,
 				B0FAB4542275FD5E00C0E8B3 /* CamperServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
