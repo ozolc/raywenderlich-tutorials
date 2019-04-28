@@ -36,5 +36,23 @@ class CamperServiceTests: XCTestCase {
     XCTAssertTrue(camper? .fullName == "Bacon Lover")
     XCTAssertTrue(camper?.phoneNumber == "910-543-9000")
   }
+  
+  func testRootContextIsSavedAfterAddingCamper() {
+    let derivedContext = coreDataStack.newDerivedContext()
+    camperService = CamperService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
+    
+    expectation(forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { notification in
+      return true
+    }
+    
+    derivedContext.perform {
+      let camper = self.camperService.addCamper("Bacon Lover", phoneNumber: "910-543-9000")
+      XCTAssertNotNil(camper)
+    }
+    
+    waitForExpectations(timeout: 2.0) { error in
+      XCTAssertNil(error, "Save did not occur")
+    }
+  }
 
 }
