@@ -32,4 +32,27 @@ import XCTest
 
 class DepartmentListViewControllerTests: XCTestCase {
 
+  func testTotalEmployeesperDepartment() { measureMetrics([.wallClockTime],
+                                                          automaticallyStartMeasuring: false) {
+      
+      let departmentList = DepartmentListViewController()
+      departmentList.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      
+      startMeasuring()
+      _ = departmentList.totalEmployeesPerDepartment()
+      stopMeasuring()
+    }
+  }
+  
+  func testTotalEmployeesPerDepartmentFast() {
+    measureMetrics([.wallClockTime],
+                   automaticallyStartMeasuring: false) {
+                    let departmentList = DepartmentListViewController()
+                    departmentList.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+                    
+                    startMeasuring()
+                    _ = departmentList.totalEmployeesPerDepartmentFast()
+                    stopMeasuring()
+    }
+  }
 }
