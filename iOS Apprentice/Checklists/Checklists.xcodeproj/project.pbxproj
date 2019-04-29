@@ -16,6 +16,7 @@
 		B090471F226F58C1008EB775 /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B090471E226F58C1008EB775 /* ItemDetailViewController.swift */; };
 		B0ABAC1122771DED00E39FCD /* AllListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ABAC1022771DED00E39FCD /* AllListsViewController.swift */; };
 		B0ABAC132277252000E39FCD /* Checklist.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ABAC122277252000E39FCD /* Checklist.swift */; };
+		B0ABAC1522772F0B00E39FCD /* ListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ABAC1422772F0B00E39FCD /* ListDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B090471E226F58C1008EB775 /* ItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		B0ABAC1022771DED00E39FCD /* AllListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListsViewController.swift; sourceTree = "<group>"; };
 		B0ABAC122277252000E39FCD /* Checklist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checklist.swift; sourceTree = "<group>"; };
+		B0ABAC1422772F0B00E39FCD /* ListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				B045B8EF226DEA7E00EFDC1D /* Assets.xcassets */,
 				B045B8F1226DEA7E00EFDC1D /* LaunchScreen.storyboard */,
 				B045B8F4226DEA7E00EFDC1D /* Info.plist */,
+				B0ABAC1422772F0B00E39FCD /* ListDetailViewController.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B045B8EB226DEA7D00EFDC1D /* ChecklistViewController.swift in Sources */,
+				B0ABAC1522772F0B00E39FCD /* ListDetailViewController.swift in Sources */,
 				B090471F226F58C1008EB775 /* ItemDetailViewController.swift in Sources */,
 				B0ABAC132277252000E39FCD /* Checklist.swift in Sources */,
 				B090471D226F3ACB008EB775 /* ChecklistItem.swift in Sources */,
