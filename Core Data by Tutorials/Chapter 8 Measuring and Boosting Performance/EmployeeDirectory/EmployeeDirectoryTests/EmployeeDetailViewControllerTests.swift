@@ -60,4 +60,16 @@ class EmployeeDetailViewControllerTests: XCTestCase {
     }
     return results![0] as! Employee
   }
+  
+  func testCountSalesFast() {
+    measureMetrics([.wallClockTime],
+                   automaticallyStartMeasuring: false) {
+                    
+                    let employee = getEmployee()
+                    let employeeDetails = EmployeeDetailViewController()
+                    startMeasuring()
+                    _ = employeeDetails.salesCountForEmployeeFast(employee)
+                    stopMeasuring()
+    }
+  }
 }
