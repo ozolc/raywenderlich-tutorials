@@ -35,6 +35,7 @@
 		642698AF1F350E7000BDE838 /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642698AB1F350E7000BDE838 /* Sale.swift */; };
 		642698B11F350E7000BDE838 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642698AD1F350E7000BDE838 /* Employee.swift */; };
 		7969AA57198CDE0000E218AD /* EmployeeDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7969AA56198CDE0000E218AD /* EmployeeDetailViewControllerTests.swift */; };
+		B091E6D12276D2790040499D /* EmployeePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B091E6D02276D2790040499D /* EmployeePicture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		642698AB1F350E7000BDE838 /* Sale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sale.swift; sourceTree = "<group>"; };
 		642698AD1F350E7000BDE838 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		7969AA56198CDE0000E218AD /* EmployeeDetailViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeDetailViewControllerTests.swift; sourceTree = "<group>"; };
+		B091E6D02276D2790040499D /* EmployeePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeePicture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 				4A80737F1B362790008AB595 /* Launch Screen.storyboard */,
 				4AE8D5D719796F4B00C89ECA /* faces */,
 				4A68F21D19772956005A0865 /* Supporting Files */,
+				B091E6D02276D2790040499D /* EmployeePicture.swift */,
 			);
 			path = EmployeeDirectory;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -342,6 +346,7 @@
 				4A68F22019772956005A0865 /* AppDelegate.swift in Sources */,
 				642698B11F350E7000BDE838 /* Employee.swift in Sources */,
 				4A2587421977357C00B91160 /* EmployeeTableViewCell.swift in Sources */,
+				B091E6D12276D2790040499D /* EmployeePicture.swift in Sources */,
 				642698AF1F350E7000BDE838 /* Sale.swift in Sources */,
 				4AE8D61D1979781F00C89ECA /* EmployeeDetailViewController.swift in Sources */,
 				4A68F22319772956005A0865 /* EmployeeDirectory.xcdatamodeld in Sources */,

@@ -56,7 +56,7 @@ extension EmployeePictureViewController {
 private extension EmployeePictureViewController {
 
   func configureView() {
-    guard let employeePicture = employee?.picture else {
+    guard let employeePicture = employee?.picture?.picture else {
       return
     }
 

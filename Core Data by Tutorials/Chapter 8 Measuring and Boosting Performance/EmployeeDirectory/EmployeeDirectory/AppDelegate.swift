@@ -171,8 +171,16 @@ extension AppDelegate {
       employee.phone = phone
       employee.address = address
       employee.about = about
-      employee.picture = pictureData
-
+      employee.pictureThumbnail =
+        imageDataScaledToHeight(pictureData, height: 120)
+      
+      let pictureObject =
+        EmployeePicture(context: coreDataStack.mainContext)
+      
+      pictureObject.picture = pictureData
+      
+      employee.picture = pictureObject
+      
       if addSalesRecords {
         addSalesRecordsToEmployee(employee)
       }
