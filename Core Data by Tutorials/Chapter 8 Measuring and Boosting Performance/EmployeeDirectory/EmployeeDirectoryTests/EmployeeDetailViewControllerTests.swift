@@ -40,7 +40,7 @@ class EmployeeDetailViewControllerTests: XCTestCase {
       let employee = getEmployee()
       let employeeDetails = EmployeeDetailViewController()
       startMeasuring()
-      _ = employeeDetails.salesCountForEmployee(employee)
+      _ = employeeDetails.salesCountForEmployeeSimple(employee)
       stopMeasuring()
     }
   }

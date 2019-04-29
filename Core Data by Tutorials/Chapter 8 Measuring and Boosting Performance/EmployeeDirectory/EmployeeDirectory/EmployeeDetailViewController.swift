@@ -92,7 +92,7 @@ private extension EmployeeDetailViewController {
 
     bioTextView.text = employee.about
 
-    salesCountLabel.text = salesCountForEmployeeFast(employee)
+    salesCountLabel.text = salesCountForEmployeeSimple(employee)
   }
 }
 
@@ -132,5 +132,9 @@ extension EmployeeDetailViewController {
       print("Error: \(error.localizedDescription)")
       return "0"
     }
+  }
+  
+  func salesCountForEmployeeSimple(_ employee: Employee) -> String {
+    return "\(employee.sales!.count)"
   }
 }
