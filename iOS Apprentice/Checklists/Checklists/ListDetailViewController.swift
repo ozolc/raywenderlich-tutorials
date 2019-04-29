@@ -40,8 +40,8 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     }
     
     // MARK: - Actions
-    @IBAction func cancel() {
-        delegate?.listDetailViewControllerDidCancel(<#T##sender: ListDetailViewController##ListDetailViewController#>)
+    @IBAction func cancel() {        
+        delegate?.listDetailViewControllerDidCancel(self)
     }
     
     @IBAction func done() {

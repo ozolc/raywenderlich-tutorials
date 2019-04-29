@@ -8,7 +8,36 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+    // MARK:- List Detail View Controller Delegates
+    
+    func listDetailViewControllerDidCancel(_ sender: ListDetailViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func listDetailViewControllerDidCancel(_ sender: ListDetailViewController, didFinishAdding checklist: Checklist) {
+        print("delegate cancel")
+        let newRoundIndex = lists.count
+        lists.append(checklist)
+        
+        let indexPath = IndexPath(row: newRoundIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func listDetailViewControllerDidCancel(_ sender: ListDetailViewController, didFinishEditing checklist: Checklist) {
+        if let index = lists.firstIndex(of: checklist) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                cell.textLabel!.text = checklist.name
+            }
+        }
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
     
     var lists = [Checklist]() // массив с элементами чеклистов.
     
@@ -58,6 +87,27 @@ class AllListsViewController: UITableViewController {
         if segue.identifier == "ShowChecklist" {
             let controller = segue.destination as! ChecklistViewController
             controller.checklist = sender as? Checklist // Подготавливаем к передаче checklist (элемент из массива lists[Checklist]
+        } else if segue.identifier == "AddChecklist" {
+            let controller = segue.destination as! ListDetailViewController
+            controller.delegate = self
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        lists.remove(at: indexPath.row)
+        
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        let controller = storyboard?.instantiateViewController(withIdentifier: "ListDetailViewController") as! ListDetailViewController
+        controller.delegate = self
+        
+        let checklist = lists[indexPath.row]
+        controller.checklistToEdit = checklist
+        
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
