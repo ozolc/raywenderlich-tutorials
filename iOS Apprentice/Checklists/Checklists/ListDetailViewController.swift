@@ -39,6 +39,21 @@ class ListDetailViewController: UITableViewController, ListDetailViewControllerD
         textField.becomeFirstResponder()
     }
     
+    // MARK: - Actions
+    @IBAction func cancel() {
+        delegate?.listDetailViewControllerDidCancel(<#T##sender: ListDetailViewController##ListDetailViewController#>)
+    }
+    
+    @IBAction func done() {
+        if let checklist = checklistToEdit {
+            checklist.name = textField.text!
+            delegate?.listDetailViewControllerDidCancel(self, didFinishEditing: checklist)
+        } else {
+            let checklist = Checklist(name: textField.text!)
+            delegate?.listDetailViewControllerDidCancel(self, didFinishAdding: checklist)
+        }
+    }
+    
     func listDetailViewControllerDidCancel(_ sender: ListDetailViewController) {
         <#code#>
     }
