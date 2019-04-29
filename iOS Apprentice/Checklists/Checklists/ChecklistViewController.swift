@@ -9,6 +9,7 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+    
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true) // удалить из стека NavigationController верхний View Controller и обновить экран. Мы передали команду делегату AddItemViewControllerDelegate закрыть экран AddItemViewController.
         // Тем самым мы выполняем метод из другого класса, делегатом которого являемся
@@ -38,6 +39,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         saveCheckListItems()
     }
     
+    var checklist: Checklist! // для передачи данных, мы устанавливаем его псевдо nil используя force unwrapping
     
     var items = [ChecklistItem]()
 
@@ -45,6 +47,8 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .never // Отключить большой заголовок для этого контроллера
+        
+        title = checklist.name // Установить заголовок из списка TO-DO
         
         // Загрузка данных из plist файла
         loadChecklistItems()
