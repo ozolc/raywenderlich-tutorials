@@ -44,7 +44,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех ViewController
+        navigationItem.largeTitleDisplayMode = .never // Отключить большой заголовок для этого контроллера
         
         // Загрузка данных из plist файла
         loadChecklistItems()
