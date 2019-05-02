@@ -12,10 +12,30 @@ import Foundation
 class DataModel {
     
     var lists = [Checklist]()
+    let checklistIndexUD = "ChecklistIndex"
+    let userDefaults = UserDefaults.standard
     
     init() {
         // Загрузка данных из plist
         loadChecklists()
+        // Регистрируем значение по-умолчанию
+        registerDefaults()
+    }
+    
+    func registerDefaults() {
+        let dictionary = [checklistIndexUD: -1]
+        UserDefaults.standard.register(defaults: dictionary) // Устанавливаем значение по-умолчанию (-1) для ключа "ChecklistIndex"
+    }
+    
+    var indexOfSelectedChecklist: Int {
+        get {
+            return userDefaults.integer(forKey: checklistIndexUD)
+        }
+        
+        set {
+            userDefaults.set(newValue, forKey: checklistIndexUD)
+            userDefaults.synchronize()
+        }
     }
     
     // Путь к директории с файлом

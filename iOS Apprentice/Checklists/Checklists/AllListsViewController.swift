@@ -10,9 +10,6 @@ import UIKit
 
 class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
     
-    let checklistIndexUD = "ChecklistIndex"
-    let userDefaults = UserDefaults.standard
-    
     // MARK:- Navigation Controller Delegates
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         // Этот метод вызывается когда Navigation Controller отображает новое окно.
@@ -21,7 +18,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         // == - проверка, что две переменные имеют одинаковое значение
         // === - проверка, что две переменные ссылаются на один и тот же объект
         if viewController === self {
-            userDefaults.set(-1, forKey: checklistIndexUD)
+            dataModel.indexOfSelectedChecklist = -1
         }
     }
     
@@ -71,12 +68,13 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        
         navigationController?.delegate = self // подписываемся делегатом navigation controller
         
-        let index = userDefaults.integer(forKey: checklistIndexUD)
+        let index = dataModel.indexOfSelectedChecklist // выбранный элемент (computed property считывает значение из UserDefaults)
         
-        // Если в прошлый раз пользователь был не в главном окне.
-        if index != -1 {
+        // Если в прошлый раз пользователь был не в главном окне. Также проверяем, что данные в модели синхронизированы и мы не отобразим segue с данными вне диапазона массива lists[].
+        if index >= 0 && index < dataModel.lists.count {
             let checklist = dataModel.lists[index]
             performSegue(withIdentifier: "ShowChecklist", sender: checklist)
         }
@@ -98,9 +96,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Сохранение выбранной ячейки в UserDefaults
-        userDefaults.set(indexPath.row,
-                                  forKey: checklistIndexUD)
+        // Сохранение выбранной ячейки в UserDefaults через computed property
+        dataModel.indexOfSelectedChecklist = indexPath.row
         
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist) // Выполним отправку в ChecklistViewController элемент массива checklist. Настройка производится в prepare-for-segue
