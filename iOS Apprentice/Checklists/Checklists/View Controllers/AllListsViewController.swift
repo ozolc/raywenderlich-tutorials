@@ -50,18 +50,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         navigationController?.popViewController(animated: true)
     }
     
-//    var lists = [Checklist]() // массив с элементами чеклистов.
-    
     let cellIdentifier = "ChecklistCell"
     var dataModel: DataModel! // ! - необходимо, потому что dataModel будет временно nil, когда приложение стартует
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier) // Регистрация идентификатора ячейки cellIdentifier, чтобы tableView знала, какую ячейку следует использовать для создания при вызове dequeue когда укажут этот идентификатор. В данном случае будет зарегистрирована стандартная ячейка UITableViewCell
+        
+        //        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier) // Регистрация идентификатора ячейки cellIdentifier, чтобы tableView знала, какую ячейку следует использовать для создания при вызове dequeue когда укажут этот идентификатор. В данном случае будет зарегистрирована стандартная ячейка UITableViewCell
         
         navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех AllListsViewController
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     // Этот метод автоматически вызывается UIKit когда view controllers становятся видимыми.
@@ -79,12 +81,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             performSegue(withIdentifier: "ShowChecklist", sender: checklist)
         }
     }
-
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataModel.lists.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell!
         
@@ -92,19 +94,25 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             cell = c
         } else {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
-            
-            let checklist = dataModel.lists[indexPath.row]
-            
-            if let label = cell.textLabel {
-                label.text = checklist.name
-            }
-            
-            cell.accessoryType = .detailDisclosureButton
-            
-            if let label = cell.detailTextLabel {
-                label.text = "\(checklist.countUncheckedItems()) Remaining"
+        }
+        
+        // Настройка ячейки
+        let checklist = dataModel.lists[indexPath.row] // Получение объекта из модели данных.
+        let count = checklist.countUncheckedItems()
+        
+        cell.accessoryType = .detailDisclosureButton
+        if let label = cell.textLabel {
+            label.text = checklist.name
+        }
+        
+        if let label = cell.detailTextLabel {
+            if checklist.items.count == 0 {
+                label.text = "(No Items)"
+            } else {
+                label.text = count == 0 ? "All Done" : "\(count) Remaining"
             }
         }
+        
         return cell
     }
     
@@ -144,5 +152,5 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         navigationController?.pushViewController(controller, animated: true)
     }
-
+    
 }

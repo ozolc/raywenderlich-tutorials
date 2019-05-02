@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true) // удалить из стека NavigationController верхний View Controller и обновить экран. Мы передали команду делегату AddItemViewControllerDelegate закрыть экран AddItemViewController.

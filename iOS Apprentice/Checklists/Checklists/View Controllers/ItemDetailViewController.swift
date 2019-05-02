@@ -8,7 +8,7 @@
 
 import UIKit
 // class - этот протокол могу реализовывать только классы. для того чтобы иметь weak ссылку на делегат
-protocol AddItemViewControllerDelegate: class {
+protocol ItemDetailViewControllerDelegate: class {
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem)
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem)
@@ -18,7 +18,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     
-    weak var delegate: AddItemViewControllerDelegate? // ссылка на класс, который подписывается под протокол AddItemViewControllerDelegate
+    weak var delegate: ItemDetailViewControllerDelegate? // ссылка на класс, который подписывается под протокол AddItemViewControllerDelegate
     
     var itemToEdit: ChecklistItem? // объект ChecklistItem, переданный из ChecklistViewController для изменения. nil - так как используются две segue для изменения(не nil) и для добавления(nil) нового элемента в таблицу
     
