@@ -47,10 +47,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B005C04D227AED17005EDA55 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B0ABAC1022771DED00E39FCD /* AllListsViewController.swift */,
+				B045B8EA226DEA7D00EFDC1D /* ChecklistViewController.swift */,
+				B090471E226F58C1008EB775 /* ItemDetailViewController.swift */,
+				B0ABAC1422772F0B00E39FCD /* ListDetailViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B005C04E227AED49005EDA55 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B045B8EF226DEA7E00EFDC1D /* Assets.xcassets */,
+				B045B8F1226DEA7E00EFDC1D /* LaunchScreen.storyboard */,
+				B045B8EC226DEA7D00EFDC1D /* Main.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B005C04F227AED59005EDA55 /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				B0ABAC122277252000E39FCD /* Checklist.swift */,
+				B090471C226F3ACB008EB775 /* ChecklistItem.swift */,
+				B005C04B227AD033005EDA55 /* DataModel.swift */,
+			);
+			path = "Data Models";
+			sourceTree = "<group>";
+		};
 		B045B8DC226DEA7D00EFDC1D = {
 			isa = PBXGroup;
 			children = (
 				B045B8E7226DEA7D00EFDC1D /* Checklists */,
+				B045B8E8226DEA7D00EFDC1D /* AppDelegate.swift */,
+				B045B8F4226DEA7E00EFDC1D /* Info.plist */,
 				B045B8E6226DEA7D00EFDC1D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,18 +99,9 @@
 		B045B8E7226DEA7D00EFDC1D /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
-				B045B8E8226DEA7D00EFDC1D /* AppDelegate.swift */,
-				B0ABAC1022771DED00E39FCD /* AllListsViewController.swift */,
-				B005C04B227AD033005EDA55 /* DataModel.swift */,
-				B0ABAC122277252000E39FCD /* Checklist.swift */,
-				B090471C226F3ACB008EB775 /* ChecklistItem.swift */,
-				B045B8EA226DEA7D00EFDC1D /* ChecklistViewController.swift */,
-				B090471E226F58C1008EB775 /* ItemDetailViewController.swift */,
-				B0ABAC1422772F0B00E39FCD /* ListDetailViewController.swift */,
-				B045B8EC226DEA7D00EFDC1D /* Main.storyboard */,
-				B045B8EF226DEA7E00EFDC1D /* Assets.xcassets */,
-				B045B8F1226DEA7E00EFDC1D /* LaunchScreen.storyboard */,
-				B045B8F4226DEA7E00EFDC1D /* Info.plist */,
+				B005C04F227AED59005EDA55 /* Data Models */,
+				B005C04E227AED49005EDA55 /* Resources */,
+				B005C04D227AED17005EDA55 /* View Controllers */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";

@@ -12,21 +12,24 @@ import Foundation
 class DataModel {
     
     var lists = [Checklist]()
-    let checklistIndexUD = "ChecklistIndex"
+    
     let userDefaults = UserDefaults.standard
+    let checklistIndexUD = "ChecklistIndex"
+    let firstTimeUD = "FirstTime" // Первый раз запущено приложение?
+    
     
     init() {
-        // Загрузка данных из plist
-        loadChecklists()
-        // Регистрируем значение по-умолчанию
-        registerDefaults()
+        loadChecklists() // Загрузка данных из plist
+        registerDefaults() // Регистрируем значение по-умолчанию
+        handleFirstTime() // Проверка запуск приложения в первый раз
     }
     
     func registerDefaults() {
-        let dictionary = [checklistIndexUD: -1]
+        let dictionary = [checklistIndexUD: -1, firstTimeUD: true] as [String: Any]
         UserDefaults.standard.register(defaults: dictionary) // Устанавливаем значение по-умолчанию (-1) для ключа "ChecklistIndex"
     }
     
+    // Выбранные элемент в списке. Это computed property
     var indexOfSelectedChecklist: Int {
         get {
             return userDefaults.integer(forKey: checklistIndexUD)
@@ -34,6 +37,22 @@ class DataModel {
         
         set {
             userDefaults.set(newValue, forKey: checklistIndexUD)
+            userDefaults.synchronize()
+        }
+    }
+    
+    // Запуск в первый раз
+    func handleFirstTime() {
+        let firstTime = userDefaults.bool(forKey: firstTimeUD)
+        
+        if firstTime {
+            // Создадим заготовку со списком под названием "List"
+            let checklist = Checklist(name: "List")
+            lists.append(checklist)
+            
+            // Обновление данных в UserDefaults
+            indexOfSelectedChecklist = 0
+            userDefaults.set(false, forKey: firstTimeUD) // Теперь приложение запустить со значением "НЕ ПЕРВЫЙ ЗАПУСК" и этот код не будет выполняться снова.
             userDefaults.synchronize()
         }
     }
