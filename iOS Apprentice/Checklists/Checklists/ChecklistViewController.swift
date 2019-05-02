@@ -17,31 +17,29 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
-        let newRowIndex = items.count // Индекс новой строки в массиве items (так как массивы считаются с 0, следующий элемент будет на 1 позицию больше из-за метода count, который считает количество элементов с 1. Удачное применение!
-        items.append(item)
+        let newRowIndex = checklist.items.count // Индекс новой строки в массиве items (так как массивы считаются с 0, следующий элемент будет на 1 позицию больше из-за метода count, который считает количество элементов с 1. Удачное применение!
+        checklist.items.append(item)
         
         let indexPath = IndexPath(row: newRowIndex, section: 0) // IndexPath объект который указывает на новую строку используя локальную переменную newRowIndex
         let indexPaths = [indexPath] // временный массив содержащий только один indexPath
         tableView.insertRows(at: indexPaths, with: .automatic) // Сообщаем tableView добавить новые ячейки из массива indexPaths
 
         navigationController?.popViewController(animated: true)
-        saveCheckListItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
-        if let index = items.firstIndex(of: item) {
+        if let index = checklist.items.firstIndex(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) {
                 configureText(for: cell, with: item)
             }
         }
         navigationController?.popViewController(animated: true)
-        saveCheckListItems()
     }
     
     var checklist: Checklist! // для передачи данных, мы устанавливаем его псевдо nil используя force unwrapping
     
-    var items = [ChecklistItem]()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,47 +49,46 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         title = checklist.name // Установить заголовок из списка TO-DO
         
         // Загрузка данных из plist файла
-        loadChecklistItems()
     }
     
-    // Путь к директории с файлом
-    func documentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
+//    // Путь к директории с файлом
+//    func documentsDirectory() -> URL {
+//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//        return paths[0]
+//    }
     
-    // Полный путь к файлу, включая имя файла
-    func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent("Checklist.plist")
-    }
+//    // Полный путь к файлу, включая имя файла
+//    func dataFilePath() -> URL {
+//        return documentsDirectory().appendingPathComponent("Checklist.plist")
+//    }
     
     // Сохранение данных в plist
-    func saveCheckListItems() {
-        let encoder = PropertyListEncoder() // Объект который кодирует в тип данных для сохранения как plist
-        
-        do {
-            let data = try encoder.encode(items) // конвертирует массив ITEMS в блок двоичных данных
-            
-            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic) // сохраняет данные в файл по адресу dataFilePath()
-        } catch {
-            print("Error encoding item array: \(error.localizedDescription)")
-        }
-    }
+//    func saveCheckListItems() {
+//        let encoder = PropertyListEncoder() // Объект который кодирует в тип данных для сохранения как plist
+//
+//        do {
+//            let data = try encoder.encode(items) // конвертирует массив ITEMS в блок двоичных данных
+//
+//            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic) // сохраняет данные в файл по адресу dataFilePath()
+//        } catch {
+//            print("Error encoding item array: \(error.localizedDescription)")
+//        }
+//    }
     
     // Загрузка данных из plist
-    func loadChecklistItems() {
-        let path = dataFilePath()
-        
-        if let data = try? Data(contentsOf: path) { // возвратить nil если ошибка получения данных (try?)
-            let decoder = PropertyListDecoder() // объект для декодирования из бинарных файлов.
-            
-            do {
-                items = try decoder.decode([ChecklistItem].self, from: data)
-            } catch {
-                print("Error decoding item array: \(error.localizedDescription)")
-            }
-        }
-    }
+//    func loadChecklistItems() {
+//        let path = dataFilePath()
+//
+//        if let data = try? Data(contentsOf: path) { // возвратить nil если ошибка получения данных (try?)
+//            let decoder = PropertyListDecoder() // объект для декодирования из бинарных файлов.
+//
+//            do {
+//                items = try decoder.decode([ChecklistItem].self, from: data)
+//            } catch {
+//                print("Error decoding item array: \(error.localizedDescription)")
+//            }
+//        }
+//    }
     
     //MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -104,7 +101,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
             
             // получим IndexPath нажатой ячейки, чтобы передать индекс массива с текстом для передачи в другой контроллер для изменения.
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                controller.itemToEdit = items[indexPath.row]
+                controller.itemToEdit = checklist.items[indexPath.row]
             }
         }
     }
@@ -112,15 +109,15 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
     // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return checklist.items.count
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        items.remove(at: indexPath.row) // Удаление строки из массива
+        checklist.items.remove(at: indexPath.row) // Удаление строки из массива
         
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic) // Удаление ячейки из tableView
-        saveCheckListItems()
+        
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -141,7 +138,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
-        let item = items[indexPath.row]
+        let item = checklist.items[indexPath.row]
         
         configureText(for: cell, with: item)
         configureCheckmark(for: cell, with: item)
@@ -152,12 +149,11 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     // MARK: - Table View Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            let item = items[indexPath.row]
+            let item = checklist.items[indexPath.row]
             item.toggleChecked()
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        saveCheckListItems()
     }
     
     
