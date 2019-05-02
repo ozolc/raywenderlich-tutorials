@@ -117,6 +117,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             }
         }
         
+        cell.imageView!.image = UIImage(named: checklist.iconName) // Устанавливаем иконку
+        
         return cell
     }
     
