@@ -50,7 +50,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех AllListsViewController
         
         // Загрузка данных из plist
-        loadChecklistItems()
+        loadChecklists()
         
         var list = Checklist(name: "Birthdays")
         lists.append(list)
@@ -133,7 +133,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         }
     
 //     Сохранение данных в plist
-        func saveCheckListItems() {
+        func saveChecklists() {
             let encoder = PropertyListEncoder() // Объект который кодирует в тип данных для сохранения как plist
     
             do {
@@ -146,7 +146,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         }
     
 //     Загрузка данных из plist
-        func loadChecklistItems() {
+        func loadChecklists() {
             let path = dataFilePath()
     
             if let data = try? Data(contentsOf: path) { // возвратить nil если ошибка получения данных (try?)
