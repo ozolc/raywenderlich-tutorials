@@ -15,7 +15,15 @@ protocol ListDetailViewControllerDelegate: class {
     func listDetailViewControllerDidCancel(_ sender: ListDetailViewController, didFinishEditing checklist: Checklist)
 }
 
-class ListDetailViewController: UITableViewController, UITextFieldDelegate {
+class ListDetailViewController: UITableViewController, UITextFieldDelegate, IconPickerViewControllerDelegate {
+    
+    // MARK:- Icon Picker View Controller Delegate
+    // Получаем из метода делегата didPick выбранное имя иконки
+    func iconPicker(_ controller: IconPickerViewController, didPick iconName: String) {
+        self.iconName = iconName
+        iconImage.image = UIImage(named: iconName)
+        navigationController?.popViewController(animated: true)
+    }
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
@@ -24,6 +32,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     weak var delegate: ListDetailViewControllerDelegate?
     
     var checklistToEdit: Checklist?
+    var iconName = "Folder"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +40,10 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
         if let checklist = checklistToEdit {
             title = "Edit Checklist"
             textField.text = checklist.name
+            iconName = checklist.iconName
             doneBarButton.isEnabled = true
         }
+        iconImage.image = UIImage(named: iconName)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +59,20 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func done() {
         if let checklist = checklistToEdit {
             checklist.name = textField.text!
+            checklist.iconName = iconName
             delegate?.listDetailViewControllerDidCancel(self, didFinishEditing: checklist)
         } else {
             let checklist = Checklist(name: textField.text!)
+            checklist.iconName = iconName
             delegate?.listDetailViewControllerDidCancel(self, didFinishAdding: checklist)
+        }
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PickIcon" {
+            let controller = segue.destination as! IconPickerViewController
+            controller.delegate = self
         }
     }
     
