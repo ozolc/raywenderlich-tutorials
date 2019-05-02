@@ -49,6 +49,9 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех AllListsViewController
         
+        // Загрузка данных из plist
+        loadChecklistItems()
+        
         var list = Checklist(name: "Birthdays")
         lists.append(list)
         
@@ -60,6 +63,12 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         list = Checklist(name: "To Do")
         lists.append(list)
+        
+        for list in lists {
+            let item = ChecklistItem()
+            item.text = "Item for \(list.name)"
+            list.items.append(item)
+        }
     }
 
     // MARK: - Table view data source
@@ -110,4 +119,44 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         navigationController?.pushViewController(controller, animated: true)
     }
+    
+        // Путь к директории с файлом
+        func documentsDirectory() -> URL {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            print(paths)
+            return paths[0]
+        }
+    
+        // Полный путь к файлу, включая имя файла
+        func dataFilePath() -> URL {
+            return documentsDirectory().appendingPathComponent("Checklist.plist")
+        }
+    
+//     Сохранение данных в plist
+        func saveCheckListItems() {
+            let encoder = PropertyListEncoder() // Объект который кодирует в тип данных для сохранения как plist
+    
+            do {
+                let data = try encoder.encode(lists) // конвертирует массив LISTS в блок двоичных данных
+    
+                try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic) // сохраняет данные в файл по адресу dataFilePath()
+            } catch {
+                print("Error encoding item array: \(error.localizedDescription)")
+            }
+        }
+    
+//     Загрузка данных из plist
+        func loadChecklistItems() {
+            let path = dataFilePath()
+    
+            if let data = try? Data(contentsOf: path) { // возвратить nil если ошибка получения данных (try?)
+                let decoder = PropertyListDecoder() // объект для декодирования из бинарных файлов.
+    
+                do {
+                    lists = try decoder.decode([Checklist].self, from: data)
+                } catch {
+                    print("Error decoding item array: \(error.localizedDescription)")
+                }
+            }
+        }
 }

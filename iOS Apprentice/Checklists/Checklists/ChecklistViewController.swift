@@ -48,47 +48,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
         title = checklist.name // Установить заголовок из списка TO-DO
         
-        // Загрузка данных из plist файла
     }
-    
-//    // Путь к директории с файлом
-//    func documentsDirectory() -> URL {
-//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-//        return paths[0]
-//    }
-    
-//    // Полный путь к файлу, включая имя файла
-//    func dataFilePath() -> URL {
-//        return documentsDirectory().appendingPathComponent("Checklist.plist")
-//    }
-    
-    // Сохранение данных в plist
-//    func saveCheckListItems() {
-//        let encoder = PropertyListEncoder() // Объект который кодирует в тип данных для сохранения как plist
-//
-//        do {
-//            let data = try encoder.encode(items) // конвертирует массив ITEMS в блок двоичных данных
-//
-//            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic) // сохраняет данные в файл по адресу dataFilePath()
-//        } catch {
-//            print("Error encoding item array: \(error.localizedDescription)")
-//        }
-//    }
-    
-    // Загрузка данных из plist
-//    func loadChecklistItems() {
-//        let path = dataFilePath()
-//
-//        if let data = try? Data(contentsOf: path) { // возвратить nil если ошибка получения данных (try?)
-//            let decoder = PropertyListDecoder() // объект для декодирования из бинарных файлов.
-//
-//            do {
-//                items = try decoder.decode([ChecklistItem].self, from: data)
-//            } catch {
-//                print("Error decoding item array: \(error.localizedDescription)")
-//            }
-//        }
-//    }
     
     //MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
