@@ -82,8 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				B045B8E7226DEA7D00EFDC1D /* Checklists */,
-				B045B8E8226DEA7D00EFDC1D /* AppDelegate.swift */,
-				B045B8F4226DEA7E00EFDC1D /* Info.plist */,
 				B045B8E6226DEA7D00EFDC1D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,6 +97,8 @@
 		B045B8E7226DEA7D00EFDC1D /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
+				B045B8F4226DEA7E00EFDC1D /* Info.plist */,
+				B045B8E8226DEA7D00EFDC1D /* AppDelegate.swift */,
 				B005C04F227AED59005EDA55 /* Data Models */,
 				B005C04E227AED49005EDA55 /* Resources */,
 				B005C04D227AED17005EDA55 /* View Controllers */,
@@ -331,7 +331,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Checklists/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Checklists/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -348,7 +348,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Checklists/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Checklists/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -58,7 +58,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier) // Регистрация идентификатора ячейки cellIdentifier, чтобы tableView знала, какую ячейку следует использовать для создания при вызове dequeue когда укажут этот идентификатор. В данном случае будет зарегистрирована стандартная ячейка UITableViewCell
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier) // Регистрация идентификатора ячейки cellIdentifier, чтобы tableView знала, какую ячейку следует использовать для создания при вызове dequeue когда укажут этот идентификатор. В данном случае будет зарегистрирована стандартная ячейка UITableViewCell
         
         navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех AllListsViewController
         
@@ -86,12 +86,25 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell: UITableViewCell!
         
-        let checklist = dataModel.lists[indexPath.row]
-        cell.textLabel!.text = checklist.name
-        cell.accessoryType = .detailDisclosureButton
-
+        if let c = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) {
+            cell = c
+        } else {
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
+            
+            let checklist = dataModel.lists[indexPath.row]
+            
+            if let label = cell.textLabel {
+                label.text = checklist.name
+            }
+            
+            cell.accessoryType = .detailDisclosureButton
+            
+            if let label = cell.detailTextLabel {
+                label.text = "\(checklist.countUncheckedItems()) Remaining"
+            }
+        }
         return cell
     }
     
