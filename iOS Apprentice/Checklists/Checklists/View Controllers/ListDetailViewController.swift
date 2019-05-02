@@ -56,9 +56,9 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     }
     
     // MARK: Table View Delegates
-    // Отменить возможность выделить ячейку
+    // Отменить возможность выделить ячейку для 0 секции, а для 1 секции возращаем indexPath
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
+        return indexPath.section == 1 ? indexPath : nil
     }
     
     // MARK:- Text Field Delegates
