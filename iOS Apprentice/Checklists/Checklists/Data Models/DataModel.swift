@@ -24,6 +24,13 @@ class DataModel {
         handleFirstTime() // Проверка запуск приложения в первый раз
     }
     
+    // Сортировка по возрастанию по name для элементов Checklist
+    func sortChecklists() {
+        lists.sort { list1, list2 in
+            return list1.name.localizedStandardCompare(list2.name) == .orderedAscending
+        }
+    }
+    
     func registerDefaults() {
         let dictionary = [checklistIndexUD: -1, firstTimeUD: true] as [String: Any]
         UserDefaults.standard.register(defaults: dictionary) // Устанавливаем значение по-умолчанию (-1) для ключа "ChecklistIndex"
@@ -91,6 +98,7 @@ class DataModel {
             
             do {
                 lists = try decoder.decode([Checklist].self, from: data)
+                sortChecklists()
             } catch {
                 print("Error decoding item array: \(error.localizedDescription)")
             }
