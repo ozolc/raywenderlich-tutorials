@@ -8,7 +8,23 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate, UINavigationControllerDelegate {
+    
+    let checklistIndexUD = "ChecklistIndex"
+    let userDefaults = UserDefaults.standard
+    
+    // MARK:- Navigation Controller Delegates
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        // Этот метод вызывается когда Navigation Controller отображает новое окно.
+        // Если кнопка Back была нажата и новый View Controller это AllListsViewController. Устанавливаем значение (-1), указывающее, что не выбран ни один checklist
+        
+        // == - проверка, что две переменные имеют одинаковое значение
+        // === - проверка, что две переменные ссылаются на один и тот же объект
+        if viewController === self {
+            userDefaults.set(-1, forKey: checklistIndexUD)
+        }
+    }
+    
     // MARK:- List Detail View Controller Delegates
     
     func listDetailViewControllerDidCancel(_ sender: ListDetailViewController) {
@@ -16,7 +32,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     func listDetailViewControllerDidCancel(_ sender: ListDetailViewController, didFinishAdding checklist: Checklist) {
-        print("delegate cancel")
         let newRoundIndex = dataModel.lists.count
         dataModel.lists.append(checklist)
         
@@ -50,23 +65,21 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         
         navigationController?.navigationBar.prefersLargeTitles = true // Установить большой заголовок для всех AllListsViewController
         
-//        var list = Checklist(name: "Birthdays")
-//        lists.append(list)
-//
-//        list = Checklist(name: "Groceries")
-//        lists.append(list)
-//
-//        list = Checklist(name: "Cool Apps")
-//        lists.append(list)
-//
-//        list = Checklist(name: "To Do")
-//        lists.append(list)
-//
-//        for list in lists {
-//            let item = ChecklistItem()
-//            item.text = "Item for \(list.name)"
-//            list.items.append(item)
-//        }
+    }
+    
+    // Этот метод автоматически вызывается UIKit когда view controllers становятся видимыми.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self // подписываемся делегатом navigation controller
+        
+        let index = userDefaults.integer(forKey: checklistIndexUD)
+        
+        // Если в прошлый раз пользователь был не в главном окне.
+        if index != -1 {
+            let checklist = dataModel.lists[index]
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
     }
 
     // MARK: - Table view data source
@@ -85,6 +98,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Сохранение выбранной ячейки в UserDefaults
+        userDefaults.set(indexPath.row,
+                                  forKey: checklistIndexUD)
+        
         let checklist = dataModel.lists[indexPath.row]
         performSegue(withIdentifier: "ShowChecklist", sender: checklist) // Выполним отправку в ChecklistViewController элемент массива checklist. Настройка производится в prepare-for-segue
     }
