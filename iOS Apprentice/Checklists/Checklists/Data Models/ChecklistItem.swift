@@ -24,11 +24,17 @@ class ChecklistItem: NSObject, Codable {
         itemID = DataModel.nextChecklistItemID() // Создание уникального ID для нотификаций
     }
     
+    deinit {
+        removeNotification() // когда удаляется объект класса, удалить оповещение из NotificationCenter
+    }
+    
     func toggleChecked() {
         checked = !checked
     }
     
     func scheduleNotification() {
+        removeNotification()
+        
         if shouldRemind && dueDate > Date() {
             
             let content = UNMutableNotificationContent()
@@ -43,8 +49,11 @@ class ChecklistItem: NSObject, Codable {
             let request = UNNotificationRequest(identifier: "\(itemID)", content: content, trigger: trigger)
             let center = UNUserNotificationCenter.current()
             center.add(request)
-            
-            print("Scheduled: \(request) for itemID: \(itemID)")
         }
+    }
+    
+    func removeNotification() {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: ["\(itemID)"])
     }
 }
