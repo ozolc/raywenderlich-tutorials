@@ -17,6 +17,10 @@ protocol ItemDetailViewControllerDelegate: class {
 class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var shouldRemindSwitch: UISwitch!
+    @IBOutlet weak var dueDateLabel: UILabel!
+    
+    var dueDate = Date()
     
     weak var delegate: ItemDetailViewControllerDelegate? // ссылка на класс, который подписывается под протокол AddItemViewControllerDelegate
     
@@ -32,7 +36,25 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             title = "Edit Item"
             textField.text = item.text
             doneBarButton.isEnabled = true // активируем кнопку Done
+            
+            shouldRemindSwitch.isOn = item.shouldRemind // Состояние switch
+            dueDate = item.dueDate
         }
+        
+        updateDueDateLabel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textField.becomeFirstResponder()
+    }
+    
+    // MARK: - Helper Methods
+    func updateDueDateLabel() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        dueDateLabel.text = formatter.string(from: dueDate)
     }
 
     // MARK: - Actions
@@ -43,17 +65,21 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func done() {
         if let item = itemToEdit {
             item.text = textField.text!
+            
+            item.shouldRemind = shouldRemindSwitch.isOn
+            item.dueDate = dueDate
+            
             delegate?.itemDetailViewController(self, didFinishEditing: item)
         } else {
             let item = ChecklistItem()
             item.text = textField.text!
+            item.checked = false
+            
+            item.shouldRemind = shouldRemindSwitch.isOn
+            item.dueDate = dueDate
+            
             delegate?.itemDetailViewController(self, didFinishAdding: item) // передаем делегату созданный объект класса ChecklistItem
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        textField.becomeFirstResponder()
     }
     
     // MARK: - Table view data source
