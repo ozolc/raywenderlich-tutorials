@@ -66,11 +66,27 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         datePickerVisible = true
         let indexPathDatePicker = IndexPath(row: 2, section: 1)
         tableView.insertRows(at: [indexPathDatePicker], with: .fade)
+        datePicker.setDate(dueDate, animated: false)
+        dueDateLabel.textColor = dueDateLabel.tintColor
+    }
+    
+    func hideDatePicker() {
+        if datePickerVisible {
+            datePickerVisible = !datePickerVisible
+            let indexPathDatePicker = IndexPath(row: 2, section: 1)
+            tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+            dueDateLabel.textColor = UIColor.black
+        }
     }
 
     // MARK: - Actions
     @IBAction func cancel() {
         delegate?.itemDetailViewControllerDidCancel(self) // Когда нажимает кнопку Cancel - мы отправляем сообщение назад делегату
+    }
+    
+    @IBAction func dateChanged(_ datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        updateDueDateLabel()
     }
     
     @IBAction func done() {
@@ -102,6 +118,19 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        textField.resignFirstResponder()
+        
+        if indexPath.section == 1 && indexPath.row == 1 {
+            if !datePickerVisible {
+                showDatePicker()
+            } else {
+                hideDatePicker()
+            }
+        }
+    }
+    
     // MARK: - Table view Delegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 && datePickerVisible {
@@ -127,14 +156,6 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        textField.resignFirstResponder()
-        if indexPath.section == 1 && indexPath.row == 1 {
-            showDatePicker()
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
         var newIndexPath = indexPath
         if indexPath.section == 1 && indexPath.row == 2 {
@@ -152,6 +173,10 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         
         doneBarButton.isEnabled = !newText.isEmpty // Если TextField пустая - кнопка Done неактивна
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        hideDatePicker()
     }
     
     // Метод если мы удаляем через Clear button в текстовом поле (быстрая очистка)
