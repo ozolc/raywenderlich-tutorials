@@ -31,6 +31,7 @@ class DataModel {
         }
     }
     
+    // Устанавливаем значение по-умолчанию для ключей в UserDefaults
     func registerDefaults() {
         let dictionary = [checklistIndexUD: -1, firstTimeUD: true] as [String: Any]
         UserDefaults.standard.register(defaults: dictionary) // Устанавливаем значение по-умолчанию (-1) для ключа "ChecklistIndex"
@@ -62,6 +63,15 @@ class DataModel {
             userDefaults.set(false, forKey: firstTimeUD) // Теперь приложение запустить со значением "НЕ ПЕРВЫЙ ЗАПУСК" и этот код не будет выполняться снова.
             userDefaults.synchronize()
         }
+    }
+    
+    class func nextChecklistItemID() -> Int {
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "ChecklistItemID") // если нет значения для этого ключа, default value равно 0
+        
+        userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+        userDefaults.synchronize() // Немедленно сохранить данные на диск
+        return itemID
     }
     
     // Путь к директории с файлом

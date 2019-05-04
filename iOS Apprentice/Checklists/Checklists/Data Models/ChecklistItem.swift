@@ -13,6 +13,15 @@ class ChecklistItem: NSObject, Codable {
     var text = ""
     var checked = false
     
+    var dueDate = Date()
+    var shouldRemind = false
+    var itemID = -1
+    
+    override init() {
+        super.init()
+        itemID = DataModel.nextChecklistItemID() // Создание уникального ID для нотификаций
+    }
+    
     func toggleChecked() {
         checked = !checked
     }
