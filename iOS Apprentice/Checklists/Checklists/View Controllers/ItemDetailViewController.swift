@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
+
 // class - этот протокол могу реализовывать только классы. для того чтобы иметь weak ссылку на делегат
 protocol ItemDetailViewControllerDelegate: class {
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
@@ -105,7 +107,20 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             item.shouldRemind = shouldRemindSwitch.isOn
             item.dueDate = dueDate
             
+            item.scheduleNotification() // Установить нотификацию
+            
             delegate?.itemDetailViewController(self, didFinishAdding: item) // передаем делегату созданный объект класса ChecklistItem
+        }
+    }
+    
+    @IBAction func shouldRemindToggled(_ switchControl: UISwitch) {
+        textField.resignFirstResponder()
+        
+        if switchControl.isOn {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .sound]) { granted, error in
+                
+            }
         }
     }
     
