@@ -22,6 +22,17 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     
     // MARK: - Actions
     @IBAction func getLocation() {
+        
+        let authStatus = CLLocationManager.authorizationStatus() // Статус авторизации для получения координат на устройстве
+        // если еще не запрашивали разрешение у пользователя, то запросим.
+        // Также надо добавить специальный ключ в Info.plist для ключа
+        // Privacy - Location When In Use Usage Description значение This app lets you keep track of interesting places. It needs access to the GPS coordinates for your location
+        
+        if authStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+            return
+        }
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.startUpdatingLocation() // Запускаем locationManager. С этого момента объект будет отправлять обновления расположения своему делегату, т.е. CurrentLocationViewController
