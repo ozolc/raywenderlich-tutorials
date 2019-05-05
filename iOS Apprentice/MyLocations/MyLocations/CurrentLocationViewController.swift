@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
 
-class CurrentLocationViewController: UIViewController {
+class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
+    
+    let locationManager = CLLocationManager() // объект, которые дает GPS координаты
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -19,7 +22,9 @@ class CurrentLocationViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func getLocation() {
-        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.startUpdatingLocation() // Запускаем locationManager. С этого момента объект будет отправлять обновления расположения своему делегату, т.е. CurrentLocationViewController
     }
 
     override func viewDidLoad() {
@@ -27,6 +32,18 @@ class CurrentLocationViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    // MARK: - CLLocationManagerDelegate
+    
+    // Если ошибка получения координат
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("didFailWithError \(error.localizedDescription)")
+    }
+    
+    // Получены новые координаты
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let newLocation = locations.last!
+        print("didUpdateLocations \(newLocation)")
+    }
 
 }
 
