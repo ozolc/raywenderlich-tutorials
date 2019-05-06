@@ -80,6 +80,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         navigationController?.isNavigationBarHidden = false // Перед уходом с View Controller отображать Navigation Bar во всем стеке Navigation Controller
     }
     
+    // MARK:- Navigation
     // Подготовка к вызову Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "TagLocation" {
@@ -197,15 +198,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             print(location!)
         }
     }
-    
-//    @objc func didTimeOut() {
-//        print("*** Time out")
-//        if location == nil {
-//            stopLocationManager()
-//            lastLocationError = NSError(domain: "MyLocationsErrorDomain", code: 1, userInfo: nil)
-//            updateLabels()
-//        }
-//    }
     
     // MARK: - CLLocationManagerDelegate
     // Если ошибка получения координат

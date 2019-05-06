@@ -21,6 +21,7 @@ class LocationDetailsViewController: UITableViewController {
     
     var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0) // Широта и долгота из CLLocation объекта
     var placemark: CLPlacemark?  // Объект, содержащий результаты получения адреса из координат
+    var categoryName = "No Category"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,15 @@ class LocationDetailsViewController: UITableViewController {
         }
         
         dateLabel.text = format(date: Date())
+        categoryLabel.text = categoryName
+    }
+    
+    // MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PickCategory" {
+            let controller = segue.destination as! CategoryPickerViewController
+            controller.selectedCategoryName = categoryName
+        }
     }
     
     // MARK: - Actions

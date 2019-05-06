@@ -10,7 +10,6 @@ import UIKit
 
 class CategoryPickerViewController: UITableViewController {
     var selectedCategoryName = ""
-    let cellId = "cellId"
     
     let categories = [
         "No Category",
@@ -30,6 +29,8 @@ class CategoryPickerViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(selectedCategoryName)
+        
         for i in 0..<categories.count {
             if categories[i] == selectedCategoryName {
                 selectedIndexPath = IndexPath(row: i, section: 0)
@@ -44,9 +45,10 @@ class CategoryPickerViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         let categoryName = categories[indexPath.row]
+        cell.textLabel?.text = categoryName
         
         if categoryName == selectedCategoryName {
             cell.accessoryType = .checkmark
