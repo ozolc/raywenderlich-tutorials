@@ -11,6 +11,11 @@ import CoreLocation
 
 class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
     
+    // Необходимо добавить в в Info.plist требования для установки приложения из AppStore
+    // В Required device capabilities добавить значения:
+    // location-services
+    // gps
+    
     let locationManager = CLLocationManager() // объект, которые дает GPS координаты
     var location: CLLocation? // Данные с координатами
     var updatingLocation = false // Обновлять локацию?
@@ -19,6 +24,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     var placemark: CLPlacemark? // Объект, содержащий результаты получения адреса из координатам
     var performingReverseGeocoding = false // Когда операция геокодирования в процессе
     var lastGeocodingError: Error? // Последняя полученная ошибка в процессе геокодирования
+    var timer: Timer? // Таймер для отсчета времени после старта определения местоположения в startLocationManager()
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -168,6 +174,13 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // Точность расположения в 10 метрах
             locationManager.startUpdatingLocation() // Запускаем locationManager. С этого момента объект будет отправлять обновления расположения своему делегату, т.е. CurrentLocationViewController
             updatingLocation = true
+            
+            // Устанавливаем таймер на 5 секунд, по истечении которых запустить метод didTimeOut
+            timer = Timer.scheduledTimer(timeInterval: 5,
+                                         target: self,
+                                         selector: #selector(didTimeOut),
+                                         userInfo: nil,
+                                         repeats: false)
         }
     }
     
@@ -176,8 +189,34 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
             updatingLocation = false
+            
+            if let timer = timer {
+                timer.invalidate() // Останавливаем таймер и удаляем его из Run loop
+            }
         }
     }
+
+    @objc func didTimeOut() {
+        print("*** Time out")
+        if location == nil {
+            stopLocationManager()
+            lastLocationError = NSError(
+                domain: "MyLocationsErrorDomain",
+                code: 1, userInfo: nil)
+            updateLabels()
+        } else {
+            print(location!)
+        }
+    }
+    
+//    @objc func didTimeOut() {
+//        print("*** Time out")
+//        if location == nil {
+//            stopLocationManager()
+//            lastLocationError = NSError(domain: "MyLocationsErrorDomain", code: 1, userInfo: nil)
+//            updateLabels()
+//        }
+//    }
     
     // MARK: - CLLocationManagerDelegate
     // Если ошибка получения координат
@@ -207,6 +246,11 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         
+        var distance = CLLocationDistance(Double.greatestFiniteMagnitude)
+        if let location = location {
+            distance = newLocation.distance(from: location)
+        }
+        
         // если nil значение (если это первый запуск и мы еще не присваивали рабочей переменной location позицию) или точность прошлой локации больше(менее точнее в метрах/милях), то используем новую локацию
         if location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy {
             lastLocationError = nil // После получения координаты, любая предыдущая ошибка не имеет значения.
@@ -217,6 +261,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
             print("*** We're done!")
             stopLocationManager()
+            
+            if distance > 0 {
+                performingReverseGeocoding = false
+            }
         }
         updateLabels()
         
@@ -237,6 +285,15 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
                 self.performingReverseGeocoding = false // Геокодинг не выполняется
                 self.updateLabels()
             })
+        } else {
+            if distance < 1 {
+                let timeInterval = newLocation.timestamp.timeIntervalSince(location!.timestamp)
+                if timeInterval > 10 {
+                    print("*** Force done!")
+                    stopLocationManager()
+                    updateLabels()
+                }
+            }
         }
     } // Конец didUpdateLocations
     
