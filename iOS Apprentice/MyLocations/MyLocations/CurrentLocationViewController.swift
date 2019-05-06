@@ -21,7 +21,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     var updatingLocation = false // Обновлять локацию?
     var lastLocationError: Error? // Последняя полученная ошибка в процессе получения локации
     let geocoder = CLGeocoder() // Интерфейс для конвертирования географических координат в названия расположения
-    var placemark: CLPlacemark? // Объект, содержащий результаты получения адреса из координатам
+    var placemark: CLPlacemark? // Объект, содержащий результаты получения адреса из координат
     var performingReverseGeocoding = false // Когда операция геокодирования в процессе
     var lastGeocodingError: Error? // Последняя полученная ошибка в процессе геокодирования
     var timer: Timer? // Таймер для отсчета времени после старта определения местоположения в startLocationManager()
@@ -78,6 +78,15 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false // Перед уходом с View Controller отображать Navigation Bar во всем стеке Navigation Controller
+    }
+    
+    // Подготовка к вызову Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TagLocation" {
+            let controller = segue.destination as! LocationDetailsViewController
+            controller.coordinate = location!.coordinate
+            controller.placemark = placemark
+        }
     }
     
     // MARK:- Helper Methods
@@ -138,36 +147,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             messageLabel.text = statusMessage
         }
         configureGetButton()
-    }
-    
-    func string(from placemark: CLPlacemark) -> String {
-        var line1 = ""
-        
-        // Номер здания
-        if let s = placemark.subThoroughfare {
-            line1 += s + " "
-        }
-        // Улица
-        if let s = placemark.thoroughfare {
-            line1 += s + " "
-        }
-        
-        var line2 = ""
-        
-        // Город
-        if let s = placemark.locality {
-            line2 += s + " "
-        }
-        // Штат или область
-        if let s = placemark.administrativeArea {
-            line2 += s + " "
-        }
-        // Индекс
-        if let s = placemark.postalCode {
-            line2 += s + " "
-        }
-        
-        return line1 + "\n" + line2
     }
     
     func configureGetButton() {

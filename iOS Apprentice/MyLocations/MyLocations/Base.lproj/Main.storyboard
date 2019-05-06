@@ -290,7 +290,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xz-B6-C0K">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Address" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xz-B6-C0K">
                                                     <rect key="frame" x="20" y="11.5" width="63" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -356,6 +356,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addressLabel" destination="Uez-sn-Kw9" id="Nc1-T7-tTd"/>
+                        <outlet property="categoryLabel" destination="UWM-3I-cTE" id="NYy-LO-gt5"/>
+                        <outlet property="dateLabel" destination="jy0-7O-CIo" id="RXG-tY-EqL"/>
+                        <outlet property="descriptionTextView" destination="aL4-Yn-38Y" id="yrj-Ud-dZN"/>
+                        <outlet property="latitudeLabel" destination="Mns-Fh-nE3" id="BGL-Gy-9T9"/>
+                        <outlet property="longitudeLabel" destination="zha-ii-tGa" id="2em-Wf-ZJ3"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rH3-b2-U9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
