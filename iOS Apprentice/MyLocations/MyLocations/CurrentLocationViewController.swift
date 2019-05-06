@@ -181,17 +181,20 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         
         if !performingReverseGeocoding {
             print("*** Going to geocode")
+            performingReverseGeocoding = true // Геокодинг в процессе
             
-            performingReverseGeocoding = true
-            geocoder.reverseGeocodeLocation(newLocation, completionHandler: { placemark, error in
-                if let error = error {
-                    print("*** Reverse Geocoding error: \(error.localizedDescription)")
-                    return
+            geocoder.reverseGeocodeLocation(newLocation, completionHandler: { placemarks, error in
+                self.lastGeocodingError = error
+                
+                // обработка ошибки и получение последней записи из массива с полученными локациями при геокодировании.
+                if error == nil, let p = placemarks, !p.isEmpty {
+                    self.placemark = p.last!
+                } else {
+                    self.placemark = nil
                 }
                 
-                if let places = placemark {
-                    print("*** Found places: \(places)")
-                }
+                self.performingReverseGeocoding = false // Геокодинг не выполняется
+                self.updateLabels()
             })
         }
     } // Конец didUpdateLocations
