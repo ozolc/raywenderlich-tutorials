@@ -50,17 +50,17 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             stopLocationManager()
             print("User has stopped getting location.")
         } else {
-            location = nil
-            lastLocationError = nil
+            placemark = nil
+            lastGeocodingError = nil
             startLocationManager()
         }
         
         updateLabels()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        
         updateLabels()
     }
     
@@ -82,7 +82,18 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             
             tagButton.isHidden = false
             messageLabel.text = ""
+            // Отображение адреса
+            if let placemark = placemark {
+                addressLabel.text = string(from: placemark)
+            } else if performingReverseGeocoding {
+                addressLabel.text = "Searching for Adress..."
+            } else if lastGeocodingError != nil {
+                addressLabel.text = "Error Finding Address"
+            } else {
+                addressLabel.text = "No Address Found"
+            }
         } else {
+            
             latitudeLabel.text = ""
             longitudeLabel.text = ""
             addressLabel.text = ""
@@ -99,8 +110,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
                 }
                 // Если отключена система навигации на устройстве
             } else if !CLLocationManager.locationServicesEnabled() {
-                    statusMessage = "Location Services Disabled"
-            // Если все хорошо, то вывести сообщение "Searching..."
+                statusMessage = "Location Services Disabled"
+                // Если все хорошо, то вывести сообщение "Searching..."
             } else if updatingLocation {
                 statusMessage = "Searching..."
             } else {
@@ -111,6 +122,36 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             messageLabel.text = statusMessage
         }
         configureGetButton()
+    }
+    
+    func string(from placemark: CLPlacemark) -> String {
+        var line1 = ""
+        
+        // Номер здания
+        if let s = placemark.subThoroughfare {
+            line1 += s + " "
+        }
+        // Улица
+        if let s = placemark.thoroughfare {
+            line1 += s + " "
+        }
+        
+        var line2 = ""
+        
+        // Город
+        if let s = placemark.locality {
+            line2 += s + " "
+        }
+        // Штат или область
+        if let s = placemark.administrativeArea {
+            line2 += s + " "
+        }
+        // Индекс
+        if let s = placemark.postalCode {
+            line2 += s + " "
+        }
+        
+        return line1 + "\n" + line2
     }
     
     func configureGetButton() {
@@ -137,7 +178,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             updatingLocation = false
         }
     }
-
+    
     // MARK: - CLLocationManagerDelegate
     // Если ошибка получения координат
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -198,6 +239,6 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             })
         }
     } // Конец didUpdateLocations
-
+    
 }
 
