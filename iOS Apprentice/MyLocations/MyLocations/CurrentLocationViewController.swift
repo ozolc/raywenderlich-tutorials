@@ -14,7 +14,11 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     let locationManager = CLLocationManager() // объект, которые дает GPS координаты
     var location: CLLocation? // Данные с координатами
     var updatingLocation = false // Обновлять локацию?
-    var lastLocationError: Error?
+    var lastLocationError: Error? // Последняя полученная ошибка в процессе получения локации
+    let geocoder = CLGeocoder() // Интерфейс для конвертирования географических координат в названия расположения
+    var placemark: CLPlacemark? // Объект, содержащий результаты получения адреса из координатам
+    var performingReverseGeocoding = false // Когда операция геокодирования в процессе
+    var lastGeocodingError: Error? // Последняя полученная ошибка в процессе геокодирования
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -174,7 +178,23 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             stopLocationManager()
         }
         updateLabels()
-    }
+        
+        if !performingReverseGeocoding {
+            print("*** Going to geocode")
+            
+            performingReverseGeocoding = true
+            geocoder.reverseGeocodeLocation(newLocation, completionHandler: { placemark, error in
+                if let error = error {
+                    print("*** Reverse Geocoding error: \(error.localizedDescription)")
+                    return
+                }
+                
+                if let places = placemark {
+                    print("*** Found places: \(places)")
+                }
+            })
+        }
+    } // Конец didUpdateLocations
 
 }
 
