@@ -29,8 +29,6 @@ class CategoryPickerViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(selectedCategoryName)
-        
         for i in 0..<categories.count {
             if categories[i] == selectedCategoryName {
                 selectedIndexPath = IndexPath(row: i, section: 0)
@@ -68,6 +66,16 @@ class CategoryPickerViewController: UITableViewController {
                 oldCell.accessoryType = .none
             }
             selectedIndexPath = indexPath
+        }
+    }
+    
+    // MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PickedCategory" {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell) {
+                selectedCategoryName = categories[indexPath.row]
+            }
         }
     }
     
