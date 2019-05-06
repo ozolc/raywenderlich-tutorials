@@ -131,10 +131,30 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     // Получены новые координаты
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let newLocation = locations.last!
+        location = newLocation
         print("didUpdateLocations \(newLocation)")
         
-        location = newLocation
-        lastLocationError = nil // После получения координаты, любая предыдущая ошибка не имеет значения.
+        // Если время получение расположения определено слишком давно (- в этом случае - кешированный результат) игнорируем его.
+        if newLocation.timestamp.timeIntervalSinceNow < -5 {
+            return
+        }
+        
+        // если точность для нового расположение меньше 0, то измерение неверное - игнорируем его
+        if newLocation.horizontalAccuracy < 0 {
+            return
+        }
+        
+        // если nil значение (если это первый запуск и мы еще не присваивали рабочей переменной location позицию) или точность прошлой локации больше(менее точнее в метрах/милях), то используем новую локацию
+        if location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy {
+            lastLocationError = nil // После получения координаты, любая предыдущая ошибка не имеет значения.
+            location = newLocation
+        }
+        
+        // Если точность позиционирования меньше или равно заданной нами точности для CLLocationManager - мы получили желаемый результат
+        if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+            print("*** We're done!")
+            stopLocationManager()
+        }
         updateLabels()
     }
 
