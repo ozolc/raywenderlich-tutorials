@@ -41,9 +41,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.startUpdatingLocation() // Запускаем locationManager. С этого момента объект будет отправлять обновления расположения своему делегату, т.е. CurrentLocationViewController
+        startLocationManager()
+        updateLabels()
     }
 
     override func viewDidLoad() {
@@ -100,6 +99,15 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
+    func startLocationManager() {
+        if CLLocationManager.locationServicesEnabled() { // Если сервис позиционирования включен на устройстве
+            locationManager.delegate = self // назначаем делегатом текущий View Controller
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters // Точность расположения в 10 метрах
+            locationManager.startUpdatingLocation() // Запускаем locationManager. С этого момента объект будет отправлять обновления расположения своему делегату, т.е. CurrentLocationViewController
+            updatingLocation = true
+        }
+    }
+    
     func stopLocationManager() {
         if updatingLocation {
             locationManager.stopUpdatingLocation()
@@ -126,6 +134,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         print("didUpdateLocations \(newLocation)")
         
         location = newLocation
+        lastLocationError = nil // После получения координаты, любая предыдущая ошибка не имеет значения.
         updateLabels()
     }
 
