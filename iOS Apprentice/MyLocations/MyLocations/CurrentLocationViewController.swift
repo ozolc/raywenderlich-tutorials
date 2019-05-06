@@ -70,6 +70,16 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         updateLabels()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true // Скрыть Navigation Bar во всем стеке Navigation Controller
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false // Перед уходом с View Controller отображать Navigation Bar во всем стеке Navigation Controller
+    }
+    
     // MARK:- Helper Methods
     func showLocationServicesDeniedAlert() {
         let alert = UIAlertController(title: "Location Services Disabled",
