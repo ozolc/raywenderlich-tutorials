@@ -41,7 +41,16 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         
-        startLocationManager()
+        // Отработка нажатия кнопки в процессе получения координат
+        if updatingLocation {
+            stopLocationManager()
+            print("User has stopped getting location.")
+        } else {
+            location = nil
+            lastLocationError = nil
+            startLocationManager()
+        }
+        
         updateLabels()
     }
 
@@ -96,6 +105,15 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             }
             
             messageLabel.text = statusMessage
+        }
+        configureGetButton()
+    }
+    
+    func configureGetButton() {
+        if updatingLocation {
+            getButton.setTitle("Stop", for: .normal)
+        } else {
+            getButton.setTitle("Get My Location", for: .normal)
         }
     }
     
