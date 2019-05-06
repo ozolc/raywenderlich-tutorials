@@ -13,6 +13,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     
     let locationManager = CLLocationManager() // объект, которые дает GPS координаты
     var location: CLLocation? // Данные с координатами
+    var updatingLocation = false // Обновлять локацию?
+    var lastLocationError: Error?
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -73,7 +75,36 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             longitudeLabel.text = ""
             addressLabel.text = ""
             tagButton.isHidden = true
-            messageLabel.text = "Tap 'Get My Location' to Start"
+            
+            let statusMessage: String
+            if let error = lastLocationError as NSError? {
+                // Если нет доступа на устройстве для получения координат
+                if error.domain == kCLErrorDomain && error.code == CLError.denied.rawValue {
+                    statusMessage = "Location Services Disabled"
+                } else {
+                    // Если что-то другое, то выводим общую формулировку
+                    statusMessage = "Error Getting Location"
+                }
+                // Если отключена система навигации на устройстве
+            } else if !CLLocationManager.locationServicesEnabled() {
+                    statusMessage = "Location Services Disabled"
+            // Если все хорошо, то вывести сообщение "Searching..."
+            } else if updatingLocation {
+                statusMessage = "Searching..."
+            } else {
+                // Иначе, отобразить приглашение к нажатию кнопки для определения текущих координат
+                statusMessage = "Tap 'Get My Location' to Start"
+            }
+            
+            messageLabel.text = statusMessage
+        }
+    }
+    
+    func stopLocationManager() {
+        if updatingLocation {
+            locationManager.stopUpdatingLocation()
+            locationManager.delegate = nil
+            updatingLocation = false
         }
     }
 
@@ -81,6 +112,12 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     // Если ошибка получения координат
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("didFailWithError \(error.localizedDescription)")
+        
+        if (error as NSError).code == CLError.locationUnknown.rawValue { return }
+        
+        lastLocationError = error
+        stopLocationManager()
+        updateLabels()
     }
     
     // Получены новые координаты
