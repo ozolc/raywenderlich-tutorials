@@ -39,19 +39,12 @@ class LocationsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! LocationCell
         
         let location = locations[indexPath.row] // индекс массива объектов <Locations> из Core Data
+        cell.configure(for: location)
         
-        let descriptionLabel = cell.viewWithTag(100) as! UILabel
-        descriptionLabel.text = location.locationDescription
         
-        let addressLabel = cell.viewWithTag(101) as! UILabel
-        if let placemark = location.placemark {
-            addressLabel.text = string(from: placemark)
-        } else {
-            addressLabel.text = ""
-        }
         return cell
     }
 
