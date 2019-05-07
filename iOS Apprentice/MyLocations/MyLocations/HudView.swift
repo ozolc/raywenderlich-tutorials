@@ -19,6 +19,7 @@ class HudView: UIView {
         view.addSubview(hudView) // Добавить в иерархию к родителю view
         view.isUserInteractionEnabled = false // Неактивно к взаимодействию родительское вью.
         
+        hudView.show(animated: true)
         return hudView
     }
     
@@ -40,7 +41,35 @@ class HudView: UIView {
         if let image = UIImage(named: "Checkmark") {
             let imagePoint = CGPoint(x: center.x - round(image.size.width / 2),
                                      y: center.y - round(image.size.height / 2) - boxHeight / 8)
+        
             image.draw(at: imagePoint)
+        }
+        
+        // Отрисовка теста
+        let attribs  = [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
+            NSAttributedString.Key.foregroundColor: UIColor.white ]
+        
+        let textSize = text.size(withAttributes: attribs)
+        
+        let textPoint = CGPoint(x: center.x - round(textSize.width / 2),
+                                y: center.y - round(textSize.height / 2) + boxHeight / 4)
+        
+        text.draw(at: textPoint, withAttributes: attribs)
+    }
+    
+    // MARK:- Public methods
+    func show(animated: Bool) {
+        if animated {
+            // Задаем начальные значения.
+            alpha = 0 // Полностью прозрачный View
+            transform = CGAffineTransform(scaleX: 1.3, y: 1.3) // увеличенные размеры на 30%
+            
+            // Изменить значения с начальных на заданные в замыкании в течении 0.3 секунды
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 1
+                self.transform = CGAffineTransform.identity // identity - первоначальное значение (отмена Scale)
+            }
         }
     }
 }
