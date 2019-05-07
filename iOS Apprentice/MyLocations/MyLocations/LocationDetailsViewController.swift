@@ -6,10 +6,9 @@
 //  Copyright © 2019 Maksim Nosov. All rights reserved.
 //
 
-
-
 import UIKit
 import CoreLocation
+import CoreData
 
 class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -22,6 +21,8 @@ class LocationDetailsViewController: UITableViewController {
     var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0) // Широта и долгота из CLLocation объекта
     var placemark: CLPlacemark?  // Объект, содержащий результаты получения адреса из координат
     var categoryName = "No Category"
+    
+    var managedObjectContext: NSManagedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
