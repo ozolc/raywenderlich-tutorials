@@ -80,4 +80,9 @@ class HudView: UIView {
             
         }
     }
+    
+    func hide() {
+        superview?.isUserInteractionEnabled = true // Возращаем возможность взаимодействия родительского вью
+        removeFromSuperview() // удалить из родительского вью
+    }
 }
