@@ -397,7 +397,7 @@
         <!--Root View Controller-->
         <scene sceneID="GHf-ua-Xf8">
             <objects>
-                <tableViewController id="5z2-rU-XTD" sceneMemberID="viewController">
+                <tableViewController id="5z2-rU-XTD" customClass="LocationsViewController" customModule="MyLocations" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lHX-qc-2JD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -411,24 +411,23 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zq0-Rl-bgD">
-                                            <rect key="frame" x="20" y="11" width="374" height="20.5"/>
+                                            <rect key="frame" x="20" y="4" width="374" height="20.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yD6-2j-LkJ">
-                                            <rect key="frame" x="20" y="23.5" width="374" height="23.5"/>
+                                            <rect key="frame" x="20" y="36.5" width="374" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="yD6-2j-LkJ" firstAttribute="bottom" secondItem="qr1-2A-P4a" secondAttribute="bottomMargin" id="9qV-aw-Y8c"/>
+                                        <constraint firstAttribute="bottom" secondItem="yD6-2j-LkJ" secondAttribute="bottom" constant="4" id="4sI-51-wET"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="yD6-2j-LkJ" secondAttribute="trailing" id="OGL-4K-neZ"/>
                                         <constraint firstItem="zq0-Rl-bgD" firstAttribute="leading" secondItem="qr1-2A-P4a" secondAttribute="leadingMargin" id="ck6-gr-d7d"/>
-                                        <constraint firstItem="yD6-2j-LkJ" firstAttribute="topMargin" secondItem="zq0-Rl-bgD" secondAttribute="bottom" id="k4Q-yw-gne"/>
-                                        <constraint firstItem="zq0-Rl-bgD" firstAttribute="top" secondItem="qr1-2A-P4a" secondAttribute="topMargin" id="l0W-Sk-End"/>
+                                        <constraint firstItem="zq0-Rl-bgD" firstAttribute="top" secondItem="qr1-2A-P4a" secondAttribute="top" constant="4" id="l0W-Sk-End"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="zq0-Rl-bgD" secondAttribute="trailing" id="nxF-yJ-RY3"/>
                                         <constraint firstItem="yD6-2j-LkJ" firstAttribute="leading" secondItem="qr1-2A-P4a" secondAttribute="leadingMargin" id="s0x-Jo-ljr"/>
                                     </constraints>

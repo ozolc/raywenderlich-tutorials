@@ -17,7 +17,7 @@
 		B07648C222817E2A00840D77 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07648C022817E2A00840D77 /* Location+CoreDataProperties.swift */; };
 		B081707A227F3804000639E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0817079227F3804000639E9 /* AppDelegate.swift */; };
 		B081707C227F3804000639E9 /* CurrentLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081707B227F3804000639E9 /* CurrentLocationViewController.swift */; };
-		B081707E227F3804000639E9 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081707D227F3804000639E9 /* SecondViewController.swift */; };
+		B081707E227F3804000639E9 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081707D227F3804000639E9 /* LocationsViewController.swift */; };
 		B0817081227F3804000639E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B081707F227F3804000639E9 /* Main.storyboard */; };
 		B0817083227F3805000639E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0817082227F3805000639E9 /* Assets.xcassets */; };
 		B0817086227F3805000639E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0817084227F3805000639E9 /* LaunchScreen.storyboard */; };
@@ -35,7 +35,7 @@
 		B0817076227F3804000639E9 /* MyLocations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyLocations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0817079227F3804000639E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B081707B227F3804000639E9 /* CurrentLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationViewController.swift; sourceTree = "<group>"; };
-		B081707D227F3804000639E9 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		B081707D227F3804000639E9 /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		B0817080227F3804000639E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B0817082227F3805000639E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0817085227F3805000639E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -75,18 +75,18 @@
 			isa = PBXGroup;
 			children = (
 				B0817079227F3804000639E9 /* AppDelegate.swift */,
-				B081707B227F3804000639E9 /* CurrentLocationViewController.swift */,
+				B0817082227F3805000639E9 /* Assets.xcassets */,
 				B011E27522809E5B009A72E5 /* CategoryPickerViewController.swift */,
+				B081707B227F3804000639E9 /* CurrentLocationViewController.swift */,
+				B07648BC2281777B00840D77 /* DataModel.xcdatamodeld */,
 				B07648BA22816B7600840D77 /* Functions.swift */,
-				B011E27122808C90009A72E5 /* LocationDetailsViewController.swift */,
 				B011E27322809A1E009A72E5 /* Helpers.swift */,
 				B07648B822815CB000840D77 /* HudView.swift */,
-				B081707D227F3804000639E9 /* SecondViewController.swift */,
-				B081707F227F3804000639E9 /* Main.storyboard */,
-				B0817082227F3805000639E9 /* Assets.xcassets */,
-				B0817084227F3805000639E9 /* LaunchScreen.storyboard */,
 				B0817087227F3805000639E9 /* Info.plist */,
-				B07648BC2281777B00840D77 /* DataModel.xcdatamodeld */,
+				B0817084227F3805000639E9 /* LaunchScreen.storyboard */,
+				B011E27122808C90009A72E5 /* LocationDetailsViewController.swift */,
+				B081707D227F3804000639E9 /* LocationsViewController.swift */,
+				B081707F227F3804000639E9 /* Main.storyboard */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -165,7 +165,7 @@
 				B011E27622809E5B009A72E5 /* CategoryPickerViewController.swift in Sources */,
 				B011E27222808C90009A72E5 /* LocationDetailsViewController.swift in Sources */,
 				B07648C222817E2A00840D77 /* Location+CoreDataProperties.swift in Sources */,
-				B081707E227F3804000639E9 /* SecondViewController.swift in Sources */,
+				B081707E227F3804000639E9 /* LocationsViewController.swift in Sources */,
 				B07648BB22816B7600840D77 /* Functions.swift in Sources */,
 				B081707A227F3804000639E9 /* AppDelegate.swift in Sources */,
 				B011E27422809A1E009A72E5 /* Helpers.swift in Sources */,
