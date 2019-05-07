@@ -40,6 +40,23 @@ class LocationDetailsViewController: UITableViewController {
         
         dateLabel.text = format(date: Date())
         categoryLabel.text = categoryName
+        
+        // Hide keyboard
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)) // target - объект, получаемый сообщение (action)
+        gestureRecognizer.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(gestureRecognizer)
+        
+    }
+    
+    // Скрытие клавиатуры при нажатии на область, кроме ячейки с descriptionTextView
+    @objc func hideKeyboard(_ gestureRecognizer: UIGestureRecognizer) {
+        let point = gestureRecognizer.location(in: tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        
+        if indexPath != nil && indexPath!.section == 0 && indexPath!.row == 0 {
+            return
+        }
+        descriptionTextView.resignFirstResponder()
     }
     
     // MARK:- Navigation
@@ -65,8 +82,9 @@ class LocationDetailsViewController: UITableViewController {
         categoryLabel.text = categoryName
     }
     
-    // MARK:- Table View Delegates
     
+    
+    // MARK:- Table View Delegates
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 || indexPath.section == 1 {
             return indexPath // Только нажатие на ячейке из секций 0 и 1
