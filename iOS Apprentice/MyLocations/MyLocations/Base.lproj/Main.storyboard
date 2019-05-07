@@ -394,7 +394,7 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Locations-->
         <scene sceneID="GHf-ua-Xf8">
             <objects>
                 <tableViewController id="5z2-rU-XTD" customClass="LocationsViewController" customModule="MyLocations" customModuleProvider="target" sceneMemberID="viewController">
@@ -439,7 +439,7 @@
                             <outlet property="delegate" destination="5z2-rU-XTD" id="wcy-Ph-Bk8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="dgx-3q-gGi"/>
+                    <navigationItem key="navigationItem" title="Locations" id="dgx-3q-gGi"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Qv-cD-hla" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
