@@ -435,6 +435,7 @@
                                 <connections>
                                     <outlet property="addressLabel" destination="yD6-2j-LkJ" id="XgU-zu-hqF"/>
                                     <outlet property="descriptionLabel" destination="zq0-Rl-bgD" id="ZdD-HB-DQm"/>
+                                    <segue destination="SJ2-9h-fNM" kind="show" id="gKD-Ls-5Iy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -489,4 +490,7 @@
     <resources>
         <image name="first" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="gKD-Ls-5Iy"/>
+    </inferredMetricsTieBreakers>
 </document>
