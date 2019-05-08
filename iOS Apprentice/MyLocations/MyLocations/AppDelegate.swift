@@ -31,16 +31,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabController = window!.rootViewController as! UITabBarController
         
         // Dependency injection для managedObjectContext
-        // Первый Tab - передача managedObjectContext
+        // Первый Tab (Current Location)- передача managedObjectContext
         if let tabViewControllers = tabController.viewControllers {
             var navController = tabViewControllers[0] as! UINavigationController
             let controller1 = navController.viewControllers.first as! CurrentLocationViewController
             controller1.managedObjectContext = managedObjectContext
         
-        // Второй Tab - передача managedObjectContext
+        // Второй Tab (Locations) - передача managedObjectContext
             navController = tabViewControllers[1] as! UINavigationController
             let controller2 = navController.viewControllers.first as! LocationsViewController
             controller2.managedObjectContext = managedObjectContext
+        
+        // Третий Tab (Locations) - передача managedObjectContext
+            navController = tabViewControllers[2] as! UINavigationController
+            let controller3 = navController.viewControllers.first as! MapViewController
+            controller3.managedObjectContext = managedObjectContext
         }
         
         print(applicationDocumentsDirectory)
