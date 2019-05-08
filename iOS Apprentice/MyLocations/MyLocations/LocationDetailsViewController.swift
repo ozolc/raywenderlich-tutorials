@@ -20,6 +20,7 @@ class LocationDetailsViewController: UITableViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var addPhotoLabel: UILabel!
+    @IBOutlet weak var imageHeight: NSLayoutConstraint! // Аутлет для Auto Layout constraint. Изменить высоту изображения. Не забыть привязать к констреинту высоты изображения в storyboard
     
     var image: UIImage?
     
@@ -79,6 +80,9 @@ class LocationDetailsViewController: UITableViewController {
         imageView.image = image
         imageView.isHidden = false
         addPhotoLabel.text = ""
+        
+        imageHeight.constant = 260 // Увеличить высоту изображения до 260 points
+        tableView.reloadData() // Не забыть перезагрузить tableView!
     }
     
     // Скрытие клавиатуры при нажатии на область, кроме ячейки с descriptionTextView
@@ -186,7 +190,7 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
     // MARK:- Image Picker Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        // получение изображение из словаря info[UIImagePickerController.InfoKey.editedImage] после выбора пользователем изображение
+        // получение изображение из словаря info[UIImagePickerController.InfoKey.editedImage] после выбора пользователем изображения
         image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
         
         if let theImage = image {
