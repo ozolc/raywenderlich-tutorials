@@ -92,7 +92,19 @@ class MapViewController: UIViewController {
     }
     
     @objc func showLocationDetails(_ sender: UIButton) {
-        
+        performSegue(withIdentifier: "EditLocation", sender: sender) // sender - отправить нажатую кнопку, из которой получим tag, для получения индекса в массиве locations
+    }
+    
+    // MARK:- Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditLocation" {
+            let controller = segue.destination as! LocationDetailsViewController
+            controller.managedObjectContext = managedObjectContext // передача context Core Data
+            
+            let button = sender as! UIButton
+            let location = locations[button.tag] // получить объект Location из массива с индексом из Tag в Annotation
+            controller.locationToEdit = location // передадим объект Location для изменения
+        }
     }
 }
 
@@ -104,16 +116,17 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         let identifier = "Location"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) // как с dequeueReusable в TableView
         
         if annotationView == nil {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            
+            // Настроить внешний вид Annotation
             pinView.isEnabled = true
             pinView.canShowCallout = true
             pinView.animatesDrop = false
             pinView.pinTintColor = UIColor(red: 0.32, green: 0.82, blue: 0.4, alpha: 1)
             
+            // кнопка в Annotation
             let rightButton = UIButton(type: .detailDisclosure)
             rightButton.addTarget(self, action: #selector(showLocationDetails(_:)), for: .touchUpInside)
             pinView.rightCalloutAccessoryView = rightButton
@@ -123,7 +136,7 @@ extension MapViewController: MKMapViewDelegate {
         
         if let annotationView = annotationView {
             annotationView.annotation = annotation
-            
+            // Присвоить tag для созданной кнопки равный индексу из массивы Location
             let button = annotationView.rightCalloutAccessoryView as! UIButton
             if let index = locations.firstIndex(of: annotation as! Location) {
                 button.tag = index
