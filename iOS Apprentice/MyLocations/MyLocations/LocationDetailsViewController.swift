@@ -141,12 +141,13 @@ class LocationDetailsViewController: UITableViewController {
         }
     }
     
+    // Выбрать фото
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 0 {
             descriptionTextView.becomeFirstResponder()
         } else if indexPath.section == 1 && indexPath.row == 0 {
-//            takePhotoWithCamera()
-            choosePhotoFromLibrary()
+            tableView.deselectRow(at: indexPath, animated: true) // убрать выделение ячейки
+            pickPhoto()
         }
     }
 }
@@ -177,6 +178,36 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // Метод-селектор для выбора фото из библиотеки/камеры
+    func pickPhoto() {
+        // Если доступна камера на устройстве, вызвать метод с Alert Controller для выбора источника изображения
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            showPhotoMenu()
+        } else {
+            // если камера недоступна, выбрать из библиотеки изображений
+            choosePhotoFromLibrary()
+        }
+    }
+    
+    func showPhotoMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let actCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(actCancel)
+        
+        let actPhoto = UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+            self.takePhotoWithCamera()
+        })
+        alert.addAction(actPhoto)
+        
+        let actLibrary = UIAlertAction(title: "Choose From Library", style: .default, handler: { _ in
+            self.choosePhotoFromLibrary()
+        })
+        alert.addAction(actLibrary)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
