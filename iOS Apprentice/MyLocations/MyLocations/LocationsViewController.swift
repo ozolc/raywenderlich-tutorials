@@ -22,14 +22,15 @@ class LocationsViewController: UITableViewController {
         let entity = Location.entity() // Инициализация Entity ассоциированную с классом Location
         fetchRequest.entity = entity // Entity используемая fetch request
         
-        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true) // Описание сортировки по полю "date" по возрастанию
-        fetchRequest.sortDescriptors = [sortDescriptor] // Массив сортировок для fetch request
+        let sort1 = NSSortDescriptor(key: "category", ascending: true) // Описание сортировки по полю "category" по возрастанию
+        let sort2 = NSSortDescriptor(key: "date", ascending: true) // Описание сортировки по полю "date" по возрастанию
+        fetchRequest.sortDescriptors = [sort1, sort2] // Массив сортировок для fetch request
         
         fetchRequest.fetchBatchSize = 20 // Количество получаемых записей в запросе
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                                   managedObjectContext: self.managedObjectContext,
-                                                                  sectionNameKeyPath: nil,
+                                                                  sectionNameKeyPath: "category",
                                                                   cacheName: "Locations") // Сохраняем кэш на диск
         
         fetchedResultsController.delegate = self // При изменении в NSFetchedResultsController этот контроллер будет оповещен.
@@ -82,6 +83,15 @@ class LocationsViewController: UITableViewController {
                 fatalCoreDataError(error)
             }
         }
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedResultsController.sections!.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionInfo = fetchedResultsController.sections![section]
+        return sectionInfo.name
     }
     
     // MARK:- Navigation
