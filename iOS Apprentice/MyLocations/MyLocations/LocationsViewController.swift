@@ -40,6 +40,8 @@ class LocationsViewController: UITableViewController {
         super.viewDidLoad()
         performFetch()
         
+        navigationItem.rightBarButtonItem = editButtonItem // Каждый view controller имеет встроенную Edit кнопку
+        
     }
     
     // MARK: - Helper methods
@@ -67,8 +69,19 @@ class LocationsViewController: UITableViewController {
         let location = fetchedResultsController.object(at: indexPath) // получаем объект из NSFetchedResultsController
         cell.configure(for: location)
         
-        
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let location = fetchedResultsController.object(at: indexPath)
+            managedObjectContext.delete(location)
+            do {
+                try managedObjectContext.save()
+            } catch {
+                fatalCoreDataError(error)
+            }
+        }
     }
     
     // MARK:- Navigation
