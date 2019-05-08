@@ -190,10 +190,20 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tta-nc-nMh">
+                                                    <rect key="frame" x="101" y="11" width="267" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="TzJ-gm-EqK"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="tta-nc-nMh" firstAttribute="bottom" secondItem="NYA-xU-hka" secondAttribute="bottomMargin" id="4HQ-eF-btU"/>
                                                 <constraint firstItem="5co-kx-dHO" firstAttribute="centerY" secondItem="NYA-xU-hka" secondAttribute="centerY" id="Do0-1l-ucw"/>
+                                                <constraint firstItem="tta-nc-nMh" firstAttribute="trailing" secondItem="NYA-xU-hka" secondAttribute="trailingMargin" id="fMr-Z3-FgK"/>
+                                                <constraint firstItem="tta-nc-nMh" firstAttribute="leading" secondItem="5co-kx-dHO" secondAttribute="trailing" id="t2d-0b-F5P"/>
                                                 <constraint firstItem="5co-kx-dHO" firstAttribute="leading" secondItem="NYA-xU-hka" secondAttribute="leadingMargin" id="u9A-LW-YVh"/>
+                                                <constraint firstItem="tta-nc-nMh" firstAttribute="top" secondItem="NYA-xU-hka" secondAttribute="topMargin" id="zyo-dZ-ZDt"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -323,17 +333,19 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPhotoLabel" destination="5co-kx-dHO" id="JiU-8m-hPc"/>
                         <outlet property="addressLabel" destination="Uez-sn-Kw9" id="Nc1-T7-tTd"/>
                         <outlet property="categoryLabel" destination="UWM-3I-cTE" id="NYy-LO-gt5"/>
                         <outlet property="dateLabel" destination="jy0-7O-CIo" id="RXG-tY-EqL"/>
                         <outlet property="descriptionTextView" destination="aL4-Yn-38Y" id="yrj-Ud-dZN"/>
+                        <outlet property="imageView" destination="tta-nc-nMh" id="Na0-km-IhA"/>
                         <outlet property="latitudeLabel" destination="Mns-Fh-nE3" id="BGL-Gy-9T9"/>
                         <outlet property="longitudeLabel" destination="zha-ii-tGa" id="2em-Wf-ZJ3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rH3-b2-U9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2142" y="-320"/>
+            <point key="canvasLocation" x="2139.130434782609" y="-320.08928571428572"/>
         </scene>
         <!--Category Picker View Controller-->
         <scene sceneID="M0s-XR-jR0">

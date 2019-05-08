@@ -18,6 +18,11 @@ class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var addPhotoLabel: UILabel!
+    
+    var image: UIImage?
+    
     var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0) // Широта и долгота из CLLocation объекта
     var placemark: CLPlacemark?  // Объект, содержащий результаты получения адреса из координат
     var categoryName = "No Category"
@@ -43,7 +48,7 @@ class LocationDetailsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let location = locationToEdit {
+        if let _ = locationToEdit {
             title = "Edit location"
         }
         
@@ -67,6 +72,13 @@ class LocationDetailsViewController: UITableViewController {
         gestureRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(gestureRecognizer)
         
+    }
+    
+    // Настройка изображения. Убрать текст, чтобы AutoLayout (0,0,0,0) - изображение займет все место в ячейке.
+    func show(image: UIImage) {
+        imageView.image = image
+        imageView.isHidden = false
+        addPhotoLabel.text = ""
     }
     
     // Скрытие клавиатуры при нажатии на область, кроме ячейки с descriptionTextView
@@ -173,6 +185,14 @@ extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavi
     
     // MARK:- Image Picker Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        // получение изображение из словаря info[UIImagePickerController.InfoKey.editedImage] после выбора пользователем изображение
+        image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+        
+        if let theImage = image {
+            show(image: theImage)
+        }
+        
         dismiss(animated: true, completion: nil)
     }
     
