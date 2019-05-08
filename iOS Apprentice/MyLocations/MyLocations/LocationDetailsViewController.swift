@@ -73,6 +73,9 @@ class LocationDetailsViewController: UITableViewController {
         gestureRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(gestureRecognizer)
         
+        // Слушаем, когда приложение уходит в background и убираем модальные view controllers.
+        listenForBackgroundNotification()
+        
     }
     
     // Настройка изображения. Убрать текст, чтобы AutoLayout (0,0,0,0) - изображение займет все место в ячейке.
@@ -101,6 +104,18 @@ class LocationDetailsViewController: UITableViewController {
         if segue.identifier == "PickCategory" {
             let controller = segue.destination as! CategoryPickerViewController
             controller.selectedCategoryName = categoryName
+        }
+    }
+    
+    // Метод, подписываемся на событие при переходе приложения в background (свернули кнопкой Home). Убираем modal view controllers (imagepicker и action sheet), и клавиатуру с descriptionTextView если она активна
+    func listenForBackgroundNotification() {
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: OperationQueue.main) { _ in
+            
+            if self.presentedViewController != nil {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            self.descriptionTextView.resignFirstResponder()
         }
     }
     
