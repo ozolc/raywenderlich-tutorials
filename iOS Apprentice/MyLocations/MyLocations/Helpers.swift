@@ -10,7 +10,6 @@ private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium
     formatter.timeStyle = .short
-    print("created")
     return formatter
 }()
 

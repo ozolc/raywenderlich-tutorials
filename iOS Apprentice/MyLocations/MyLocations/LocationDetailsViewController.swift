@@ -22,6 +22,20 @@ class LocationDetailsViewController: UITableViewController {
     var placemark: CLPlacemark?  // Объект, содержащий результаты получения адреса из координат
     var categoryName = "No Category"
     
+    // Объект получаемый из LocationsViewController. nil - так как при добавлении через CurrentLocationViewController, мы не передаем его. didSet - вызывается до viewDidLoad()
+    var locationToEdit: Location? {
+        didSet {
+            if let location = locationToEdit {
+                descriptionText = location.locationDescription
+                categoryName = location.category
+                date = location.date
+                coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+                placemark = location.placemark
+            }
+        }
+    }
+    var descriptionText = ""
+    
     // Core Data
     var managedObjectContext: NSManagedObjectContext!
     var date = Date()
@@ -29,7 +43,11 @@ class LocationDetailsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionTextView.text = ""
+        if let location = locationToEdit {
+            title = "Edit location"
+        }
+        
+        descriptionTextView.text = descriptionText
         categoryLabel.text = ""
         
         latitudeLabel.text = String(format: "%.8f", coordinate.latitude)
@@ -73,9 +91,15 @@ class LocationDetailsViewController: UITableViewController {
     // MARK: - Actions
     @IBAction func done() {
         let hudView = HudView.hud(inView: navigationController!.view, animated: true)
-        hudView.text = "Tagged"
         
-        let location = Location(context: managedObjectContext)
+        let location: Location
+        if let temp = locationToEdit {
+            hudView.text = "Updated"
+            location = temp
+        } else {
+            hudView.text = "Tagged"
+            location = Location(context: managedObjectContext)
+        }
         
         location.locationDescription = descriptionTextView.text
         location.category = categoryName
