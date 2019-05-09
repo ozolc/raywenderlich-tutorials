@@ -14,9 +14,21 @@ class LocationCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     
+    // каждый объект из storyboard имеет awakeFromNib() метод. Этот метод вызывается, когда UIKit загружает объект из storyboard. Здесь мы изменить его вид
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        let selection = UIView(frame: CGRect.zero)
+        selection.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        selectedBackgroundView = selection // Изменить цвет для выделенной ячейки
+        
+        // Закруглить углы для изображений в ячейки
+        photoImageView.layer.cornerRadius = photoImageView.bounds.size.width / 2
+        photoImageView.clipsToBounds = true
+        separatorInset = UIEdgeInsets(top: 0, left: 82, bottom: 0, right: 0)
+        
+        descriptionLabel.backgroundColor = UIColor.purple
+        addressLabel.backgroundColor = UIColor.purple
     }
     
     // MARK:- Helper Method
@@ -45,7 +57,7 @@ class LocationCell: UITableViewCell {
         if location.hasPhoto, let image = location.photoImage {
             return image.resized(withBounds: CGSize(width: 52, height: 52))
         }
-        return UIImage()
+        return UIImage(named: "No Photo")!
     }
 
 }
