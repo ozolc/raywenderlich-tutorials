@@ -50,8 +50,16 @@ class LocationDetailsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let _ = locationToEdit {
+        if let location = locationToEdit {
             title = "Edit location"
+            
+            // Загрузим фото при редактировании записи. Путь к файлу берется из URL photoURL в Core Data и создается UIImage photoImage
+            if location.hasPhoto {
+                if let theImage = location.photoImage {
+                    show(image: theImage)
+                }
+            }
+            
         }
         
         descriptionTextView.text = descriptionText
@@ -137,6 +145,7 @@ class LocationDetailsViewController: UITableViewController {
         } else {
             hudView.text = "Tagged"
             location = Location(context: managedObjectContext)
+            location.photoID = nil // Новый объект еще не имеет фото. Будем проверять это чуть ниже
         }
         
         location.locationDescription = descriptionTextView.text
@@ -145,6 +154,21 @@ class LocationDetailsViewController: UITableViewController {
         location.longitude = coordinate.longitude
         location.date = date
         location.placemark = placemark
+        
+        // Если выбрано изображение в UIImagePickerController
+        if let image = image {
+            if !location.hasPhoto { // нет фото для объекта Location
+                location.photoID = Location.nextPhotoID() as NSNumber // генерируем новое ID
+            }
+            
+            if let data = image.jpegData(compressionQuality: 0.5) {
+                do {
+                    try data.write(to: location.photoURL, options: .atomic)
+                } catch {
+                    print("Error writing file: \(error)")
+                }
+            }
+        }
         
         do {
             try managedObjectContext.save()
