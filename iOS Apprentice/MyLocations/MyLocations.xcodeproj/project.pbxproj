@@ -109,8 +109,8 @@
 				B081707D227F3804000639E9 /* LocationsViewController.swift */,
 				B081707F227F3804000639E9 /* Main.storyboard */,
 				B032DDF82282D453007A7819 /* MapViewController.swift */,
-				B012CF7B2284183100D8D178 /* UIImage+Resize.swift */,
 				B0E8ED55228447EB00B796BF /* String+AddText.swift */,
+				B012CF7B2284183100D8D178 /* UIImage+Resize.swift */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
