@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import CoreData
+import AudioToolbox
 
 class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate, CAAnimationDelegate {
     
@@ -26,6 +27,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     var performingReverseGeocoding = false // Когда операция геокодирования в процессе
     var lastGeocodingError: Error? // Последняя полученная ошибка в процессе геокодирования
     var timer: Timer? // Таймер для отсчета времени после старта определения местоположения в startLocationManager()
+    var soundID: SystemSoundID = 0 // Системный звук для нотификации. 0 - обозначает, что еще не загружен системный звук
     
     var logoVisible = false
     
@@ -91,6 +93,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         super.viewDidLoad()
         
         updateLabels()
+        loadSoundEffect("Sound.caf")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +104,26 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false // Перед уходом с View Controller отображать Navigation Bar во всем стеке Navigation Controller
+    }
+    
+    // MARK:- Sound effects
+    func loadSoundEffect(_ name: String) {
+        if let path = Bundle.main.path(forResource: name, ofType: nil) {
+            let fileURL = URL(fileURLWithPath: path, isDirectory: false)
+            let error = AudioServicesCreateSystemSoundID(fileURL as CFURL, &soundID)
+            if error != kAudioServicesNoError {
+                print("Error code \(error) loading sound: \(path)")
+            }
+        }
+    }
+    
+    func unloadSoundEffect() {
+        AudioServicesDisposeSystemSoundID(soundID)
+        soundID = 0
+    }
+    
+    func playSoundEffect() {
+        AudioServicesPlaySystemSound(soundID)
     }
     
     // MARK:- Navigation
@@ -203,7 +226,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             if let placemark = placemark {
                 addressLabel.text = string(from: placemark)
             } else if performingReverseGeocoding {
-                addressLabel.text = "Searching for Adress..."
+                addressLabel.text = "Searching for Address..."
             } else if lastGeocodingError != nil {
                 addressLabel.text = "Error Finding Address"
             } else {
@@ -372,6 +395,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
                 
                 // обработка ошибки и получение последней записи из массива с полученными локациями при геокодировании.
                 if error == nil, let p = placemarks, !p.isEmpty {
+                    if self.placemark == nil {
+                        print("FIRST TIME!")
+                        self.playSoundEffect()
+                    }
                     self.placemark = p.last!
                 } else {
                     self.placemark = nil

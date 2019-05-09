@@ -54,6 +54,7 @@
 		B0E8ED55228447EB00B796BF /* String+AddText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AddText.swift"; sourceTree = "<group>"; };
 		B0E8ED5722844FA100B796BF /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 		B0E8ED592284512000B796BF /* MyImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImagePickerController.swift; sourceTree = "<group>"; };
+		B0E8ED5B228472E800B796BF /* Sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sound.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		B081706D227F3804000639E9 = {
 			isa = PBXGroup;
 			children = (
+				B0E8ED5B228472E800B796BF /* Sound.caf */,
 				B07648BF22817E2A00840D77 /* Location+CoreDataClass.swift */,
 				B07648C022817E2A00840D77 /* Location+CoreDataProperties.swift */,
 				B0817078227F3804000639E9 /* MyLocations */,
