@@ -94,6 +94,7 @@ class LocationDetailsViewController: UITableViewController {
     
     // Настройка изображения. Убрать текст, чтобы AutoLayout (0,0,0,0) - изображение займет все место в ячейке.
     func show(image: UIImage) {
+//        imageView.image = image.resized(withBounds: CGSize(width: view.bounds.width, height: view.bounds.height))
         imageView.image = image
         imageView.isHidden = false
         addPhotoLabel.text = ""

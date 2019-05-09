@@ -10,6 +10,7 @@
 		B011E27222808C90009A72E5 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B011E27122808C90009A72E5 /* LocationDetailsViewController.swift */; };
 		B011E27422809A1E009A72E5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B011E27322809A1E009A72E5 /* Helpers.swift */; };
 		B011E27622809E5B009A72E5 /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B011E27522809E5B009A72E5 /* CategoryPickerViewController.swift */; };
+		B012CF7C2284183100D8D178 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012CF7B2284183100D8D178 /* UIImage+Resize.swift */; };
 		B032DDF72282D3BA007A7819 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B032DDF62282D3BA007A7819 /* MapKit.framework */; };
 		B032DDF92282D453007A7819 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B032DDF82282D453007A7819 /* MapViewController.swift */; };
 		B065571E22820C9B00B033B8 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B065571D22820C9B00B033B8 /* LocationCell.swift */; };
@@ -30,6 +31,7 @@
 		B011E27122808C90009A72E5 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 		B011E27322809A1E009A72E5 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		B011E27522809E5B009A72E5 /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
+		B012CF7B2284183100D8D178 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		B032DDF62282D3BA007A7819 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B032DDF82282D453007A7819 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B065571D22820C9B00B033B8 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				B081707D227F3804000639E9 /* LocationsViewController.swift */,
 				B081707F227F3804000639E9 /* Main.storyboard */,
 				B032DDF82282D453007A7819 /* MapViewController.swift */,
+				B012CF7B2284183100D8D178 /* UIImage+Resize.swift */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				B07648BB22816B7600840D77 /* Functions.swift in Sources */,
 				B081707A227F3804000639E9 /* AppDelegate.swift in Sources */,
 				B032DDF92282D453007A7819 /* MapViewController.swift in Sources */,
+				B012CF7C2284183100D8D178 /* UIImage+Resize.swift in Sources */,
 				B065571E22820C9B00B033B8 /* LocationCell.swift in Sources */,
 				B011E27422809A1E009A72E5 /* Helpers.swift in Sources */,
 				B07648BE2281777B00840D77 /* DataModel.xcdatamodeld in Sources */,
