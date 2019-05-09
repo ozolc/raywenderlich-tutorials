@@ -16,27 +16,18 @@ private let dateFormatter: DateFormatter = {
 import CoreLocation
 
 func string(from placemark: CLPlacemark) -> String {
-    var text = ""
     
-    if let s = placemark.subThoroughfare {
-        text += s + " "
-    }
-    if let s = placemark.thoroughfare {
-        text += s + ", "
-    }
-    if let s = placemark.locality {
-        text += s + ", "
-    }
-    if let s = placemark.administrativeArea {
-        text += s + " "
-    }
-    if let s = placemark.postalCode {
-        text += s + ", "
-    }
-    if let s = placemark.country {
-        text += s
-    }
-    return text
+    var line1 = ""
+    line1.add(text: placemark.subThoroughfare)
+    line1.add(text: placemark.thoroughfare, separatedBy: " ")
+
+    var line2 = ""
+    line2.add(text: placemark.locality)
+    line2.add(text: placemark.administrativeArea, separatedBy: " ")
+    line2.add(text: placemark.postalCode, separatedBy: " ")
+    
+    line1.add(text: line2, separatedBy: "\n")
+    return line1
 }
 
 func format(date: Date) -> String {

@@ -25,6 +25,7 @@
 		B0817081227F3804000639E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B081707F227F3804000639E9 /* Main.storyboard */; };
 		B0817083227F3805000639E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0817082227F3805000639E9 /* Assets.xcassets */; };
 		B0817086227F3805000639E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0817084227F3805000639E9 /* LaunchScreen.storyboard */; };
+		B0E8ED56228447EB00B796BF /* String+AddText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E8ED55228447EB00B796BF /* String+AddText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		B0817082227F3805000639E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0817085227F3805000639E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0817087227F3805000639E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0E8ED55228447EB00B796BF /* String+AddText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AddText.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				B081707F227F3804000639E9 /* Main.storyboard */,
 				B032DDF82282D453007A7819 /* MapViewController.swift */,
 				B012CF7B2284183100D8D178 /* UIImage+Resize.swift */,
+				B0E8ED55228447EB00B796BF /* String+AddText.swift */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				B011E27422809A1E009A72E5 /* Helpers.swift in Sources */,
 				B07648BE2281777B00840D77 /* DataModel.xcdatamodeld in Sources */,
 				B07648B922815CB000840D77 /* HudView.swift in Sources */,
+				B0E8ED56228447EB00B796BF /* String+AddText.swift in Sources */,
 				B07648C122817E2A00840D77 /* Location+CoreDataClass.swift in Sources */,
 				B081707C227F3804000639E9 /* CurrentLocationViewController.swift in Sources */,
 			);
