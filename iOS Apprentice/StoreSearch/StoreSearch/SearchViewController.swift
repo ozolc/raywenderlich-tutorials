@@ -26,11 +26,17 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     // Этот метод срабатывает, когда пользователь нажимает Search button на клавиатуре
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // Убрать клавиатуру
+        
         searchResults = []
         for i in 0...2 {
             searchResults.append(String(format: "Fake Results %d for '%@'", i, searchBar.text!))
         }
         tableView.reloadData()
+    }
+    
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
     }
 }
 
