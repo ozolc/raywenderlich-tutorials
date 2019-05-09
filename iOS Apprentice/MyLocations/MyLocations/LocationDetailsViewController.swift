@@ -23,6 +23,7 @@ class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var imageHeight: NSLayoutConstraint! // Аутлет для Auto Layout constraint. Изменить высоту изображения. Не забыть привязать к констреинту высоты изображения в storyboard
     
     var image: UIImage?
+    var observer: Any! // Ссылка на обзервер
     
     var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0) // Широта и долгота из CLLocation объекта
     var placemark: CLPlacemark?  // Объект, содержащий результаты получения адреса из координат
@@ -78,6 +79,11 @@ class LocationDetailsViewController: UITableViewController {
         
     }
     
+    deinit {
+        print("*** deinit \(self)")
+        NotificationCenter.default.removeObserver(observer)
+    }
+    
     // Настройка изображения. Убрать текст, чтобы AutoLayout (0,0,0,0) - изображение займет все место в ячейке.
     func show(image: UIImage) {
         imageView.image = image
@@ -109,13 +115,14 @@ class LocationDetailsViewController: UITableViewController {
     
     // Метод, подписываемся на событие при переходе приложения в background (свернули кнопкой Home). Убираем modal view controllers (imagepicker и action sheet), и клавиатуру с descriptionTextView если она активна
     func listenForBackgroundNotification() {
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: OperationQueue.main) { _ in
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: OperationQueue.main) { [weak self] _ in
             
-            if self.presentedViewController != nil {
-                self.dismiss(animated: true, completion: nil)
+            if let weakSelf = self {
+                if weakSelf.presentedViewController != nil {
+                    weakSelf.dismiss(animated: true, completion: nil)
+                }
+                weakSelf.descriptionTextView.resignFirstResponder()
             }
-            
-            self.descriptionTextView.resignFirstResponder()
         }
     }
     
