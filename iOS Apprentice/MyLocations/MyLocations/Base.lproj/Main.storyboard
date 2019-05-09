@@ -528,7 +528,7 @@
         <scene sceneID="AwV-X0-QX9">
             <objects>
                 <navigationController id="RTi-Ru-b9G" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Locations" id="hUu-R7-7lp"/>
+                    <tabBarItem key="tabBarItem" title="Locations" image="Locations" id="hUu-R7-7lp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hCR-vt-0Kz">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -545,7 +545,7 @@
         <scene sceneID="lDw-Tz-I0U">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1iv-Vm-tiK" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Tag" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Tag" image="Tag" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Cxw-QN-imc">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -564,7 +564,7 @@
         <scene sceneID="V8b-g9-KCv">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kcy-PZ-lgq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="LeL-WW-AyG"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="Map" id="LeL-WW-AyG"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PoB-bd-vmF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -581,7 +581,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
+        <image name="Locations" width="30" height="30"/>
+        <image name="Map" width="30" height="30"/>
+        <image name="Tag" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ndr-0b-U6a"/>
