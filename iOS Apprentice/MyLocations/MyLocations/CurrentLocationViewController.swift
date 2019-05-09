@@ -36,6 +36,8 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var getButton: UIButton!
+    @IBOutlet weak var latitudeTextLabel: UILabel!
+    @IBOutlet weak var longitudeTextLabel: UILabel!
     
     // MARK: - Actions
     @IBAction func getLocation() {
@@ -124,12 +126,17 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             } else {
                 addressLabel.text = "No Address Found"
             }
+            latitudeTextLabel.isHidden = false
+            longitudeTextLabel.isHidden = false
         } else {
             
             latitudeLabel.text = ""
             longitudeLabel.text = ""
             addressLabel.text = ""
             tagButton.isHidden = true
+            
+            latitudeTextLabel.isHidden = true
+            longitudeTextLabel.isHidden = true
             
             let statusMessage: String
             if let error = lastLocationError as NSError? {
