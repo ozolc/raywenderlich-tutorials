@@ -24,7 +24,6 @@
 		B081707E227F3804000639E9 /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081707D227F3804000639E9 /* LocationsViewController.swift */; };
 		B0817081227F3804000639E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B081707F227F3804000639E9 /* Main.storyboard */; };
 		B0817083227F3805000639E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0817082227F3805000639E9 /* Assets.xcassets */; };
-		B0817086227F3805000639E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0817084227F3805000639E9 /* LaunchScreen.storyboard */; };
 		B0E8ED56228447EB00B796BF /* String+AddText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E8ED55228447EB00B796BF /* String+AddText.swift */; };
 		B0E8ED5822844FA100B796BF /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E8ED5722844FA100B796BF /* MyTabBarController.swift */; };
 		B0E8ED5A2284512000B796BF /* MyImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E8ED592284512000B796BF /* MyImagePickerController.swift */; };
@@ -49,7 +48,6 @@
 		B081707D227F3804000639E9 /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
 		B0817080227F3804000639E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B0817082227F3805000639E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B0817085227F3805000639E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0817087227F3805000639E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0E8ED55228447EB00B796BF /* String+AddText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AddText.swift"; sourceTree = "<group>"; };
 		B0E8ED5722844FA100B796BF /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 				B011E27322809A1E009A72E5 /* Helpers.swift */,
 				B07648B822815CB000840D77 /* HudView.swift */,
 				B0817087227F3805000639E9 /* Info.plist */,
-				B0817084227F3805000639E9 /* LaunchScreen.storyboard */,
 				B065571D22820C9B00B033B8 /* LocationCell.swift */,
 				B011E27122808C90009A72E5 /* LocationDetailsViewController.swift */,
 				B081707D227F3804000639E9 /* LocationsViewController.swift */,
@@ -186,7 +183,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0817086227F3805000639E9 /* LaunchScreen.storyboard in Resources */,
 				B0817083227F3805000639E9 /* Assets.xcassets in Resources */,
 				B0817081227F3804000639E9 /* Main.storyboard in Resources */,
 			);
@@ -228,14 +224,6 @@
 				B0817080227F3804000639E9 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		B0817084227F3805000639E9 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B0817085227F3805000639E9 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -361,6 +349,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MyLocations/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -370,7 +359,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ozolc.MyLocations;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -378,6 +367,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MyLocations/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -387,7 +377,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ozolc.MyLocations;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
