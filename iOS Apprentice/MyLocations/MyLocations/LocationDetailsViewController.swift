@@ -193,8 +193,6 @@ class LocationDetailsViewController: UITableViewController {
         categoryLabel.text = categoryName
     }
     
-    
-    
     // MARK:- Table View Delegates
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 || indexPath.section == 1 {
@@ -212,6 +210,14 @@ class LocationDetailsViewController: UITableViewController {
             tableView.deselectRow(at: indexPath, animated: true) // убрать выделение ячейки
             pickPhoto()
         }
+    }
+    
+    // Переопределить вид при выделении ячейки, т.к. у нас статичная ячейка и для неё не определен класс.
+    // Этот метод делегата вызывается перед тем, как ячейка станет видна
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let selection = UIView(frame: CGRect.zero)
+        selection.backgroundColor = UIColor(white: 1.0, alpha: 0.3)
+        cell.selectedBackgroundView = selection
     }
 }
 

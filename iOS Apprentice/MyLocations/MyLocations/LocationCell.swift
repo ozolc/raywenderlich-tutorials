@@ -26,9 +26,7 @@ class LocationCell: UITableViewCell {
         photoImageView.layer.cornerRadius = photoImageView.bounds.size.width / 2
         photoImageView.clipsToBounds = true
         separatorInset = UIEdgeInsets(top: 0, left: 82, bottom: 0, right: 0)
-        
-        descriptionLabel.backgroundColor = UIColor.purple
-        addressLabel.backgroundColor = UIColor.purple
+    
     }
     
     // MARK:- Helper Method
