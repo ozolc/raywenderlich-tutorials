@@ -31,7 +31,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0) // Добавить отступ для tableView на 64 points( 20 - StatusBar, 44 - SearchBar)
+        tableView.contentInset = UIEdgeInsets(top: 108, left: 0, bottom: 0, right: 0) // Добавить отступ для tableView на 64 points( 20 - StatusBar, 44 - SearchBar)
         
         // регистрация nib'ов для переиспользования identifiers из TableView.CellIdentifiers
         var cellNib = UINib(nibName: TableView.CellIdentifiers.searchResultCell, bundle: nil) // Загрузить nib файл из bundle
@@ -47,14 +47,22 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
-        print("Segment changed: \(sender.selectedSegmentIndex)")
+        performSearch()
     }
     
     // MARK: - Helper Methods
     // Получение валидной строки для запроса
-    func iTunesURL(searchText: String) -> URL {
+    func iTunesURL(searchText: String, category: Int) -> URL {
+        let kind: String
+        switch category {
+        case 1: kind = "musicTrack"
+        case 2: kind = "software"
+        case 3: kind = "ebook"
+        default: kind = ""
+        }
+        
         let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        let urlString = String(format: "https://itunes.apple.com/search?term=%@&limit=200", encodedText)
+        let urlString = "https://itunes.apple.com/search?term=\(encodedText)&limit=200&entity=\(kind)"
         let url = URL(string: urlString)
         return url!
     }
@@ -95,6 +103,11 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchBarDelegate {
     // Этот метод срабатывает, когда пользователь нажимает Search button на клавиатуре
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        performSearch()
+    }
+    
+    // Метод выполнения поиска
+    func performSearch() {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder() // Убрать клавиатуру
             
@@ -105,7 +118,7 @@ extension SearchViewController: UISearchBarDelegate {
             hasSearched = true
             searchResults = []
             
-            let url = self.iTunesURL(searchText: searchBar.text!) // Создать URL объект
+            let url = self.iTunesURL(searchText: searchBar.text!, category: segmentedControl.selectedSegmentIndex) // Создать URL объект
             let session = URLSession.shared // Получить shared объект для кеширования, cookies и др.
             
             // Создать data task для получения данных из url. Код из completionHandler будет вызван когда data task получит ответ от сервера.
