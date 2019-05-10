@@ -39,6 +39,7 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Helper Methods
+    // Получение валидной строки для запроса
     func iTunesURL(searchText: String) -> URL {
         let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let urlString = String(format: "https://itunes.apple.com/search?term=%@", encodedText)
@@ -46,12 +47,24 @@ class SearchViewController: UIViewController {
         return url!
     }
     
-    func performStoreRequest(with url: URL) -> String? {
+    // получение данных с сервера
+    func performStoreRequest(with url: URL) -> Data? {
         do {
-            return try String(contentsOf: url, encoding: .utf8)
+            return try Data(contentsOf: url) // JSONDecoder принимает Data тип
         } catch {
             print("Download Error: \(error.localizedDescription)")
             return nil
+        }
+    }
+    // Парсинг JSON с сервера в модель данных
+    func parse(data: Data) -> [SearchResult] {
+        do {
+            let decoder = JSONDecoder() // для декодирования из JSON
+            let result = try decoder.decode(ResultArray.self, from: data)
+            return result.results
+        } catch {
+            print("JSON error: \(error)")
+            return [] // Если получили ошибку - возвращает пустой массив SearchResult
         }
     }
     
@@ -69,8 +82,9 @@ extension SearchViewController: UISearchBarDelegate {
             let url = iTunesURL(searchText: searchBar.text!)
             print("URL: '\(url)'")
             
-            if let jsonString = performStoreRequest(with: url) {
-                print("Received JSON string '\(jsonString)'")
+            if let data = performStoreRequest(with: url) {
+                let results = parse(data: data)
+                print("Got results: \(results)")
             }
             
             tableView.reloadData()
