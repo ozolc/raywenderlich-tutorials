@@ -18,7 +18,8 @@ class SearchViewController: UIViewController {
     
     struct TableView {
         struct CellIdentifiers {
-            static let cellIdentifier = "SearchResultCell"
+            static let searchResultCell = "SearchResultCell"
+            static let nothingFoundCell = "NothingFoundCell"
         }
     }
     
@@ -27,10 +28,14 @@ class SearchViewController: UIViewController {
         
         tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0) // Добавить отступ для tableView на 64 points( 20 - StatusBar, 44 - SearchBar)
         
-        let cellNib = UINib(nibName: TableView.CellIdentifiers.cellIdentifier, bundle: nil) // Загрузить nib файл из bundle
-        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.cellIdentifier) // регистрация nib для переиспользования identifier
+        // регистрация nib'ов для переиспользования identifiers из TableView.CellIdentifiers
+        var cellNib = UINib(nibName: TableView.CellIdentifiers.searchResultCell, bundle: nil) // Загрузить nib файл из bundle
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.searchResultCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.nothingFoundCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.nothingFoundCell)
     }
-
+    
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -41,11 +46,11 @@ extension SearchViewController: UISearchBarDelegate {
         searchResults = []
         
         if searchBar.text! != "Test" {
-        for i in 0...2 {
-            let searchResult = SearchResult()
-            searchResult.name = String(format: "Fake Result %d for", i)
-            searchResult.artistName = searchBar.text!
-            searchResults.append(searchResult)
+            for i in 0...2 {
+                let searchResult = SearchResult()
+                searchResult.name = String(format: "Fake Result %d for", i)
+                searchResult.artistName = searchBar.text!
+                searchResults.append(searchResult)
             }
         }
         hasSearched = true
@@ -71,18 +76,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.cellIdentifier, for: indexPath) as! SearchResultCell
-        
         if searchResults.count == 0 {
-            
-            cell.nameLabel.text = "(Nothing found)"
-            cell.artistNameLabel.text = ""
+            return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.nothingFoundCell, for: indexPath)
         } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
+            
             let searchResult = searchResults[indexPath.row]
             cell.nameLabel.text = searchResult.name
             cell.artistNameLabel.text = searchResult.artistName
+            
+            return cell
         }
-        return cell
     }
     
     // Снять выделение с ячейки
