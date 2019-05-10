@@ -96,20 +96,23 @@ extension SearchViewController: UISearchBarDelegate {
             hasSearched = true
             searchResults = []
             
-            let url = iTunesURL(searchText: searchBar.text!)
-            print("URL: '\(url)'")
+            let queue = DispatchQueue.global() // Глобальная очередь GCD для асинхронного запуска кода в closure
             
-            if let data = performStoreRequest(with: url) {
-                searchResults = parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
-                
-                // Сортировка полученных данных JSON по полю name (Заголовок)
-                searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-//                searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
-//                searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
+            let url = self.iTunesURL(searchText: searchBar.text!)
+            
+            // Асинхронный вызов кода в очереди. Код запускается в другой очереди, тем самым не блокирует main queue - экран приложения не блокируется во время запроса данных из сети.
+            queue.async {
+                if let data = self.performStoreRequest(with: url) {
+                    self.searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
+                    
+                    // Сортировка полученных данных JSON по полю name (Заголовок)
+                    self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+                    // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
+                    // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
+                    print("DONE!")
+                    return
+                }
             }
-            
-            isLoading = false
-            tableView.reloadData()
         }
     }
     
