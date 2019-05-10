@@ -16,6 +16,8 @@ class SearchViewController: UIViewController {
     var searchResults = [SearchResult]()
     var hasSearched = false // Флаг, что данные были найдены. Не пустой ответ от сервера.
     var isLoading = false // Флаг загрузки данных из сети. При значении true - отображается spinner загрузки.
+    var dataTask: URLSessionDataTask? // Ссылка на data task, для отмена запроса, пока он выполняется. Поэтому он вынесен за пределы метода, где он выполняется - searchBarSearchButtonClicked(_:). Опциональный, т.к. нет data task пока пользователь не запустит поиск.
+    
     
     struct TableView {
         struct CellIdentifiers {
@@ -91,6 +93,7 @@ extension SearchViewController: UISearchBarDelegate {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder() // Убрать клавиатуру
             
+            dataTask?.cancel() // Если data task активен - отменить его. Старый поиск не будет возвращен, на случай если запустить новый во время выполнения текущего.
             isLoading = true
             tableView.reloadData()
             
@@ -98,7 +101,6 @@ extension SearchViewController: UISearchBarDelegate {
             searchResults = []
             
             let url = self.iTunesURL(searchText: searchBar.text!) // Создать URL объект
-            
             let session = URLSession.shared // Получить shared объект для кеширования, cookies и др.
             
             // Создать data task для получения данных из url. Код из completionHandler будет вызван когда data task получит ответ от сервера.
@@ -108,32 +110,28 @@ extension SearchViewController: UISearchBarDelegate {
             
             // Асинхронный вызов кода в URLSession.
             // Код запускается в background thread, тем самым не блокирует main thread - экран приложения не блокируется во время запроса данных из сети.
-            let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+            dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
                 
-                print("On main thread? " + (Thread.current.isMainThread ? "Yes" : "No"))
-                
-                if let error = error {
-                    print("Failure! \(error.localizedDescription)")
+                if let error = error as NSError?, error.code == -999 {
                     return
+                } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                    if let data = data {
+                        self.searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
+                        // Сортировка полученных данных JSON по полю name (Заголовок)
+                        self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+                        // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
+                        // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
+                        
+                        // После получения данных, обновить UI в main потоке. Остановить анимацию spinner'a
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            self.tableView.reloadData()
+                        }
+                        return
+                    } // конец data
+                } else {
+                    print("Failure! \(response!)")
                 }
-                
-                if let data = data {
-                    self.searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
-                    
-                    // Сортировка полученных данных JSON по полю name (Заголовок)
-                    self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-                    // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
-                    // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
-                    
-                    // После получения данных, обновить UI в main потоке. Остановить анимацию spinner'a
-                    DispatchQueue.main.async {
-                        self.isLoading = false
-                        self.tableView.reloadData()
-                    }
-                    
-                    return
-                } // Конец data
-                
                 // Этот код запускается, только если что-то пошло не так
                 DispatchQueue.main.async {
                     self.hasSearched = false
@@ -141,10 +139,9 @@ extension SearchViewController: UISearchBarDelegate {
                     self.tableView.reloadData()
                     self.showNetworkError()
                 }
-                
             }) // Конец completionHandler
             
-            dataTask.resume() // запустить data task. Он выполняется в background thread асинхронно. Ответ может прийти не сразу.
+            dataTask?.resume() // запустить data task. Он выполняется в background thread асинхронно. Ответ может прийти не сразу.
         }
     }
     
