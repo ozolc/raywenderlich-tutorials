@@ -16,6 +16,7 @@
 		B0E8ED8C2284897D00B796BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0E8ED8A2284897D00B796BF /* Main.storyboard */; };
 		B0E8ED8E2284897E00B796BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0E8ED8D2284897E00B796BF /* Assets.xcassets */; };
 		B0E8ED912284897E00B796BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0E8ED8F2284897E00B796BF /* LaunchScreen.storyboard */; };
+		B0F1BDEB2285B15000CB7B90 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F1BDEA2285B15000CB7B90 /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B0E8ED8D2284897E00B796BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0E8ED902284897E00B796BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0E8ED922284897E00B796BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0F1BDEA2285B15000CB7B90 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				B0AE5959228538A200A2565A /* SearchResultCell.xib */,
 				B0AE595B2285401E00A2565A /* SearchResultCell.swift */,
 				B0AE595D2285437A00A2565A /* NothingFoundCell.xib */,
+				B0F1BDEA2285B15000CB7B90 /* LoadingCell.xib */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 			files = (
 				B0E8ED912284897E00B796BF /* LaunchScreen.storyboard in Resources */,
 				B0E8ED8E2284897E00B796BF /* Assets.xcassets in Resources */,
+				B0F1BDEB2285B15000CB7B90 /* LoadingCell.xib in Resources */,
 				B0AE595A228538A200A2565A /* SearchResultCell.xib in Resources */,
 				B0AE595E2285437A00A2565A /* NothingFoundCell.xib in Resources */,
 				B0E8ED8C2284897D00B796BF /* Main.storyboard in Resources */,
