@@ -15,15 +15,20 @@ class SearchViewController: UIViewController {
     
     var searchResults = [SearchResult]()
     var hasSearched = false
-    let cellIdentifier = "SearchResultCell"
+    
+    struct TableView {
+        struct CellIdentifiers {
+            static let cellIdentifier = "SearchResultCell"
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0) // Добавить отступ для tableView на 64 points( 20 - StatusBar, 44 - SearchBar)
         
-        let cellNib = UINib(nibName: cellIdentifier, bundle: nil) // Загрузить nib файл из bundle
-        tableView.register(cellNib, forCellReuseIdentifier: cellIdentifier) // регистрация nib для переиспользования identifier
+        let cellNib = UINib(nibName: TableView.CellIdentifiers.cellIdentifier, bundle: nil) // Загрузить nib файл из bundle
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.cellIdentifier) // регистрация nib для переиспользования identifier
     }
 
 }
@@ -66,15 +71,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.cellIdentifier, for: indexPath) as! SearchResultCell
         
         if searchResults.count == 0 {
-            cell.textLabel!.text = "(Nothing found)"
-            cell.detailTextLabel!.text = ""
+            
+            cell.nameLabel.text = "(Nothing found)"
+            cell.artistNameLabel.text = ""
         } else {
             let searchResult = searchResults[indexPath.row]
-            cell.textLabel?.text = searchResult.name
-            cell.detailTextLabel?.text = searchResult.artistName
+            cell.nameLabel.text = searchResult.name
+            cell.artistNameLabel.text = searchResult.artistName
         }
         return cell
     }
