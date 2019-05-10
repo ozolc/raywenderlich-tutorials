@@ -15,7 +15,7 @@ class SearchViewController: UIViewController {
     
     var searchResults = [SearchResult]()
     var hasSearched = false // Флаг, что данные были найдены. Не пустой ответ от сервера.
-    var isLoading = false // Флаг загрузки данных из сети
+    var isLoading = false // Флаг загрузки данных из сети. При значении true - отображается spinner загрузки.
     
     struct TableView {
         struct CellIdentifiers {
@@ -109,7 +109,13 @@ extension SearchViewController: UISearchBarDelegate {
                     self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
                     // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
                     // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
-                    print("DONE!")
+                    
+                    // После получения данных, обновить UI в main потоке. Остановить анимацию spinner'a
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.tableView.reloadData()
+                    }
+                    
                     return
                 }
             }
@@ -139,8 +145,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         if isLoading {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
             
+            // Создать spinner для оповещения пользователя о загрузке данных из сети
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-            spinner.startAnimating()
+            spinner.startAnimating() // Запуск анимации spinner
             return cell
             
         } else if searchResults.count == 0 {
