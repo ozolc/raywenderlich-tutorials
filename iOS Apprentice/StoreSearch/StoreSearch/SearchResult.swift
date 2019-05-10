@@ -6,6 +6,16 @@
 //  Copyright © 2019 Maksim Nosov. All rights reserved.
 //
 
+// Перегрузка оператора "<" для сортировки по возрастанию
+func < (lhs: SearchResult, rhs: SearchResult) -> Bool {
+    return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
+}
+
+// Перегрузка оператора ">" для сортировки по убыванию
+func > (lhs: SearchResult, rhs: SearchResult) -> Bool {
+    return lhs.artist.localizedStandardCompare(rhs.artist) == .orderedDescending
+}
+
 class ResultArray: Codable {
     var resultCount = 0
     var results = [SearchResult]()
@@ -92,4 +102,6 @@ class SearchResult: Codable, CustomStringConvertible {
     var artist: String {
         return artistName ?? ""
     }
+    
+    
 }

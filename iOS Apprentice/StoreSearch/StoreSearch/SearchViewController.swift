@@ -93,6 +93,11 @@ extension SearchViewController: UISearchBarDelegate {
             
             if let data = performStoreRequest(with: url) {
                 searchResults = parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
+                
+                // Сортировка полученных данных JSON по полю name (Заголовок)
+                searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+//                searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
+//                searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
             }
             
             tableView.reloadData()
