@@ -132,8 +132,17 @@ extension SearchViewController: UISearchBarDelegate {
                     }
                     
                     return
+                } // Конец data
+                
+                // Этот код запускается, только если что-то пошло не так
+                DispatchQueue.main.async {
+                    self.hasSearched = false
+                    self.isLoading = false
+                    self.tableView.reloadData()
+                    self.showNetworkError()
                 }
-            })
+                
+            }) // Конец completionHandler
             
             dataTask.resume() // запустить data task. Он выполняется в background thread асинхронно. Ответ может прийти не сразу.
         }
