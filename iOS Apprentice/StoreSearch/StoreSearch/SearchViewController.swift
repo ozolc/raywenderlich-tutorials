@@ -52,16 +52,16 @@ class SearchViewController: UIViewController {
         return url!
     }
     
-//     получение данных с сервера
-//    func performStoreRequest(with url: URL) -> Data? {
-//        do {
-//            return try Data(contentsOf: url) // JSONDecoder принимает Data тип
-//        } catch {
-//            print("Download Error: \(error.localizedDescription)")
-//            showNetworkError()
-//            return nil
-//        }
-//    }
+    //     получение данных с сервера
+    //    func performStoreRequest(with url: URL) -> Data? {
+    //        do {
+    //            return try Data(contentsOf: url) // JSONDecoder принимает Data тип
+    //        } catch {
+    //            print("Download Error: \(error.localizedDescription)")
+    //            showNetworkError()
+    //            return nil
+    //        }
+    //    }
     
     // Парсинг JSON с сервера в модель данных
     func parse(data: Data) -> [SearchResult] {
@@ -71,7 +71,7 @@ class SearchViewController: UIViewController {
             return result.results
         } catch {
             print("JSON error: \(error)")
-            return [] // Если получили ошибку - возвращает пустой массив SearchResult
+            return [] // Если получили ошибку - возвращает пустой массив [SearchResult]
         }
     }
     
@@ -97,8 +97,6 @@ extension SearchViewController: UISearchBarDelegate {
             hasSearched = true
             searchResults = []
             
-//            let queue = DispatchQueue.global() // Глобальная очередь GCD для асинхронного запуска кода в closure
-            
             let url = self.iTunesURL(searchText: searchBar.text!) // Создать URL объект
             
             let session = URLSession.shared // Получить shared объект для кеширования, cookies и др.
@@ -107,38 +105,37 @@ extension SearchViewController: UISearchBarDelegate {
             // error - ошибка при получении данных
             // response - код ответа и заголовки от сервера
             // data - данные, полученные от сервера (в данном случае JSON)
+            
+            // Асинхронный вызов кода в URLSession.
+            // Код запускается в background thread, тем самым не блокирует main thread - экран приложения не блокируется во время запроса данных из сети.
             let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+                
+                print("On main thread? " + (Thread.current.isMainThread ? "Yes" : "No"))
                 
                 if let error = error {
                     print("Failure! \(error.localizedDescription)")
-                } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    print("Success! \(data!)")
-                } else {
-                    print("Failure! \(response!)")
+                    return
+                }
+                
+                if let data = data {
+                    self.searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
+                    
+                    // Сортировка полученных данных JSON по полю name (Заголовок)
+                    self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+                    // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
+                    // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
+                    
+                    // После получения данных, обновить UI в main потоке. Остановить анимацию spinner'a
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.tableView.reloadData()
+                    }
+                    
+                    return
                 }
             })
             
             dataTask.resume() // запустить data task. Он выполняется в background thread асинхронно. Ответ может прийти не сразу.
-            
-            // Асинхронный вызов кода в очереди. Код запускается в другой очереди, тем самым не блокирует main queue - экран приложения не блокируется во время запроса данных из сети.
-//            queue.async {
-//                if let data = self.performStoreRequest(with: url) {
-//                    self.searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
-//
-//                    // Сортировка полученных данных JSON по полю name (Заголовок)
-//                    self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-//                    // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
-//                    // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
-//
-//                    // После получения данных, обновить UI в main потоке. Остановить анимацию spinner'a
-//                    DispatchQueue.main.async {
-//                        self.isLoading = false
-//                        self.tableView.reloadData()
-//                    }
-//
-//                    return
-//                }
-//            }
         }
     }
     
