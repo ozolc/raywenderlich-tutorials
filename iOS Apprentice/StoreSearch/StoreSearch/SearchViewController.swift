@@ -34,6 +34,8 @@ class SearchViewController: UIViewController {
         
         cellNib = UINib(nibName: TableView.CellIdentifiers.nothingFoundCell, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.nothingFoundCell)
+        
+        searchBar.becomeFirstResponder() // Отобразить клавиатуру при загрузке в строке поиска
     }
     
 }
