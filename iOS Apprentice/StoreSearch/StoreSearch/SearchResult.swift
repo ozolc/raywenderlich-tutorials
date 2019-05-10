@@ -14,11 +14,18 @@ class ResultArray: Codable {
 class SearchResult: Codable, CustomStringConvertible {
     // CustomStringConvertible - протокол позволяет объекту иметь свое текстовое представление
     var description: String {
-        return "Name: \(name), Artist Name: \(artistName ?? "None")"
+        return "Kind: \(kind ?? "None"), Name: \(name), Artist Name: \(artistName ?? "None")\n"
     }
     
     var artistName: String? = ""
     var trackName: String? = ""
+    var kind: String? = ""
+    var trackPrice: Double? = 0.0
+    var currency = ""
+    var artworkUrl60 = ""
+    var artworkUrl100 = ""
+    var trackViewUrl: String? = ""
+    var primaryGenreName = ""
     
     var name: String {
         return trackName ?? ""
