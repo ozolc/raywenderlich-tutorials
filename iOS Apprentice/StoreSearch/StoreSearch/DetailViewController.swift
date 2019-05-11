@@ -22,7 +22,12 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         view.tintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+        popupView.layer.cornerRadius = 10
 
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
+        gestureRecognizer.cancelsTouchesInView = false // gestureRecognizer слушает ВЕЗДЕ в view controller
+        gestureRecognizer.delegate = self
+        view.addGestureRecognizer(gestureRecognizer)
     }
     
     // MARK: - Actions
@@ -44,5 +49,13 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
     // Использовать DimmingPresentationController вместо стандантного Presentation Controller для выполнения transition
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return DimmingPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+extension DetailViewController: UIGestureRecognizerDelegate {
+    // Когда нажали вне pop-up view
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        // self.view - view родитель pop-up view
+        return (touch.view === self.view)
     }
 }
