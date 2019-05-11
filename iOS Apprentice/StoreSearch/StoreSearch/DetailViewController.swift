@@ -18,6 +18,11 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var priceButton: UIButton!
     
+    var downloadTask: URLSessionDownloadTask?
+    
+    var searchResult: SearchResult! // force unwrapping потому что не известно значение до выполнения segue. Он nil в самом начале
+    // Передается из SearchViewController через performSegue
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +33,16 @@ class DetailViewController: UIViewController {
         gestureRecognizer.cancelsTouchesInView = false // gestureRecognizer слушает ВЕЗДЕ в view controller
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
+        
+        if searchResult != nil {
+            updateUI()
+        }
+    }
+    
+    deinit {
+        print("deinit \(self)")
+        // Отменить загрузку изображение с товаром, если pop-up view закроется
+        downloadTask?.cancel()
     }
     
     // MARK: - Actions
@@ -35,11 +50,53 @@ class DetailViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    // Открыть страницу продукта в iTunes Store
+    @IBAction func openInStore() {
+        if let url = URL(string: searchResult.storeURL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
     // Вызывается для загрузки view controller из storyboard
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         modalPresentationStyle = .custom
         transitioningDelegate = self
+    }
+    
+    // MARK: - Helper Methods
+    func updateUI() {
+        nameLabel.text = searchResult.name
+        
+        if searchResult.artist.isEmpty {
+            artistNameLabel.text = "Unknown"
+        } else {
+            artistNameLabel.text = searchResult.artist
+        }
+        
+        kindLabel.text = searchResult.kind
+        genreLabel.text = searchResult.genre
+        
+        // Отобразить цену товара
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = searchResult.currency
+        
+        let priceText: String
+        if searchResult.price == 0 {
+            priceText = "Free"
+        } else if let text = formatter.string(from: searchResult.price as NSNumber) {
+            priceText = text
+        } else {
+            priceText = ""
+        }
+        
+        priceButton.setTitle(priceText, for: .normal)
+        
+        // Загрузка изображения товара
+        if let largeURL = URL(string: searchResult.imageLarge) {
+            downloadTask = artworkImageView.loadImage(url: largeURL)
+        }
     }
 
 }
