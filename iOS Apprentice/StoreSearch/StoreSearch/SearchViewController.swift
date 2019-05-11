@@ -149,13 +149,14 @@ extension SearchViewController: UISearchBarDelegate {
                     } // конец data
                 } else {
                     print("Failure! \(response!)")
-                }
+//                }
                 // Этот код запускается, только если что-то пошло не так
                 DispatchQueue.main.async {
                     self.hasSearched = false
                     self.isLoading = false
                     self.tableView.reloadData()
                     self.showNetworkError()
+                    }
                 }
             }) // Конец completionHandler
             
