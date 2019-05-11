@@ -13,6 +13,7 @@
 		B05AEBEE2286A229001916BD /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */; };
 		B05AEBF02286AC8F001916BD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05AEBEF2286AC8F001916BD /* DetailViewController.swift */; };
 		B05AEBF22286B160001916BD /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05AEBF12286B160001916BD /* DimmingPresentationController.swift */; };
+		B084EB7A2287119E003FB4B0 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B084EB792287119E003FB4B0 /* LandscapeViewController.swift */; };
 		B0A8F1F82284A4C9001B832C /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A8F1F72284A4C9001B832C /* SearchResult.swift */; };
 		B0AE595A228538A200A2565A /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0AE5959228538A200A2565A /* SearchResultCell.xib */; };
 		B0AE595C2285401E00A2565A /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AE595B2285401E00A2565A /* SearchResultCell.swift */; };
@@ -31,6 +32,7 @@
 		B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		B05AEBEF2286AC8F001916BD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B05AEBF12286B160001916BD /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
+		B084EB792287119E003FB4B0 /* LandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
 		B0A8F1F72284A4C9001B832C /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		B0AE5959228538A200A2565A /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		B0AE595B2285401E00A2565A /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
@@ -76,8 +78,12 @@
 			children = (
 				B0E8ED862284897D00B796BF /* AppDelegate.swift */,
 				B0E8ED8D2284897E00B796BF /* Assets.xcassets */,
+				B001FBEA2286F1E50052E15E /* BounceAnimationController.swift */,
 				B05AEBEF2286AC8F001916BD /* DetailViewController.swift */,
+				B05AEBF12286B160001916BD /* DimmingPresentationController.swift */,
+				B001FBE82286ED2C0052E15E /* GradientView.swift */,
 				B0E8ED922284897E00B796BF /* Info.plist */,
+				B084EB792287119E003FB4B0 /* LandscapeViewController.swift */,
 				B0F1BDEA2285B15000CB7B90 /* LoadingCell.xib */,
 				B0E8ED8A2284897D00B796BF /* Main.storyboard */,
 				B0AE595D2285437A00A2565A /* NothingFoundCell.xib */,
@@ -85,11 +91,8 @@
 				B0AE595B2285401E00A2565A /* SearchResultCell.swift */,
 				B0AE5959228538A200A2565A /* SearchResultCell.xib */,
 				B0E8ED882284897D00B796BF /* SearchViewController.swift */,
-				B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */,
-				B05AEBF12286B160001916BD /* DimmingPresentationController.swift */,
-				B001FBE82286ED2C0052E15E /* GradientView.swift */,
-				B001FBEA2286F1E50052E15E /* BounceAnimationController.swift */,
 				B001FBEC2286F6680052E15E /* SlideOutAnimationController.swift */,
+				B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				B0A8F1F82284A4C9001B832C /* SearchResult.swift in Sources */,
 				B0AE595C2285401E00A2565A /* SearchResultCell.swift in Sources */,
 				B001FBEB2286F1E50052E15E /* BounceAnimationController.swift in Sources */,
+				B084EB7A2287119E003FB4B0 /* LandscapeViewController.swift in Sources */,
 				B05AEBF02286AC8F001916BD /* DetailViewController.swift in Sources */,
 				B0E8ED872284897D00B796BF /* AppDelegate.swift in Sources */,
 				B001FBE92286ED2C0052E15E /* GradientView.swift in Sources */,

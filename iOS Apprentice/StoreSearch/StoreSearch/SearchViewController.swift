@@ -19,6 +19,8 @@ class SearchViewController: UIViewController {
     var isLoading = false // Флаг загрузки данных из сети. При значении true - отображается spinner загрузки.
     var dataTask: URLSessionDataTask? // Ссылка на data task, для отмена запроса, пока он выполняется. Поэтому он вынесен за пределы метода, где он выполняется - searchBarSearchButtonClicked(_:). Опциональный, т.к. нет data task пока пользователь не запустит поиск.
     
+    var landscapeVC: LandscapeViewController? // опциональный в портретной ориентации. В ландшафтной ориентации - получает значение
+    
     
     struct TableView {
         struct CellIdentifiers {
@@ -66,17 +68,6 @@ class SearchViewController: UIViewController {
         let url = URL(string: urlString)
         return url!
     }
-    
-    //     получение данных с сервера
-    //    func performStoreRequest(with url: URL) -> Data? {
-    //        do {
-    //            return try Data(contentsOf: url) // JSONDecoder принимает Data тип
-    //        } catch {
-    //            print("Download Error: \(error.localizedDescription)")
-    //            showNetworkError()
-    //            return nil
-    //        }
-    //    }
     
     // Парсинг JSON с сервера в модель данных
     func parse(data: Data) -> [SearchResult] {
@@ -164,9 +155,47 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
     
+    // Отобразить Bar вверху экрана
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
+
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        switch newCollection.verticalSizeClass {
+        case .compact:
+            showLandscape(with: coordinator)
+        case .regular, .unspecified:
+            hideLandscape(with: coordinator)
+        @unknown default:
+            hideLandscape(with: coordinator)
+        }
+    }
+    
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        guard landscapeVC == nil else { return } // В приложении объект LandscapeViewController создаетсе только один
+        
+        // Создаем объект LandscapeViewController вручную через storyboard?.instantiateViewController(:)
+        landscapeVC = storyboard?.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
+        
+        if let controller = landscapeVC {
+            controller.view.frame = view.bounds // Размеры нового контроллера равны bounds родительского view (SearchViewController)
+            view.addSubview(controller.view)
+            addChild(controller) // LandscapeViewController управлет частью экрана
+            controller.didMove(toParent: self) // сообщил, что новый view controller имеет родительский view controller self (SearchViewController). LandscapeViewController находится внутри SearchViewController
+        }
+    }
+    
+    func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeVC {
+            controller.willMove(toParent: nil) // Сообщает view controller что он покидает иерархию контроллеров и больше не имеет родителя
+            controller.view.removeFromSuperview() // удаление view с экрана
+            controller.removeFromParent() // Удаляем родителя у controller
+            landscapeVC = nil // Удаление последних strong ссылок к объекту LandscapeViewController
+        }
+    }
+    
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
