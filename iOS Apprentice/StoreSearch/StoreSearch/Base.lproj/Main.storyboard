@@ -149,7 +149,7 @@
                                         <rect key="frame" x="164" y="208" width="68" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
-                                        <state key="normal" title="$9.99"/>
+                                        <state key="normal" title="$9.99" backgroundImage="PriceButton"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.94999999999999996" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -183,5 +183,6 @@
     </scenes>
     <resources>
         <image name="CloseButton" width="15" height="15"/>
+        <image name="PriceButton" width="11" height="24"/>
     </resources>
 </document>

@@ -17,9 +17,11 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var kindLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var priceButton: UIButton!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.tintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
 
     }
     
