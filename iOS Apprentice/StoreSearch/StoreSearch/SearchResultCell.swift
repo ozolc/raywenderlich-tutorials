@@ -30,7 +30,6 @@ class SearchResultCell: UITableViewCell {
         // Отменить загрузку в download task изображения если ячейка готовится к переиспользованию. Не загружает изображения, которые уже не нужны на экране
         downloadTask?.cancel()
         downloadTask = nil
-        print("prepare for reuse")
     }
 
     // MARK: - Public Methods
