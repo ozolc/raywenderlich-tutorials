@@ -23,6 +23,13 @@ class DetailViewController: UIViewController {
     var searchResult: SearchResult! // force unwrapping потому что не известно значение до выполнения segue. Он nil в самом начале
     // Передается из SearchViewController через performSegue
     
+    enum AnimationStyle {
+        case slide
+        case fade
+    }
+    
+    var dismissStyle = AnimationStyle.fade
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +56,7 @@ class DetailViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func close() {
+        dismissStyle = .slide // Установить анимацию slide
         dismiss(animated: true, completion: nil)
     }
     
@@ -117,7 +125,12 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
     
     // Сообщаем app использовать новый контроллер для анимации когда убираем Detail pop-up
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SlideOutAnimationController()
+        switch dismissStyle {
+        case .slide:
+            return SlideOutAnimationController()
+        case .fade:
+            return FadeOutAnimationController()
+        }
     }
 }
 

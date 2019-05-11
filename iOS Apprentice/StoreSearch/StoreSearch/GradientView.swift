@@ -12,6 +12,7 @@ class GradientView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
+        autoresizingMask = [.flexibleWidth, .flexibleHeight] // Сообщить view, что оно должно изменять высоту и ширину пропорциональ siperview если экран будет развернут
     }
     
     required init?(coder aDecoder: NSCoder) {

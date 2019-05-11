@@ -181,18 +181,34 @@ extension SearchViewController: UISearchBarDelegate {
         
         if let controller = landscapeVC {
             controller.view.frame = view.bounds // Размеры нового контроллера равны bounds родительского view (SearchViewController)
+            controller.view.alpha = 0 // Установить видимость view в 0
             view.addSubview(controller.view)
             addChild(controller) // LandscapeViewController управлет частью экрана
-            controller.didMove(toParent: self) // сообщил, что новый view controller имеет родительский view controller self (SearchViewController). LandscapeViewController находится внутри SearchViewController
+            
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 1 // Видимость view возвращена
+                self.searchBar.resignFirstResponder() // Убрать клавиатуру
+                // Если есть модальное окно (с деталями о продукте) - закрыть его
+                if self.presentedViewController != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }) { _ in
+                controller.didMove(toParent: self) // сообщил, что новый view controller имеет родительский view controller self (SearchViewController). LandscapeViewController находится внутри SearchViewController
+            }
         }
     }
     
     func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
         if let controller = landscapeVC {
             controller.willMove(toParent: nil) // Сообщает view controller что он покидает иерархию контроллеров и больше не имеет родителя
-            controller.view.removeFromSuperview() // удаление view с экрана
-            controller.removeFromParent() // Удаляем родителя у controller
-            landscapeVC = nil // Удаление последних strong ссылок к объекту LandscapeViewController
+            
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 0
+            }) { _ in
+                controller.view.removeFromSuperview() // удаление view с экрана
+                controller.removeFromParent() // Удаляем родителя у controller
+                self.landscapeVC = nil // Удаление последних strong ссылок к объекту LandscapeViewController
+            }
         }
     }
     
