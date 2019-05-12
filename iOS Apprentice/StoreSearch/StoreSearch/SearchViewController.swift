@@ -180,6 +180,7 @@ extension SearchViewController: UISearchBarDelegate {
         landscapeVC = storyboard?.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
         
         if let controller = landscapeVC {
+            controller.searchResults = searchResults // Передать в LandscapeViewController массив с результами поиска
             controller.view.frame = view.bounds // Размеры нового контроллера равны bounds родительского view (SearchViewController)
             controller.view.alpha = 0 // Установить видимость view в 0
             view.addSubview(controller.view)
