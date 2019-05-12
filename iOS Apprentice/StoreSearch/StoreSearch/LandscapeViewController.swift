@@ -30,6 +30,9 @@ class LandscapeViewController: UIViewController {
         
         view.backgroundColor = UIColor(patternImage: UIImage(named: "LandscapeBackground")!)
         
+        // Начальное количество страниц для page control
+        pageControl.numberOfPages = 0
+        
     }
     
     // Создание собственного layout. Вызывается UIKit как часть фазы расположения views на view controller'a как когда он впервые появляется на экране. Идеальное место для изменения frames для views вручную.
@@ -40,7 +43,7 @@ class LandscapeViewController: UIViewController {
         pageControl.frame = CGRect(x: safeFrame.origin.x, y: safeFrame.size.height - pageControl.frame.size.height, width: safeFrame.size.width, height: pageControl.frame.size.height)
         
         if firstTime {
-            firstTime != firstTime
+            firstTime = !firstTime
             tileButtons(searchResults)
         }
     }
@@ -129,5 +132,27 @@ class LandscapeViewController: UIViewController {
                                         height: scrollView.bounds.size.height)
         
         print("Number of pages: \(numPages)")
+        
+        // Установка количества страниц и начальную страницу
+        pageControl.numberOfPages = numPages
+        pageControl.currentPage = 0
+    }
+    
+    // MARK: - Actions
+    @IBAction func pageChanged(_ sender: UIPageControl) {
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: [.curveEaseInOut],
+                       animations: { self.scrollView.contentOffset = CGPoint(x: self.scrollView.bounds.size.width * CGFloat(sender.currentPage), y: 0) },
+                       completion: nil)
+    }
+    
+}
+
+extension LandscapeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = scrollView.bounds.size.width
+        let page = Int( (scrollView.contentOffset.x + width / 2) / width )
+        pageControl.currentPage = page
     }
 }
