@@ -68,22 +68,24 @@ extension SearchViewController: UISearchBarDelegate {
     
     // Метод выполнения поиска
     func performSearch() {
-        search.performSearch(for: searchBar.text!, category: segmentedControl.selectedSegmentIndex, completion: { success in
-            if !success {
-                self.showNetworkError()
-            }
-            self.tableView.reloadData()
-        })
-        
-        tableView.reloadData()
-        searchBar.resignFirstResponder()
+        // Для перевода Int значения из selectedSegnentIndex в элемент из Category enum используется rawValue
+        if let category = Search.Category(rawValue: segmentedControl.selectedSegmentIndex) {
+            search.performSearch(for: searchBar.text!, category: category, completion: { success in
+                if !success {
+                    self.showNetworkError()
+                }
+                self.tableView.reloadData()
+            })
+            
+            tableView.reloadData()
+            searchBar.resignFirstResponder()
+        }
     }
-    
     // Отобразить Bar вверху экрана
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
     }
-
+    
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         
@@ -141,33 +143,38 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if search.isLoading {
-            return 1 // Загрузка ...
-        } else if !search.hasSearched {
+        switch search.state {
+        case .notSearchedYet:
             return 0 // Еще не найден
-        } else if search.searchResults.count == 0 {
+        case .loading:
+            return 1 // Загрузка ...
+        case .noResult:
             return 1 // Ничего не найдено
-        } else {
-            return search.searchResults.count
+        case .results(let list):
+            return list.count // Данные получены после запроса успешно
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if search.isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
+        switch search.state {
             
+        case .notSearchedYet:
+            fatalError("Should never get here")
+            
+        case .loading:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
             // Создать spinner для оповещения пользователя о загрузке данных из сети
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating() // Запуск анимации spinner
             return cell
             
-        } else if search.searchResults.count == 0 {
+        case .noResult:
             return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.nothingFoundCell, for: indexPath)
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
             
-            let searchResult = search.searchResults[indexPath.row]
+        case .results(let list):
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
+            let searchResult = list[indexPath.row]
             cell.configure(for: searchResult)
             
             return cell
@@ -183,9 +190,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // Если нет данных в модели - выделить ячейки невозможно
-        if search.searchResults.count == 0 || search.isLoading {
+        switch search.state {
+        case .notSearchedYet, .loading, .noResult:
             return nil
-        } else {
+        case .results:
             // Разрешить выделение ячейки
             return indexPath
         }
@@ -194,10 +202,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetail" {
-            let detailViewController = segue.destination as! DetailViewController
-            let indexPath = sender as! IndexPath
-            let searchResult = search.searchResults[indexPath.row]
-            detailViewController.searchResult = searchResult
+            if case .results(let list) = search.state {
+                let detailViewController = segue.destination as! DetailViewController
+                let indexPath = sender as! IndexPath
+                let searchResult = list[indexPath.row]
+                detailViewController.searchResult = searchResult
+            }
         }
     }
+    
 }
