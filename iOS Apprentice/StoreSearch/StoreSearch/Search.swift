@@ -6,14 +6,14 @@
 //  Copyright © 2019 Maksim Nosov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Search {
     
     enum State {
         case notSearchedYet // Поиск еще не производился
         case loading // Загрузка данных из сети. При значении true - отображается spinner загрузки.
-        case noResult // После поиска на сервере - данных в ответе нет.
+        case noResults // После поиска на сервере - данных в ответе нет.
         case results([SearchResult]) // Когда поиск успешен массив с данными
     }
     
@@ -44,6 +44,8 @@ class Search {
         if !text.isEmpty {
             dataTask?.cancel() // Если data task активен - отменить его. Старый поиск не будет возвращен, на случай если запустить новый во время выполнения текущего.
             
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true // Отобразить network activity в Status bar
+            state = .loading
             let url = self.iTunesURL(searchText: text, category: category) // Создать URL объект
             let session = URLSession.shared // Получить shared объект для кеширования, cookies и др.
             
@@ -68,7 +70,7 @@ class Search {
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
                     var searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
                     if searchResults.isEmpty {
-                        newState = .noResult
+                        newState = .noResults
                     } else {
                         // Сортировка полученных данных JSON по полю name (Заголовок)
                         searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
@@ -82,6 +84,7 @@ class Search {
                 DispatchQueue.main.async {
                     self.state = newState
                     completion(success)
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false // Убрать network activity в Status bar
                 }
                 
             }) // Конец completionHandler

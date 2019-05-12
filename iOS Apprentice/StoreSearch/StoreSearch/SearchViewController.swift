@@ -75,6 +75,7 @@ extension SearchViewController: UISearchBarDelegate {
                     self.showNetworkError()
                 }
                 self.tableView.reloadData()
+                self.landscapeVC?.searchResultsReceived()
             })
             
             tableView.reloadData()
@@ -130,6 +131,9 @@ extension SearchViewController: UISearchBarDelegate {
             controller.willMove(toParent: nil) // Сообщает view controller что он покидает иерархию контроллеров и больше не имеет родителя
             
             coordinator.animate(alongsideTransition: { _ in
+                if self.presentedViewController != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
                 controller.view.alpha = 0
             }) { _ in
                 controller.view.removeFromSuperview() // удаление view с экрана
@@ -148,7 +152,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return 0 // Еще не найден
         case .loading:
             return 1 // Загрузка ...
-        case .noResult:
+        case .noResults:
             return 1 // Ничего не найдено
         case .results(let list):
             return list.count // Данные получены после запроса успешно
@@ -169,7 +173,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             spinner.startAnimating() // Запуск анимации spinner
             return cell
             
-        case .noResult:
+        case .noResults:
             return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.nothingFoundCell, for: indexPath)
             
         case .results(let list):
@@ -191,7 +195,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // Если нет данных в модели - выделить ячейки невозможно
         switch search.state {
-        case .notSearchedYet, .loading, .noResult:
+        case .notSearchedYet, .loading, .noResults:
             return nil
         case .results:
             // Разрешить выделение ячейки
