@@ -14,13 +14,9 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    var searchResults = [SearchResult]()
-    var hasSearched = false // Флаг, что данные были найдены. Не пустой ответ от сервера.
-    var isLoading = false // Флаг загрузки данных из сети. При значении true - отображается spinner загрузки.
-    var dataTask: URLSessionDataTask? // Ссылка на data task, для отмена запроса, пока он выполняется. Поэтому он вынесен за пределы метода, где он выполняется - searchBarSearchButtonClicked(_:). Опциональный, т.к. нет data task пока пользователь не запустит поиск.
+    private let search = Search() // Объект для поиска товаров
     
     var landscapeVC: LandscapeViewController? // опциональный в портретной ориентации. В ландшафтной ориентации - получает значение
-    
     
     struct TableView {
         struct CellIdentifiers {
@@ -53,33 +49,6 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Helper Methods
-    // Получение валидной строки для запроса
-    func iTunesURL(searchText: String, category: Int) -> URL {
-        let kind: String
-        switch category {
-        case 1: kind = "musicTrack"
-        case 2: kind = "software"
-        case 3: kind = "ebook"
-        default: kind = ""
-        }
-        
-        let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-        let urlString = "https://itunes.apple.com/search?term=\(encodedText)&limit=200&entity=\(kind)"
-        let url = URL(string: urlString)
-        return url!
-    }
-    
-    // Парсинг JSON с сервера в модель данных
-    func parse(data: Data) -> [SearchResult] {
-        do {
-            let decoder = JSONDecoder() // для декодирования из JSON
-            let result = try decoder.decode(ResultArray.self, from: data)
-            return result.results
-        } catch {
-            print("JSON error: \(error)")
-            return [] // Если получили ошибку - возвращает пустой массив [SearchResult]
-        }
-    }
     
     // Alert при возникновении ошибки во время сетевого запроса
     func showNetworkError() {
@@ -99,60 +68,15 @@ extension SearchViewController: UISearchBarDelegate {
     
     // Метод выполнения поиска
     func performSearch() {
-        if !searchBar.text!.isEmpty {
-            searchBar.resignFirstResponder() // Убрать клавиатуру
-            
-            dataTask?.cancel() // Если data task активен - отменить его. Старый поиск не будет возвращен, на случай если запустить новый во время выполнения текущего.
-            isLoading = true
-            tableView.reloadData()
-            
-            hasSearched = true
-            searchResults = []
-            
-            let url = self.iTunesURL(searchText: searchBar.text!, category: segmentedControl.selectedSegmentIndex) // Создать URL объект
-            let session = URLSession.shared // Получить shared объект для кеширования, cookies и др.
-            
-            // Создать data task для получения данных из url. Код из completionHandler будет вызван когда data task получит ответ от сервера.
-            // error - ошибка при получении данных
-            // response - код ответа и заголовки от сервера
-            // data - данные, полученные от сервера (в данном случае JSON)
-            
-            // Асинхронный вызов кода в URLSession.
-            // Код запускается в background thread, тем самым не блокирует main thread - экран приложения не блокируется во время запроса данных из сети.
-            dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
-                
-                if let error = error as NSError?, error.code == -999 {
-                    return
-                } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    if let data = data {
-                        self.searchResults = self.parse(data: data) // Помещает полученный массив из Интернет в searchResults (модель данных)
-                        // Сортировка полученных данных JSON по полю name (Заголовок)
-                        self.searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
-                        // searchResults.sort { $0 < $1 } // Использование перегруженного оператора "<" в SearchResult.swift
-                        // searchResults.sort(by: >) // Короткая версия использования перегрузки оператора ">" сортирующую по убыванию по artist (Имя автора)
-                        
-                        // После получения данных, обновить UI в main потоке. Остановить анимацию spinner'a
-                        DispatchQueue.main.async {
-                            self.isLoading = false
-                            self.tableView.reloadData()
-                        }
-                        return
-                    } // конец data
-                } else {
-                    print("Failure! \(response!)")
-//                }
-                // Этот код запускается, только если что-то пошло не так
-                DispatchQueue.main.async {
-                    self.hasSearched = false
-                    self.isLoading = false
-                    self.tableView.reloadData()
-                    self.showNetworkError()
-                    }
-                }
-            }) // Конец completionHandler
-            
-            dataTask?.resume() // запустить data task. Он выполняется в background thread асинхронно. Ответ может прийти не сразу.
-        }
+        search.performSearch(for: searchBar.text!, category: segmentedControl.selectedSegmentIndex, completion: { success in
+            if !success {
+                self.showNetworkError()
+            }
+            self.tableView.reloadData()
+        })
+        
+        tableView.reloadData()
+        searchBar.resignFirstResponder()
     }
     
     // Отобразить Bar вверху экрана
@@ -180,7 +104,7 @@ extension SearchViewController: UISearchBarDelegate {
         landscapeVC = storyboard?.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
         
         if let controller = landscapeVC {
-            controller.searchResults = searchResults // Передать в LandscapeViewController массив с результами поиска
+            controller.search = search // Передать в LandscapeViewController массив с результами поиска
             controller.view.frame = view.bounds // Размеры нового контроллера равны bounds родительского view (SearchViewController)
             controller.view.alpha = 0 // Установить видимость view в 0
             view.addSubview(controller.view)
@@ -217,20 +141,20 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isLoading {
-            return 1
-        } else if !hasSearched {
-            return 0
-        } else if searchResults.count == 0 {
-            return 1
+        if search.isLoading {
+            return 1 // Загрузка ...
+        } else if !search.hasSearched {
+            return 0 // Еще не найден
+        } else if search.searchResults.count == 0 {
+            return 1 // Ничего не найдено
         } else {
-            return searchResults.count
+            return search.searchResults.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if isLoading {
+        if search.isLoading {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
             
             // Создать spinner для оповещения пользователя о загрузке данных из сети
@@ -238,12 +162,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             spinner.startAnimating() // Запуск анимации spinner
             return cell
             
-        } else if searchResults.count == 0 {
+        } else if search.searchResults.count == 0 {
             return tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.nothingFoundCell, for: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell, for: indexPath) as! SearchResultCell
             
-            let searchResult = searchResults[indexPath.row]
+            let searchResult = search.searchResults[indexPath.row]
             cell.configure(for: searchResult)
             
             return cell
@@ -259,7 +183,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // Если нет данных в модели - выделить ячейки невозможно
-        if searchResults.count == 0 || isLoading {
+        if search.searchResults.count == 0 || search.isLoading {
             return nil
         } else {
             // Разрешить выделение ячейки
@@ -272,7 +196,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         if segue.identifier == "ShowDetail" {
             let detailViewController = segue.destination as! DetailViewController
             let indexPath = sender as! IndexPath
-            let searchResult = searchResults[indexPath.row]
+            let searchResult = search.searchResults[indexPath.row]
             detailViewController.searchResult = searchResult
         }
     }

@@ -10,7 +10,7 @@ import UIKit
 
 class LandscapeViewController: UIViewController {
     
-    var searchResults = [SearchResult]()
+    var search: Search! // объект с логикой поиска
     private var firstTime = true // для проверки, что кнопки с результатами расположились только один раз
     private var downloads = [URLSessionDownloadTask]() // Все активные URLSessionDownloadTask объекты
 
@@ -45,7 +45,7 @@ class LandscapeViewController: UIViewController {
         
         if firstTime {
             firstTime = !firstTime
-            tileButtons(searchResults)
+            tileButtons(search.searchResults)
         }
     }
     

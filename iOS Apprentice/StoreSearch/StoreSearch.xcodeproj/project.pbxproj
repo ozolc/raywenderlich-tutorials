@@ -10,6 +10,7 @@
 		B001FBE92286ED2C0052E15E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001FBE82286ED2C0052E15E /* GradientView.swift */; };
 		B001FBEB2286F1E50052E15E /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001FBEA2286F1E50052E15E /* BounceAnimationController.swift */; };
 		B001FBED2286F6680052E15E /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B001FBEC2286F6680052E15E /* SlideOutAnimationController.swift */; };
+		B04CFDDA2287FE2200DCA54B /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04CFDD92287FE2200DCA54B /* Search.swift */; };
 		B05AEBEE2286A229001916BD /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */; };
 		B05AEBF02286AC8F001916BD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05AEBEF2286AC8F001916BD /* DetailViewController.swift */; };
 		B05AEBF22286B160001916BD /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05AEBF12286B160001916BD /* DimmingPresentationController.swift */; };
@@ -30,6 +31,7 @@
 		B001FBE82286ED2C0052E15E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		B001FBEA2286F1E50052E15E /* BounceAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
 		B001FBEC2286F6680052E15E /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
+		B04CFDD92287FE2200DCA54B /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		B05AEBEF2286AC8F001916BD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B05AEBF12286B160001916BD /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				B001FBEC2286F6680052E15E /* SlideOutAnimationController.swift */,
 				B05AEBED2286A229001916BD /* UIImageView+DownloadImage.swift */,
 				B084EB7B228723F5003FB4B0 /* FadeOutAnimationController.swift */,
+				B04CFDD92287FE2200DCA54B /* Search.swift */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B04CFDDA2287FE2200DCA54B /* Search.swift in Sources */,
 				B0E8ED892284897D00B796BF /* SearchViewController.swift in Sources */,
 				B05AEBF22286B160001916BD /* DimmingPresentationController.swift in Sources */,
 				B084EB7C228723F5003FB4B0 /* FadeOutAnimationController.swift in Sources */,
