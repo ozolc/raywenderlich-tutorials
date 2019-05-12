@@ -6,6 +6,8 @@
 //  Copyright © 2019 Maksim Nosov. All rights reserved.
 //
 
+import Foundation
+
 // Перегрузка оператора "<" для сортировки по возрастанию
 func < (lhs: SearchResult, rhs: SearchResult) -> Bool {
     return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
@@ -79,24 +81,34 @@ class SearchResult: Codable, CustomStringConvertible {
         return ""
     }
     
-    var type: String {
+    var type:String {
         let kind = self.kind ?? "audiobook"
         
         // Удобное представление для возращаемого типа продукта (kind)
         switch kind {
-        case "album": return "Album"
-        case "audiobook": return "Audio Book"
-        case "book": return "Book"
-        case "ebook": return "E-Book"
-        case "feature-movie": return "Movie"
-        case "music-video": return "Music Video"
-        case "podcast": return "Podcast"
-        case "software": return "App"
-        case "song": return "Song"
-        case "tv-episode": return "TV Episode"
-        default: break
+        case "album":
+            return NSLocalizedString("Album", comment: "Localized kind: Album")
+        case "audiobook":
+            return NSLocalizedString("Audio Book", comment: "Localized kind: Audio Book")
+        case "book":
+            return NSLocalizedString("Book", comment: "Localized kind: Book")
+        case "ebook":
+            return NSLocalizedString("E-Book", comment: "Localized kind: E-Book")
+        case "feature-movie":
+            return NSLocalizedString("Movie", comment: "Localized kind: Feature Movie")
+        case "music-video":
+            return NSLocalizedString("Music Video", comment: "Localized kind: Music Video")
+        case "podcast":
+            return NSLocalizedString("Podcast", comment: "Localized kind: Podcast")
+        case "software":
+            return NSLocalizedString("App", comment: "Localized kind: Software")
+        case "song":
+            return NSLocalizedString("Song",  comment: "Localized kind: Song")
+        case "tv-episode":
+            return NSLocalizedString("TV Episode", comment: "Localized kind: TV Episode")
+        default:
+            return kind
         }
-        return "Unknown"
     }
     
     var artist: String {

@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  StoreSearch
+
+  Created by Maksim Nosov on 12/05/2019.
+  Copyright © 2019 Maksim Nosov. All rights reserved.
+*/
+
+/* Localized kind: Album */
+"Album" = "Альбом";
+
+/* Localized kind: Software */
+"App" = "Приложение";
+
+/* Localized kind: Audio Book */
+"Audio Book" = "Аудиокнига";
+
+/* Localized kind: Book */
+"Book" = "Книга";
+
+/* Localized kind: E-Book */
+"E-Book" = "Эл.книга";
+
+/* Localized kind: Feature Movie */
+"Movie" = "Фильм";
+
+/* Localized kind: Music Video */
+"Music Video" = "Клип";
+
+/* Localized kind: Podcast */
+"Podcast" = "Подкаст";
+
+/* Localized kind: Song */
+"Song" = "Песня";
+
+/* Localized kind: TV Episode */
+"TV Episode" = "Сериал";
+
