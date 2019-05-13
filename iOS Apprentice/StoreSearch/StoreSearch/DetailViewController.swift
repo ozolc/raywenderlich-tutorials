@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI // Работа с почтой
 
 class DetailViewController: UIViewController {
     
@@ -134,6 +135,14 @@ class DetailViewController: UIViewController {
         popupView.isHidden = false
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowMenu" {
+            let controller = segue.destination as! MenuViewController
+            controller.delegate = self
+        }
+    }
+    
 }
 
 extension DetailViewController: UIViewControllerTransitioningDelegate {
@@ -164,5 +173,29 @@ extension DetailViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         // self.view - view родитель pop-up view
         return (touch.view === self.view)
+    }
+}
+
+extension DetailViewController: MenuViewControllerDelegate {
+    func menuViewControllerSendEmail(_ controller: MenuViewController) {
+        
+        dismiss(animated: true) {
+            if MFMailComposeViewController.canSendMail() {
+                let controller = MFMailComposeViewController()
+                controller.setSubject(NSLocalizedString("Support Request", comment: "Email subject"))
+                controller.setToRecipients(["dummy@email.com"])
+                controller.mailComposeDelegate = self
+                controller.modalPresentationStyle = .formSheet
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
+        
+    }
+    
+}
+
+extension DetailViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true, completion: nil)
     }
 }
