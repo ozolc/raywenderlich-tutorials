@@ -42,6 +42,8 @@ class SearchViewController: UIViewController {
         tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.loadingCell)
         
         searchBar.becomeFirstResponder() // Отобразить клавиатуру при загрузке в строке поиска
+        
+        title = NSLocalizedString("Search", comment: "split view master button")
     }
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
