@@ -20,8 +20,18 @@ class DetailViewController: UIViewController {
     
     var downloadTask: URLSessionDownloadTask?
     
-    var searchResult: SearchResult! // force unwrapping потому что не известно значение до выполнения segue. Он nil в самом начале
+    var isPopUp = false // Поведение окна. на iPhone - pop-up, на iPad - нет.
+    
+    // force unwrapping потому что не известно значение до выполнения segue. Он nil в самом начале
     // Передается из SearchViewController через performSegue
+    var searchResult: SearchResult! {
+        // Значение получает, только если запущен на iPad.
+        didSet {
+            if isViewLoaded {
+                updateUI()
+            }
+        }
+    }
     
     enum AnimationStyle {
         case slide
@@ -37,11 +47,25 @@ class DetailViewController: UIViewController {
         
         view.tintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
         popupView.layer.cornerRadius = 10
-
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
-        gestureRecognizer.cancelsTouchesInView = false // gestureRecognizer слушает ВЕЗДЕ в view controller
-        gestureRecognizer.delegate = self
-        view.addGestureRecognizer(gestureRecognizer)
+        
+        if isPopUp {
+            // если iPhone
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(close))
+            gestureRecognizer.cancelsTouchesInView = false // gestureRecognizer слушает ВЕЗДЕ в view controller
+            gestureRecognizer.delegate = self
+            view.addGestureRecognizer(gestureRecognizer)
+            
+            view.backgroundColor = UIColor.clear
+        } else {
+            // если iPad
+            view.backgroundColor = UIColor(patternImage: UIImage(named: "LandscapeBackground")!)
+            popupView.isHidden = true
+            
+            // Установить заголовок
+            if let displayName = Bundle.main.localizedInfoDictionary?["CFBundleDisplayName"] as? String {
+                title = displayName
+            }
+        }
         
         if searchResult != nil {
             updateUI()
@@ -107,8 +131,9 @@ class DetailViewController: UIViewController {
         if let largeURL = URL(string: searchResult.imageLarge) {
             downloadTask = artworkImageView.loadImage(url: largeURL)
         }
+        popupView.isHidden = false
     }
-
+    
 }
 
 extension DetailViewController: UIViewControllerTransitioningDelegate {

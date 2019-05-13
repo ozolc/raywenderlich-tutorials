@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
     private let search = Search() // Объект для поиска товаров
     
     var landscapeVC: LandscapeViewController? // опциональный в портретной ориентации. В ландшафтной ориентации - получает значение
+    weak var splitViewDetail: DetailViewController? // weak. т.к. SearchViewController не ответственнен за DetailViewController - это работа split view controller. nil - т.к. она может быть пустая, если запуск на iPhone
     
     struct TableView {
         struct CellIdentifiers {
@@ -44,6 +45,11 @@ class SearchViewController: UIViewController {
         searchBar.becomeFirstResponder() // Отобразить клавиатуру при загрузке в строке поиска
         
         title = NSLocalizedString("Search", comment: "split view master button")
+        
+        // при запуске на iPhone - активировать searchBar
+        if UIDevice.current.userInterfaceIdiom != .pad {
+            searchBar.becomeFirstResponder()
+        }
     }
     
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
@@ -51,6 +57,14 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: - Helper Methods
+    // Вызывается в портретном режиме на iPad
+    private func hideMasterPane() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.splitViewController!.preferredDisplayMode = .primaryHidden // спрятать Master pane
+        }) { _ in
+            self.splitViewController!.preferredDisplayMode = .automatic // Необходимо восстановить значение после заверения анимация, иначе master pane будет скрыт и в ландшафтном режиме
+        }
+    }
     
     // Alert при возникновении ошибки во время сетевого запроса
     func showNetworkError() {
@@ -190,8 +204,24 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     // Снять выделение с ячейки
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        searchBar.resignFirstResponder()
         
-        performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        // запущен на iPhone?
+        if view.window!.rootViewController!.traitCollection.horizontalSizeClass == .compact {
+            tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        } else {
+            if case .results(let list) = search.state {
+                splitViewDetail?.searchResult = list[indexPath.row]
+            }
+            // Скрыть master pane после выбора результата поиска продукта
+            // .allVisible применяется только в ландшафтном режиме, поэтому данная проверка сработает только в портретном режиме iPad
+            if splitViewController!.displayMode != .allVisible {
+                hideMasterPane()
+            }
+        }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -213,6 +243,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 let indexPath = sender as! IndexPath
                 let searchResult = list[indexPath.row]
                 detailViewController.searchResult = searchResult
+                detailViewController.isPopUp = true
             }
         }
     }
