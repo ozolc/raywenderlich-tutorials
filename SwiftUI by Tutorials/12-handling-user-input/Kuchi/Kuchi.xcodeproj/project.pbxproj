@@ -41,6 +41,11 @@
 		B02ED3AD23B7D57F0053E174 /* FlashCard+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02ED3AC23B7D57F0053E174 /* FlashCard+Equatable.swift */; };
 		B02ED3AF23B7D66D0053E174 /* FlashDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02ED3AE23B7D66D0053E174 /* FlashDeck.swift */; };
 		B02ED3B123B7D80B0053E174 /* FlashDeck+ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02ED3B023B7D80B0053E174 /* FlashDeck+ObservableObject.swift */; };
+		B0F31E9723B9274E0092D083 /* LearningStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F31E9623B9274E0092D083 /* LearningStore.swift */; };
+		B0F31E9923B927E40092D083 /* LearningStore+ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F31E9823B927E40092D083 /* LearningStore+ObservableObject.swift */; };
+		B0F31E9B23B928290092D083 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F31E9A23B928290092D083 /* CardView.swift */; };
+		B0F31E9D23B929320092D083 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F31E9C23B929320092D083 /* DeckView.swift */; };
+		B0F31E9F23B92F990092D083 /* DiscardedDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F31E9E23B92F990092D083 /* DiscardedDirection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +86,11 @@
 		B02ED3AC23B7D57F0053E174 /* FlashCard+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+Equatable.swift"; sourceTree = "<group>"; };
 		B02ED3AE23B7D66D0053E174 /* FlashDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashDeck.swift; sourceTree = "<group>"; };
 		B02ED3B023B7D80B0053E174 /* FlashDeck+ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashDeck+ObservableObject.swift"; sourceTree = "<group>"; };
+		B0F31E9623B9274E0092D083 /* LearningStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningStore.swift; sourceTree = "<group>"; };
+		B0F31E9823B927E40092D083 /* LearningStore+ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LearningStore+ObservableObject.swift"; sourceTree = "<group>"; };
+		B0F31E9A23B928290092D083 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		B0F31E9C23B929320092D083 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		B0F31E9E23B92F990092D083 /* DiscardedDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardedDirection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +249,11 @@
 				B02ED3AC23B7D57F0053E174 /* FlashCard+Equatable.swift */,
 				B02ED3AE23B7D66D0053E174 /* FlashDeck.swift */,
 				B02ED3B023B7D80B0053E174 /* FlashDeck+ObservableObject.swift */,
+				B0F31E9623B9274E0092D083 /* LearningStore.swift */,
+				B0F31E9823B927E40092D083 /* LearningStore+ObservableObject.swift */,
+				B0F31E9A23B928290092D083 /* CardView.swift */,
+				B0F31E9C23B929320092D083 /* DeckView.swift */,
+				B0F31E9E23B92F990092D083 /* DiscardedDirection.swift */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -329,10 +344,12 @@
 				5797556D22E124E200246F70 /* RegisterView.swift in Sources */,
 				57C31A5822E28147001481AD /* User.swift in Sources */,
 				9B352BD222F9AB5F00644004 /* PracticeStore+Identifiable.swift in Sources */,
+				B0F31E9B23B928290092D083 /* CardView.swift in Sources */,
 				57D84F3A22E46BB50059EC25 /* PracticeStore.swift in Sources */,
 				5726996422E3DD8700423A69 /* StarterView.swift in Sources */,
 				9B352BD922F9AB7A00644004 /* User+ObservableObject.swift in Sources */,
 				B02ED3A723B7D2860053E174 /* LearnView.swift in Sources */,
+				B0F31E9F23B92F990092D083 /* DiscardedDirection.swift in Sources */,
 				9B352BD022F9AB5F00644004 /* PracticeStore+ObservableObject.swift in Sources */,
 				6758885B22DA0C090015DE4B /* PracticeView.swift in Sources */,
 				57D84F3E22E4CADF0059EC25 /* HomeView.swift in Sources */,
@@ -345,7 +362,10 @@
 				B02ED3A923B7D3C80053E174 /* FlashCard.swift in Sources */,
 				57D84F4622E4DC370059EC25 /* ChallengeView.swift in Sources */,
 				6758889122DF0E780015DE4B /* ChoicesView.swift in Sources */,
+				B0F31E9723B9274E0092D083 /* LearningStore.swift in Sources */,
+				B0F31E9D23B929320092D083 /* DeckView.swift in Sources */,
 				57D84F4222E4CB0D0059EC25 /* ProfileView.swift in Sources */,
+				B0F31E9923B927E40092D083 /* LearningStore+ObservableObject.swift in Sources */,
 				9B352BD822F9AB7A00644004 /* Profile.swift in Sources */,
 				57D84F4022E4CB030059EC25 /* ProgressView.swift in Sources */,
 			);
