@@ -28,11 +28,25 @@
 
 import SwiftUI
 
+extension AnyTransition {
+  static var flightDetailsTransition: AnyTransition {
+    let insertion = AnyTransition.move(edge: .trailing)
+      .combined(with: .opacity)
+    let removal = AnyTransition.scale(scale: 1.0)
+      .combined(with: .opacity)
+    return .asymmetric(insertion: insertion, removal: removal)
+  }
+}
+
 struct FlightBoardInformation : View {
   @State private var showDetails = false
   var flight: FlightInformation
   @Binding var dismissFlag: Bool
   
+  var flightDetailAnimation : Animation {
+    Animation.easeInOut
+  }
+
   var body: some View {
     VStack(alignment: .leading) {
       HStack{
@@ -44,25 +58,24 @@ struct FlightBoardInformation : View {
       }
       Text("\(flight.direction == .arrival ? "From: " : "To: ") \(flight.otherAirport)")
       Text(flight.flightStatus)
-      
       Button(action: {
-        self.showDetails.toggle()
+        withAnimation {
+          self.showDetails.toggle()
+        }
       }) {
         HStack {
           Text(showDetails ? "Hide Details" : "Show Details")
           Spacer()
           Image(systemName: "chevron.up.square")
-            .rotationEffect(.degrees(showDetails ? 0 : 180))
-            .animation(.default)
+          .scaleEffect(showDetails ? 2 : 1)
+          .rotationEffect(.degrees(showDetails ? 0 : 180))
+          .animation(flightDetailAnimation)
         }
       }
-      FlightDetails(flight: flight)
-        .offset(x: showDetails ? 0 : -UIScreen.main.bounds.width)
-        .animation(.interpolatingSpring(mass: 1.0,
-                                        stiffness: 100.0,
-                                        damping: 10,
-                                        initialVelocity: 0))
-      
+      if showDetails {
+        FlightDetails(flight: flight)
+          .transition(.flightDetailsTransition)
+      }
       Spacer()
     }.font(.headline).padding(10)
   }
